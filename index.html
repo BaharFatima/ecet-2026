@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Subjects Hub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen">
+<div class="max-w-6xl mx-auto px-6 py-8">
+<header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl p-10 text-center shadow-lg">
+<h1 class="text-4xl md:text-5xl font-bold">ECET Subject Portal</h1>
+<p class="mt-4 text-lg text-white/90">Choose a subject and open units directly</p>
+</header>
+<nav class="flex flex-wrap gap-3 mt-8 border-b pb-4">
+<button onclick="showSection('maths',this)" class="tab px-5 py-3 rounded-xl bg-blue-500 text-white">Mathematics</button>
+<button onclick="showSection('physics',this)" class="tab px-5 py-3 rounded-xl bg-white border">Physics</button>
+<button onclick="showSection('chemistry',this)" class="tab px-5 py-3 rounded-xl bg-white border">Chemistry</button>
+<button onclick="showSection('cse',this)" class="tab px-5 py-3 rounded-xl bg-white border">Computer Science</button>
+</nav>
+<section class="mt-8 space-y-6">
+<div id="maths" class="subject bg-white rounded-2xl p-6 shadow border">
+
+<!--MATHS-->>
+<h2 class="text-2xl font-bold text-blue-600 mb-4">Mathematics</h2>
+<div class="grid md:grid-cols-2 gap-3">
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="matrices-and-determinants.html">Matrices & Determinants</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="trigonometry.html">Trigonometry</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/maths/analytical-geometry.html">Analytical Geometry</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/maths/differentiation.html">Differentiation</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/maths/integration.html">Integration</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/maths/differential-equations.html">Differential Equations</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/maths/laplace-transforms.html">Laplace Transforms</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/maths/fourier-series.html">Fourier Series</a></div></div>
+<div id="physics" class="subject hidden bg-white rounded-2xl p-6 shadow border">
+
+<!--physics-->    
+
+<h2 class="text-2xl font-bold text-blue-600 mb-4">Physics</h2>
+<div class="grid md:grid-cols-2 gap-3">
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/physics/units-measurements.html">Units & Measurements</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/physics/vectors.html">Vectors</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/physics/mechanics.html">Mechanics</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/physics/properties-of-matter.html">Properties of Matter</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/physics/energy-sources.html">Energy Sources</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/physics/heat.html">Heat</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/physics/shm.html">SHM</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/physics/sound.html">Sound</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/physics/magnetism-electricity.html">Magnetism & Electricity</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/physics/optics.html">Optics</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/physics/modern-physics.html">Modern Physics</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/physics/semiconductors.html">Semiconductors</a></div></div>
+<div id="chemistry" class="subject hidden bg-white rounded-2xl p-6 shadow border">
+
+<!--chemistry-->>    
+<h2 class="text-2xl font-bold text-blue-600 mb-4">Chemistry</h2>
+<div class="grid md:grid-cols-2 gap-3">
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/chemistry/fundamentals.html">Fundamentals</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/chemistry/solutions-colloids.html">Solutions & Colloids</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/chemistry/acids-bases.html">Acids & Bases</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/chemistry/environmental-science.html">Environmental Science</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/chemistry/water-technology.html">Water Technology</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/chemistry/electrochemistry.html">Electrochemistry</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/chemistry/metallurgy.html">Metallurgy</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/chemistry/corrosion.html">Corrosion</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/chemistry/polymers.html">Polymers</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/chemistry/fuels-lubricants.html">Fuels & Lubricants</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/chemistry/batteries.html">Batteries</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/chemistry/environmental-studies.html">Environmental Studies</a></div></div>
+<div id="cse" class="subject hidden bg-white rounded-2xl p-6 shadow border">
+
+<!--cse-->>    
+<h2 class="text-2xl font-bold text-blue-600 mb-4">Computer Science</h2>
+<div class="grid md:grid-cols-2 gap-3"><a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/cse/digital-electronics.html">Digital Electronics</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/cse/computer-architecture.html">Computer Architecture</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/cse/c-data-structures.html">C & Data Structures</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/cse/cpp.html">C++</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/cse/rdbms.html">RDBMS</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/cse/hardware-networking.html">Hardware & Networking</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/cse/operating-systems.html">Operating Systems</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/cse/java.html">Java</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/cse/python.html">Python</a>
+<a class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border" href="/cse/web-technologies.html">Web Technologies</a></div></div>
+</section>
+</div>
+<script>
+function showSection(id,btn){document.querySelectorAll('.subject').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('bg-blue-500','text-white');t.classList.add('bg-white','border');});btn.classList.add('bg-blue-500','text-white');btn.classList.remove('bg-white','border');}
+</script></body>
+</html>
