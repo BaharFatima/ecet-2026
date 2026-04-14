@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C++ OOP - TS ECET Exam Preparation</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: #f8f9fa;
+  color: #2c3e50;
+  line-height: 1.6;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+.header { text-align: center; margin-bottom: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 12px; }
+.header h1 { font-size: 32px; font-weight: 600; margin-bottom: 0.5rem; }
+.header p { font-size: 16px; opacity: 0.95; }
+
+.nav-tabs { 
+  display: flex; 
+  gap: 8px; 
+  overflow-x: auto; 
+  margin-bottom: 2rem; 
+  padding-bottom: 1rem; 
+  border-bottom: 2px solid #e0e0e0;
+  flex-wrap: wrap;
+}
+.nav-btn { 
+  padding: 10px 18px; 
+  border: 2px solid #ddd;
+  background: white;
+  cursor: pointer; 
+  border-radius: 8px; 
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap; 
+  transition: all 0.3s;
+  color: #2c3e50;
+}
+.nav-btn.active { 
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+.nav-btn:hover { 
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.content-section { display: none; }
+.content-section.active { display: block; animation: fadeIn 0.3s; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.topic-card { 
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: box-shadow 0.3s;
+}
+.topic-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+.topic-title { 
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #667eea;
+}
+.topic-subtitle { 
+  font-size: 14px;
+  color: #7f8c8d;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.code-block { 
+  background: #f5f7fa;
+  border: 1px solid #e0e0e0;
+  border-left: 4px solid #667eea;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  overflow-x: auto;
+  line-height: 1.6;
+  color: #2c3e50;
+}
+
+.key-points { 
+  background: #e8f4f8;
+  border-left: 4px solid #3498db;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+.key-points p { 
+  font-size: 14px;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+.key-points strong { color: #2980b9; }
+
+.mcq-box { 
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+.mcq-box strong { color: #856404; }
+.mcq-box p { font-size: 14px; color: #856404; margin-top: 0.5rem; }
+
+.quick-note { 
+  background: #f0f0f0;
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+  font-size: 14px;
+  border-left: 3px solid #95a5a6;
+}
+
+.exam-tips { 
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  border-left: 4px solid #28a745;
+}
+.exam-tips p { 
+  font-size: 14px;
+  color: #155724;
+  margin-bottom: 0.5rem;
+}
+.exam-tips strong { color: #155724; }
+
+.badge { 
+  display: inline-block;
+  background: #e9ecef;
+  color: #495057;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.grid-2 { 
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+@media (max-width: 768px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .header h1 { font-size: 24px; }
+  .nav-tabs { flex-wrap: wrap; }
+}
+
+strong { color: #2c3e50; }
+p { margin-bottom: 0.75rem; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>C++ OOP - TS ECET Exam Preparation</h1>
+<p>Comprehensive guide with MCQ-focused explanations for all topics</p>
+</div>
+
+<div class="nav-tabs">
+<button class="nav-btn active" onclick="showTab('fundamentals')">Fundamentals</button>
+<button class="nav-btn" onclick="showTab('classes')">Classes & Objects</button>
+<button class="nav-btn" onclick="showTab('pointers')">Pointers & References</button>
+<button class="nav-btn" onclick="showTab('constructors')">Constructors & Destructors</button>
+<button class="nav-btn" onclick="showTab('overloading')">Overloading</button>
+<button class="nav-btn" onclick="showTab('inheritance')">Inheritance</button>
+<button class="nav-btn" onclick="showTab('advanced')">Advanced Topics</button>
+</div>
+
+<!-- FUNDAMENTALS SECTION -->
+<div id="fundamentals" class="content-section active">
+
+<div class="topic-card">
+<div class="topic-title">OOPs Concepts</div>
+<div class="topic-subtitle">Foundation of Object-Oriented Programming</div>
+<p>OOP is a programming paradigm based on objects and classes, providing better code organization and reusability through encapsulation, inheritance, and polymorphism.</p>
+
+<strong style="display: block; margin-bottom: 0.5rem;">Four Pillars of OOP:</strong>
+<div style="margin-bottom: 1rem;">
+<div class="quick-note"><strong>1. Encapsulation:</strong> Bundling data and functions into a class, hiding internal details from the outside world. Using private, protected, and public access specifiers.</div>
+<div class="quick-note"><strong>2. Abstraction:</strong> Hiding complex implementation details and showing only essential features. Achieved through abstract classes and interfaces.</div>
+<div class="quick-note"><strong>3. Inheritance:</strong> Creating new classes from existing classes, promoting code reuse. Child class inherits properties from parent class.</div>
+<div class="quick-note"><strong>4. Polymorphism:</strong> Same function name with different behaviors. Two types: compile-time (function overloading) and runtime (virtual functions).</div>
+</div>
+
+<div class="key-points">
+<p><strong>Key Points for MCQ:</strong></p>
+<p>• Encapsulation increases code security by restricting direct access</p>
+<p>• Inheritance saves code through reusability</p>
+<p>• Polymorphism enables flexible code design</p>
+<p>• A class is a blueprint; an object is an instance</p>
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">C++ Keywords</div>
+<div class="topic-subtitle">Essential keywords for OOP programming</div>
+
+<div class="grid-2">
+<div>
+<strong style="display: block; margin-bottom: 0.5rem;">Access Specifiers:</strong>
+<div class="quick-note"><strong>public:</strong> Members accessible everywhere</div>
+<div class="quick-note"><strong>private:</strong> Members accessible only within the class</div>
+<div class="quick-note"><strong>protected:</strong> Members accessible in derived classes</div>
+</div>
+<div>
+<strong style="display: block; margin-bottom: 0.5rem;">Important Keywords:</strong>
+<div class="quick-note"><strong>class:</strong> Defines a class</div>
+<div class="quick-note"><strong>this:</strong> Pointer to current object</div>
+<div class="quick-note"><strong>virtual:</strong> For polymorphism</div>
+<div class="quick-note"><strong>friend:</strong> Grants access to private members</div>
+</div>
+</div>
+
+<div class="mcq-box">
+<strong>MCQ Tip:</strong> By default, class members are <strong>private</strong>. Struct members are <strong>public</strong> by default.
+</div>
+</div>
+
+</div>
+
+<!-- CLASSES & OBJECTS SECTION -->
+<div id="classes" class="content-section">
+
+<div class="topic-card">
+<div class="topic-title">Classes and Objects</div>
+<div class="topic-subtitle">Building blocks of OOP</div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Basic Syntax:</strong>
+<div class="code-block">class ClassName {
+  private:
+    int x;      // Data member
+  public:
+    void display() {  // Member function
+      cout << x;
+    }
+};
+ClassName obj;  // Object creation</div>
+
+<div class="key-points">
+<p><strong>Key Differences:</strong></p>
+<p>• Class: User-defined data type combining data and functions</p>
+<p>• Object: Instance of a class created in memory</p>
+<p>• Member variables: Data stored in each object</p>
+<p>• Member functions: Methods that operate on member variables</p>
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Array of Objects</div>
+<div class="topic-subtitle">Multiple objects in a single array</div>
+
+<div class="code-block">class Student {
+  int rollNo;
+  string name;
+};
+Student students[100];  // Array of 100 objects
+students[0].rollNo = 1; // Access using dot operator
+</div>
+
+<div class="mcq-box">
+<strong>MCQ Focus:</strong> When creating an array of objects, default constructor is called for each element. Use parameterized constructor during declaration or manually initialize each object.
+</div>
+
+<div class="quick-note"><strong>Accessing object members:</strong>
+- Using object: obj.member
+- Using pointer: ptr->member or (*ptr).member
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Passing and Returning Objects</div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Passing by Value:</strong>
+<div class="code-block">void func(Student s) {  // Copy of object passed
+  s.display();
+}</div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Passing by Reference:</strong>
+<div class="code-block">void func(Student &s) {  // Reference passed (no copy)
+  s.display();  // More efficient
+}</div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Returning Objects:</strong>
+<div class="code-block">Student getStudent() {
+  Student s;
+  return s;  // Object copy returned
+}</div>
+
+<div class="key-points">
+<p>• Passing by value creates a copy (slower, safe)</p>
+<p>• Passing by reference is faster (no copy overhead)</p>
+<p>• Return by reference is risky (don't return local objects)</p>
+</div>
+</div>
+
+</div>
+
+<!-- POINTERS & REFERENCES SECTION -->
+<div id="pointers" class="content-section">
+
+<div class="topic-card">
+<div class="topic-title">Pointers to Objects</div>
+<div class="topic-subtitle">Dynamic memory management</div>
+
+<div class="code-block">class Student {
+  int id;
+  void display() {}
+};
+
+Student *ptr;           // Pointer declaration
+ptr = new Student();    // Dynamic allocation
+ptr->id = 10;          // Access using arrow operator
+ptr->display();        // Call member function
+delete ptr;            // Free memory</div>
+
+<div class="key-points">
+<p><strong>Key Points:</strong></p>
+<p>• Pointer stores memory address of an object</p>
+<p>• new allocates memory on heap, returns address</p>
+<p>• delete frees dynamically allocated memory</p>
+<p>• Arrow operator (->) used with pointers</p>
+<p>• Dot operator (.) used with objects</p>
+</div>
+
+<div class="mcq-box">
+<strong>MCQ Tip:</strong> sizeof(pointer) = 4 or 8 bytes (depends on architecture), regardless of what it points to.
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">References</div>
+<div class="topic-subtitle">Aliases to existing variables</div>
+
+<div class="code-block">int x = 10;
+int &ref = x;   // ref is alias for x
+ref = 20;       // x is now 20
+
+class Student {
+  int id;
+};
+Student obj;
+Student &objRef = obj;  // Reference to object
+objRef.id = 5;</div>
+
+<div class="key-points">
+<p>• Reference is alias, not a pointer</p>
+<p>• Must be initialized at declaration</p>
+<p>• Cannot be reassigned</p>
+<p>• No NULL references (references must refer to valid variable)</p>
+<p>• Reference size = size of variable it references</p>
+</div>
+
+<div class="exam-tips">
+<p><strong>Exam Key Difference:</strong></p>
+<p><strong>Pointer vs Reference:</strong> Pointer can be NULL, reassigned, and uses -> or (*ptr). operator. Reference is non-NULL alias, initialized once, uses dot operator like original variable.</p>
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">this Pointer</div>
+<div class="topic-subtitle">Pointer to current object</div>
+
+<div class="code-block">class Student {
+  int id;
+  void setId(int id) {
+    this->id = id;  // this->id = parameter id
+  }
+  void display() {
+    cout << this->id;
+  }
+};
+Student s;
+s.setId(5);</div>
+
+<div class="key-points">
+<p>• this is implicit pointer to current object</p>
+<p>• Available in non-static member functions</p>
+<p>• Type: const ClassName *this</p>
+<p>• Used to avoid ambiguity between member and local variables</p>
+<p>• Can be used to return object: return *this;</p>
+</div>
+
+<div class="mcq-box">
+<strong>Important:</strong> this is a const pointer (address cannot change), but can modify object data (data is not const).
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">I/O Manipulators</div>
+<div class="topic-subtitle">Controlling input/output format</div>
+
+<div class="code-block">cout << setw(10) << x;      // Set width
+cout << setprecision(2) << 3.14159;  // Decimal places
+cout << fixed << setprecision(2) << x;  // Fixed notation
+cout << hex << x;           // Hexadecimal
+cout << setfill('*') << setw(10) << x;  // Fill character
+cout << left << setw(10) << x;  // Left align
+cout << right << setw(10) << x;  // Right align</div>
+
+<div class="quick-note"><strong>Include:</strong> #include &lt;iomanip&gt;</div>
+
+<div class="key-points">
+<p>• setw(): Set field width</p>
+<p>• setprecision(): Set decimal places</p>
+<p>• setfill(): Set fill character</p>
+<p>• left/right: Alignment</p>
+<p>• hex/oct: Number base</p>
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">File and I/O Functions</div>
+
+<div class="code-block">// File operations
+#include <fstream>
+ifstream inFile("file.txt");     // Read file
+ofstream outFile("file.txt");    // Write file
+fstream file("file.txt", ios::in | ios::out);
+
+// Writing
+outFile << "Hello";
+
+// Reading
+string line;
+getline(inFile, line);
+getline(inFile, line, ',');  // Read until comma
+
+// File position
+inFile.seekg(5);             // Move to position 5
+inFile.tellg();              // Current position
+
+// Close file
+inFile.close();</div>
+
+<div class="key-points">
+<p>• ifstream: Input file stream (read)</p>
+<p>• ofstream: Output file stream (write)</p>
+<p>• fstream: Both input and output</p>
+<p>• ios::app: Append mode</p>
+<p>• ios::binary: Binary mode</p>
+</div>
+</div>
+
+</div>
+
+<!-- CONSTRUCTORS & DESTRUCTORS SECTION -->
+<div id="constructors" class="content-section">
+
+<div class="topic-card">
+<div class="topic-title">Constructors</div>
+<div class="topic-subtitle">Initializing objects automatically</div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Default Constructor:</strong>
+<div class="code-block">class Student {
+  int id;
+  string name;
+  Student() {  // Default constructor
+    id = 0;
+    name = "";
+  }
+};</div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Parameterized Constructor:</strong>
+<div class="code-block">class Student {
+  int id;
+  string name;
+  Student(int i, string n) {  // Constructor with parameters
+    id = i;
+    name = n;
+  }
+};
+Student s(5, "John");  // Calling parameterized constructor</div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Copy Constructor:</strong>
+<div class="code-block">class Student {
+  int id;
+  Student() { id = 0; }
+  Student(const Student &s) {  // Copy constructor
+    id = s.id;
+  }
+};
+Student s1(5);
+Student s2(s1);  // Copy constructor called</div>
+
+<div class="key-points">
+<p>• Constructor has same name as class</p>
+<p>• No return type, not even void</p>
+<p>• Called automatically when object created</p>
+<p>• Default constructor created by compiler if not defined</p>
+<p>• Copy constructor used to copy one object to another</p>
+</div>
+
+<div class="mcq-box">
+<strong>MCQ Key:</strong> Compiler provides default constructor, copy constructor, and copy assignment operator automatically. You can override them.
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Destructors</div>
+<div class="topic-subtitle">Cleaning up when object is destroyed</div>
+
+<div class="code-block">class Student {
+  int *ptr;
+  Student() {
+    ptr = new int[100];
+  }
+  ~Student() {  // Destructor
+    delete[] ptr;  // Free memory
+  }
+};
+Student s;  // Constructor called
+// Destructor called when s goes out of scope</div>
+
+<div class="key-points">
+<p>• Name: ~ClassName()</p>
+<p>• No parameters, no return type</p>
+<p>• Called automatically when object destroyed</p>
+<p>• Used to free dynamically allocated memory</p>
+<p>• Only one destructor per class</p>
+<p>• Called in reverse order of construction</p>
+</div>
+
+<div class="exam-tips">
+<p><strong>Memory Management:</strong> Always use destructor to free memory allocated in constructor with new. Use delete[] for arrays, delete for single variables.</p>
+</div>
+</div>
+
+</div>
+
+<!-- OVERLOADING SECTION -->
+<div id="overloading" class="content-section">
+
+<div class="topic-card">
+<div class="topic-title">Function Overloading</div>
+<div class="topic-subtitle">Same function name, different parameters</div>
+
+<div class="code-block">class Calculator {
+  int add(int a, int b) {
+    return a + b;
+  }
+  double add(double a, double b) {  // Different parameter types
+    return a + b;
+  }
+  int add(int a, int b, int c) {    // Different number of parameters
+    return a + b + c;
+  }
+};
+Calculator c;
+cout << c.add(5, 10);        // Calls first function
+cout << c.add(5.5, 10.5);    // Calls second function
+cout << c.add(5, 10, 15);    // Calls third function</div>
+
+<div class="key-points">
+<p>• Same function name with different parameters</p>
+<p>• Can differ in: number, type, or order of parameters</p>
+<p>• Return type alone cannot differentiate overloaded functions</p>
+<p>• Resolved at compile time (compile-time polymorphism)</p>
+<p>• Also called static or early binding</p>
+</div>
+
+<div class="mcq-box">
+<strong>MCQ Rule:</strong> Return type difference only = NOT overloading. Compiler error!
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Constructor Overloading</div>
+<div class="topic-subtitle">Multiple constructors with different parameters</div>
+
+<div class="code-block">class Student {
+  int id;
+  string name;
+  Student() { id = 0; name = ""; }
+  Student(int i) { id = i; name = ""; }
+  Student(int i, string n) { id = i; name = n; }
+  Student(string n) { id = 0; name = n; }
+};
+Student s1;           // Default constructor
+Student s2(5);        // Constructor with int
+Student s3(5, "John"); // Constructor with int and string
+Student s4("John");   // Constructor with string</div>
+
+<div class="quick-note"><strong>Delegation Constructor (C++11):</strong> Constructor can call another constructor of same class using : Constructor1() syntax</div>
+
+<div class="key-points">
+<p>• Multiple constructors with same name</p>
+<p>• Different parameter lists</p>
+<p>• Resolves which constructor to call based on arguments</p>
+<p>• Default constructor has no parameters</p>
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Operator Overloading</div>
+<div class="topic-subtitle">Redefining operators for custom types</div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Unary Operator Overloading:</strong>
+<div class="code-block">class Complex {
+  int real, imag;
+  Complex operator++() {  // Pre-increment
+    real++; imag++;
+    return *this;
+  }
+  Complex operator++(int) {  // Post-increment
+    Complex temp = *this;
+    real++; imag++;
+    return temp;
+  }
+  Complex operator-() {  // Unary minus
+    return Complex(-real, -imag);
+  }
+};
+Complex c(3, 4);
+++c;    // Pre-increment
+c++;    // Post-increment
+-c;     // Unary minus</div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Binary Operator Overloading:</strong>
+<div class="code-block">class Complex {
+  int real, imag;
+  Complex operator+(const Complex &c) {  // Addition
+    return Complex(real + c.real, imag + c.imag);
+  }
+  Complex operator-(const Complex &c) {  // Subtraction
+    return Complex(real - c.real, imag - c.imag);
+  }
+  bool operator==(const Complex &c) {  // Equality
+    return real == c.real && imag == c.imag;
+  }
+};
+Complex c1(3, 4), c2(1, 2);
+Complex c3 = c1 + c2;  // Addition
+bool equal = (c1 == c2); // Equality</div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Friend Function for Operator Overloading:</strong>
+<div class="code-block">class Complex {
+  int real, imag;
+  friend Complex operator*(const Complex &c1, const Complex &c2);
+};
+Complex operator*(const Complex &c1, const Complex &c2) {
+  return Complex(c1.real * c2.real, c1.imag * c2.imag);
+}</div>
+
+<div class="key-points">
+<p>• operator keyword followed by operator symbol</p>
+<p>• Cannot overload: . :: .* ?: sizeof</p>
+<p>• Assignment (=), subscript ([]), function call (()), member access (->) must be member functions</p>
+<p>• Most operators can be member or friend functions</p>
+<p>• Stream operators (<<, >>) typically friend functions</p>
+</div>
+
+<div class="mcq-box">
+<strong>Key Differences:</strong>
+<p>• <strong>Member function:</strong> lhs is implicit *this, rhs is parameter. Example: a + b calls a.operator+(b)</p>
+<p>• <strong>Friend function:</strong> Both operands are parameters. Example: friend operator+(a, b)</p>
+</div>
+</div>
+
+</div>
+
+<!-- INHERITANCE SECTION -->
+<div id="inheritance" class="content-section">
+
+<div class="topic-card">
+<div class="topic-title">Single Inheritance</div>
+<div class="topic-subtitle">One derived class from one base class</div>
+
+<div class="code-block">class Vehicle {  // Base class
+  int speed;
+  void display() { cout << speed; }
+};
+
+class Car : public Vehicle {  // Derived class
+  int wheels;
+  void show() { 
+    display();  // Can call base class function
+    cout << wheels;
+  }
+};
+
+Car c;
+c.display();  // Inherited function
+c.show();     // Own function</div>
+
+<div class="key-points">
+<p>• Base class: Parent class providing features</p>
+<p>• Derived class: Child class inheriting from base</p>
+<p>• public inheritance: public members remain public</p>
+<p>• protected inheritance: public becomes protected</p>
+<p>• private inheritance: all become private</p>
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Multiple Inheritance</div>
+<div class="topic-subtitle">One derived class from multiple base classes</div>
+
+<div class="code-block">class Vehicle {
+  void vehicleInfo() {}
+};
+
+class Engine {
+  void engineInfo() {}
+};
+
+class Car : public Vehicle, public Engine {  // Multiple inheritance
+  void carInfo() {}
+};
+
+Car c;
+c.vehicleInfo();   // From Vehicle
+c.engineInfo();    // From Engine
+c.carInfo();       // Own function</div>
+
+<div class="mcq-box">
+<strong>Diamond Problem:</strong> When a class inherits from two classes that both inherit from a common base class, the common members appear twice. Solution: Use virtual inheritance.
+</div>
+
+<div class="code-block">class A { };
+class B : virtual public A { };  // Virtual inheritance
+class C : virtual public A { };
+class D : public B, public C { };  // No duplication</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Multilevel Inheritance</div>
+<div class="topic-subtitle">Chain of inheritance: A -> B -> C</div>
+
+<div class="code-block">class Animal {
+  void eat() { cout << "Eating"; }
+};
+
+class Mammal : public Animal {
+  void walk() { cout << "Walking"; }
+};
+
+class Dog : public Mammal {  // Inherits from Mammal, indirectly from Animal
+  void bark() { cout << "Barking"; }
+};
+
+Dog d;
+d.eat();    // From Animal
+d.walk();   // From Mammal
+d.bark();   // Own function</div>
+
+<div class="quick-note"><strong>Constructor Calling Order (Multilevel):</strong> Base class -> Intermediate class -> Derived class. Destructor calling order: Reverse.</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Hierarchical Inheritance</div>
+<div class="topic-subtitle">Multiple derived classes from one base class</div>
+
+<div class="code-block">class Vehicle {  // Base class
+  void display() {}
+};
+
+class Car : public Vehicle {   // Derived 1
+};
+
+class Bike : public Vehicle {  // Derived 2
+};
+
+class Bus : public Vehicle {   // Derived 3
+};
+
+Car c;
+Bike b;
+Bus bu;
+// Each has access to Vehicle functions</div>
+
+<div class="quick-note">Each derived class has its own copy of base class members. Changes in one class don't affect others.</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Hybrid Inheritance</div>
+<div class="topic-subtitle">Combination of multiple inheritance types</div>
+
+<div class="code-block">class A { };
+class B : public A { };       // Multilevel
+class C : public A { };       // Hierarchical
+class D : public B, public C { };  // Multiple
+// Combination: Multilevel + Hierarchical + Multiple</div>
+
+<div class="quick-note"><strong>When using Hybrid Inheritance:</strong> Use virtual inheritance to avoid diamond problem if common base exists.</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Multipath Inheritance (Diamond)</div>
+<div class="topic-subtitle">Multiple paths to same base class</div>
+
+<div class="code-block">// Without virtual inheritance: PROBLEM
+class A { int x; };
+class B : public A { };
+class C : public A { };
+class D : public B, public C { };  // A appears twice!
+
+// With virtual inheritance: SOLUTION
+class A { int x; };
+class B : virtual public A { };
+class C : virtual public A { };
+class D : public B, public C { };  // A appears only once!</div>
+
+<div class="key-points">
+<p>• virtual keyword prevents member duplication</p>
+<p>• Base class initialized only once</p>
+<p>• Slightly more memory overhead</p>
+<p>• More complex, use only when necessary</p>
+</div>
+</div>
+
+</div>
+
+<!-- ADVANCED TOPICS SECTION -->
+<div id="advanced" class="content-section">
+
+<div class="topic-card">
+<div class="topic-title">Virtual Functions</div>
+<div class="topic-subtitle">Runtime polymorphism and dynamic binding</div>
+
+<div class="code-block">class Animal {
+  virtual void sound() {  // Virtual function
+    cout << "Generic sound";
+  }
+};
+
+class Dog : public Animal {
+  void sound() override {  // Override (C++11)
+    cout << "Bark";
+  }
+};
+
+class Cat : public Animal {
+  void sound() override {
+    cout << "Meow";
+  }
+};
+
+int main() {
+  Animal *ptr;
+  Dog d;
+  Cat c;
+  
+  ptr = &d;
+  ptr->sound();  // Calls Dog::sound() - Bark
+  
+  ptr = &c;
+  ptr->sound();  // Calls Cat::sound() - Meow
+}</div>
+
+<div class="key-points">
+<p>• virtual keyword enables runtime polymorphism</p>
+<p>• Function call resolved at runtime based on object type</p>
+<p>• Base class pointer/reference can point to derived object</p>
+<p>• Slightly slower than non-virtual (vtable lookup)</p>
+<p>• Override keyword (C++11) explicitly marks overriding functions</p>
+</div>
+
+<div class="mcq-box">
+<strong>Virtual Function Rules:</strong>
+<p>• Must be member function</p>
+<p>• Cannot be static</p>
+<p>• Must be public or protected</p>
+<p>• Same signature in base and derived class</p>
+<p>• Virtual in base = automatically virtual in derived</p>
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Pure Virtual Functions & Abstract Classes</div>
+
+<div class="code-block">class Shape {  // Abstract class
+  virtual void draw() = 0;  // Pure virtual
+  virtual ~Shape() {}
+};
+
+class Circle : public Shape {
+  void draw() override {  // Must implement
+    cout << "Drawing circle";
+  }
+};
+
+class Square : public Shape {
+  void draw() override {
+    cout << "Drawing square";
+  }
+};
+
+// Shape s;  // ERROR: Cannot instantiate abstract class
+Circle c;  // OK
+c.draw();</div>
+
+<div class="key-points">
+<p>• Pure virtual: = 0 in function declaration</p>
+<p>• Class with pure virtual = abstract class</p>
+<p>• Cannot create objects of abstract class</p>
+<p>• Derived class must implement all pure virtual functions</p>
+<p>• Used to define interface/contract for derived classes</p>
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Friend Functions</div>
+<div class="topic-subtitle">Access to private members from outside</div>
+
+<div class="code-block">class Student {
+  int id;
+  string name;
+  friend void printStudent(Student &s);  // Friend declaration
+};
+
+void printStudent(Student &s) {  // Friend function definition
+  cout << s.id << " " << s.name;  // Can access private
+}
+
+int main() {
+  Student s;
+  printStudent(s);  // Can call non-member function
+}</div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Friend Class:</strong>
+<div class="code-block">class A {
+  int x;
+  friend class B;  // B can access private members of A
+};
+
+class B {
+  void display(A &a) {
+    cout << a.x;  // Can access private
+  }
+};</div>
+
+<div class="key-points">
+<p>• friend grants access to private/protected members</p>
+<p>• Not inherited - friend of parent ≠ friend of child</p>
+<p>• Breaks encapsulation, use sparingly</p>
+<p>• One-way: A declares B friend, not vice versa</p>
+<p>• Outside class definition</p>
+</div>
+
+<div class="mcq-box">
+<strong>Key Point:</strong> friend violates OOP principle but sometimes necessary. Operator overloading often uses friend functions.
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Inline Functions</div>
+<div class="topic-subtitle">Request compiler to replace with function body</div>
+
+<div class="code-block">class Calculator {
+  inline int add(int a, int b) {  // Explicit inline
+    return a + b;
+  }
+  
+  int subtract(int a, int b) {  // Implicitly inline (inside class)
+    return a - b;
+  }
+};
+
+inline int multiply(int a, int b) {  // Standalone inline
+  return a * b;
+}</div>
+
+<div class="key-points">
+<p>• Compiler replaces function call with function body</p>
+<p>• Reduces function call overhead</p>
+<p>• Increases code size (code duplication)</p>
+<p>• inline is just a request (compiler may ignore)</p>
+<p>• Good for small, frequently called functions</p>
+<p>• Functions defined inside class = implicitly inline</p>
+</div>
+
+<div class="exam-tips">
+<p><strong>Use inline when:</strong> Function is very simple (1-2 lines) and called frequently. Don't use for complex functions or recursion.</p>
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Function Templates</div>
+<div class="topic-subtitle">Generic functions for different data types</div>
+
+<div class="code-block">template <typename T>  // Or template <class T>
+T findMax(T a, T b) {
+  return (a > b) ? a : b;
+}
+
+// Template instantiation
+cout << findMax(5, 10);           // Calls findMax<int>
+cout << findMax(3.5, 7.2);        // Calls findMax<double>
+cout << findMax("hello", "world"); // Calls findMax<string></div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Template with Multiple Parameters:</strong>
+<div class="code-block">template <typename T, typename U>
+void swap(T &a, U &b) {
+  // Swap logic
+}</div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Template Specialization:</strong>
+<div class="code-block">template <typename T>  // General template
+void func(T x) { cout << "General"; }
+
+template <>  // Specialization
+void func(int x) { cout << "Integer"; }</div>
+
+<div class="key-points">
+<p>• Generic function for any data type</p>
+<p>• Compiler generates code for each type used</p>
+<p>• Template function vs normal function - compiler chooses best match</p>
+<p>• Syntax check when instantiated, not declaration</p>
+<p>• typename and class keywords are equivalent</p>
+</div>
+</div>
+
+<div class="topic-card">
+<div class="topic-title">Class Templates</div>
+<div class="topic-subtitle">Generic classes for any data type</div>
+
+<div class="code-block">template <typename T>
+class Box {
+  T data;
+public:
+  Box(T val) { data = val; }
+  T getData() { return data; }
+  void setData(T val) { data = val; }
+};
+
+// Template instantiation
+Box<int> intBox(10);
+Box<double> dblBox(3.14);
+Box<string> strBox("Hello");
+
+cout << intBox.getData();  // 10
+cout << dblBox.getData();  // 3.14</div>
+
+<strong style="display: block; margin-bottom: 0.75rem;">Class Template with Non-Type Parameter:</strong>
+<div class="code-block">template <typename T, int SIZE>
+class Array {
+  T arr[SIZE];
+public:
+  void insert(int idx, T val) { arr[idx] = val; }
+};
+
+Array<int, 100> intArray;
+Array<double, 50> dblArray;</div>
+
+<div class="key-points">
+<p>• Class template definition in header file or same file</p>
+<p>• Instantiation syntax: ClassName<type> obj;</p>
+<p>• Each instantiation = separate class</p>
+<p>• Non-type parameters (int SIZE) must be compile-time constant</p>
+<p>• Template class members compiled only when instantiated</p>
+</div>
+
+<div class="mcq-box">
+<strong>Common MCQ Confusion:</strong>
+<p>• Template function/class = NOT actual code, just blueprint</p>
+<p>• Code generated when template is instantiated with specific type</p>
+<p>• Each instantiation is separate code</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+function showTab(tabName) {
+  const sections = document.querySelectorAll('.content-section');
+  sections.forEach(s => s.classList.remove('active'));
+  
+  const buttons = document.querySelectorAll('.nav-btn');
+  buttons.forEach(b => b.classList.remove('active'));
+  
+  document.getElementById(tabName).classList.add('active');
+  event.target.classList.add('active');
+  
+  // Scroll to top
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
