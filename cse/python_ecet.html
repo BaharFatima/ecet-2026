@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Programming - TS ECET Study Guide</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        :root {
+            --color-text-primary: #1f2937;
+            --color-text-secondary: #4b5563;
+            --color-background-primary: #ffffff;
+            --color-background-secondary: #f9fafb;
+            --color-border-secondary: #e5e7eb;
+            --color-border-tertiary: #f3f4f6;
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono: 'Fira Code', 'Courier New', monospace;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            font-family: var(--font-sans);
+            color: var(--color-text-primary);
+        }
+
+        .header-gradient {
+            background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+        }
+
+        .wrap {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .nav-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background: white;
+            border: 1px solid var(--color-border-secondary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .nav-btn.on {
+            background: #7c3aed;
+            color: white;
+            border-color: #7c3aed;
+        }
+
+        .nav-btn:hover:not(.on) {
+            background: #f3f4f6;
+        }
+
+        .sec { display: none; }
+        .sec.on { display: block; animation: fadeIn 0.3s ease-in-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #4338ca;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card p, .card li {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--color-text-secondary);
+        }
+
+        .card ul { list-style-type: disc; padding-left: 1.5rem; }
+        .card li { margin-bottom: 0.5rem; }
+
+        .hl { background: #EEEDFE; border-left: 4px solid #7F77DD; padding: 12px 16px; margin: 12px 0; border-radius: 4px; font-size: 13.5px; color: #3C3489; }
+        .tip { background: #E1F5EE; border-left: 4px solid #1D9E75; padding: 12px 16px; margin: 12px 0; border-radius: 4px; font-size: 13.5px; color: #085041; }
+        .warn { background: #FAECE7; border-left: 4px solid #D85A30; padding: 12px 16px; margin: 12px 0; border-radius: 4px; font-size: 13.5px; color: #712B13; }
+
+        pre {
+            background: #1e293b;
+            color: #f8fafc;
+            border-radius: 10px;
+            padding: 1rem;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            line-height: 1.5;
+        }
+
+        table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 1rem 0; background: white; border-radius: 8px; overflow: hidden; }
+        th { background: #f8fafc; font-weight: 600; padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; color: var(--color-text-secondary); }
+        
+        code { font-family: var(--font-mono); background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; color: #e11d48; }
+
+        .progress-bar-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            height: 8px;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            position: relative;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: #eef2ff;
+            color: #4338ca;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrap">
+    <!-- Header -->
+    <div class="header-gradient rounded-3xl p-8 mb-8 text-white shadow-xl">
+        <h1 class="text-3xl font-bold text-center mb-2">Python - TS ECET Exam Prep</h1>
+        <p class="text-center opacity-90 text-sm">Comprehensive guide with MCQ-focused explanations for all syllabus topics</p>
+        
+        <div class="progress-bar-container">
+            <div id="progress-fill" style="width: 11.1%"></div>
+        </div>
+        <div class="flex justify-between mt-2 text-xs font-medium opacity-80">
+            <span id="progress-text">1 / 9 topics explored</span>
+            <span id="progress-percent">11% progress</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-container" id="nav">
+        <button class="nav-btn on" onclick="sw('basics', 0)">Basics</button>
+        <button class="nav-btn" onclick="sw('ds', 1)">Data Structures</button>
+        <button class="nav-btn" onclick="sw('oop', 2)">OOP</button>
+        <button class="nav-btn" onclick="sw('modules', 3)">Modules</button>
+        <button class="nav-btn" onclick="sw('exceptions', 4)">Exceptions</button>
+        <button class="nav-btn" onclick="sw('threads', 5)">Threads</button>
+        <button class="nav-btn" onclick="sw('tkinter', 6)">Tkinter</button>
+        <button class="nav-btn" onclick="sw('regex', 7)">Regex</button>
+        <button class="nav-btn" onclick="sw('files', 8)">File Ops</button>
+    </div>
+
+    <!-- Content Sections -->
+    <div id="content-area">
+        <!-- BASICS -->
+        <div class="sec on" id="basics">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-indigo-900">1. Python Basics</h2>
+                <p class="text-gray-500 text-sm">Features · Variables · Data types · Indentation · Decision making · Loops</p>
+            </div>
+
+            <div class="card">
+                <span class="tag">Overview</span>
+                <h3>Key features of Python</h3>
+                <ul>
+                    <li>Interpreted language — executes line by line, no separate compilation step</li>
+                    <li>Dynamically typed — no need to declare variable types</li>
+                    <li>Object-oriented, functional, and procedural — multi-paradigm</li>
+                    <li>Indentation-based block structure (no curly braces)</li>
+                    <li>Extensive standard library ("batteries included")</li>
+                    <li>Platform independent / portable</li>
+                    <li>Open source and free</li>
+                </ul>
+                <div class="tip">MCQ tip: Python is interpreted, NOT compiled. Variables don't need type declarations. The creator is Guido van Rossum (1991).</div>
+            </div>
+
+            <div class="card">
+                <span class="tag">Fundamentals</span>
+                <h3>Data types</h3>
+                <table>
+                    <thead>
+                        <tr><th>Type</th><th>Example</th><th>Mutable?</th><th>Key fact</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>int</code></td><td><code>x = 10</code></td><td>No</td><td>Unlimited precision</td></tr>
+                        <tr><td><code>float</code></td><td><code>x = 3.14</code></td><td>No</td><td>64-bit double</td></tr>
+                        <tr><td><code>complex</code></td><td><code>x = 2+3j</code></td><td>No</td><td>j is imaginary unit</td></tr>
+                        <tr><td><code>str</code></td><td><code>x = "hi"</code></td><td>No</td><td>Immutable sequence</td></tr>
+                        <tr><td><code>bool</code></td><td><code>True/False</code></td><td>No</td><td>Subclass of int (1/0)</td></tr>
+                        <tr><td><code>list</code></td><td><code>[1,2,3]</code></td><td>Yes</td><td>Ordered, allows duplicates</td></tr>
+                        <tr><td><code>tuple</code></td><td><code>(1,2,3)</code></td><td>No</td><td>Ordered, immutable</td></tr>
+                        <tr><td><code>set</code></td><td><code>{1,2,3}</code></td><td>Yes</td><td>Unordered, no duplicates</td></tr>
+                        <tr><td><code>dict</code></td><td><code>{"a":1}</code></td><td>Yes</td><td>Key-value pairs</td></tr>
+                    </tbody>
+                </table>
+                <div class="tip">MCQ tip: <code>bool</code> is a subclass of <code>int</code>. <code>True == 1</code> and <code>False == 0</code>. <code>type(True)</code> returns <code>bool</code>.</div>
+            </div>
+
+            <div class="card">
+                <span class="tag">Syntax</span>
+                <h3>Indentation rules</h3>
+                <ul>
+                    <li>Python uses indentation (spaces/tabs) to define code blocks</li>
+                    <li>Standard is 4 spaces per level</li>
+                    <li>Mixing tabs and spaces causes <code>IndentationError</code></li>
+                    <li>All statements in same block must have same indentation</li>
+                </ul>
+                <div class="warn">Common MCQ trap: <code>IndentationError</code> is raised for incorrect indentation. Python does NOT use <code>{}</code> for blocks.</div>
+            </div>
+
+            <div class="card">
+                <span class="tag">Logic</span>
+                <h3>Control Flow</h3>
+                <pre># if-elif-else
+if age >= 18:
+    print("Vote")
+else:
+    print("Wait")
+
+# Ternary operator
+status = "Adult" if age >= 18 else "Minor"</pre>
+                <div class="tip">MCQ tip: Python has no <code>switch</code> statement in older versions. Python 3.10+ introduced <code>match-case</code>.</div>
+            </div>
+            
+            <div class="card">
+                <span class="tag">Iteration</span>
+                <h3>Loops</h3>
+                <pre>for i in range(5):       # 0,1,2,3,4 (5 is exclusive)
+    print(i)
+
+while condition:
+    pass # placeholder</pre>
+                <div class="hl">Important: The <code>else</code> block in a loop runs only if the loop finishes naturally (no <code>break</code>).</div>
+            </div>
+        </div>
+
+        <!-- DATA STRUCTURES -->
+        <div class="sec" id="ds">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-indigo-900">2. Data Structures</h2>
+                <p class="text-gray-500 text-sm">Lists · Tuples · Sets · Dictionaries</p>
+            </div>
+
+            <div class="card">
+                <span class="tag">List</span>
+                <h3>Lists <code>[]</code></h3>
+                <p>Ordered, mutable, allows duplicates.</p>
+                <pre>lst = [10, 20, 30]
+lst.append(40)      # Add to end
+lst.insert(1, 15)   # Add at index
+lst.pop()           # Remove last
+lst.remove(20)      # Remove by value</pre>
+                <div class="tip">MCQ tip: <code>append()</code> adds 1 item, <code>extend()</code> adds multiple items from an iterable.</div>
+            </div>
+
+            <div class="card">
+                <span class="tag">Tuple</span>
+                <h3>Tuples <code>()</code></h3>
+                <p>Ordered, <b>immutable</b> sequence.</p>
+                <pre>t = (1, 2, 3)
+# t[0] = 5  # Error! Immutable</pre>
+                <div class="warn">MCQ trap: A single element tuple requires a comma: <code>t = (5,)</code>. Without the comma, <code>(5)</code> is just an integer.</div>
+            </div>
+
+            <div class="card">
+                <span class="tag">Set</span>
+                <h3>Sets <code>{}</code></h3>
+                <p>Unordered, unique elements only.</p>
+                <pre>s = {1, 2, 2, 3} # Result: {1, 2, 3}
+s.add(4)
+# Access by index is NOT possible</pre>
+                <div class="warn">MCQ trap: <code>{}</code> creates an empty Dictionary. Use <code>set()</code> for an empty Set.</div>
+            </div>
+
+            <div class="card">
+                <span class="tag">Dictionary</span>
+                <h3>Dictionaries <code>{k:v}</code></h3>
+                <pre>d = {"name": "ECET", "year": 2025}
+val = d.get("name") # Safe access</pre>
+                <div class="tip">MCQ tip: Keys must be <b>immutable</b> (e.g., strings, numbers, tuples). Lists cannot be keys.</div>
+            </div>
+        </div>
+
+        <!-- OOP -->
+        <div class="sec" id="oop">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-indigo-900">3. Object Oriented Programming</h2>
+                <p class="text-gray-500 text-sm">Classes · Objects · Constructors · Inheritance</p>
+            </div>
+            <div class="card">
+                <h3>Classes and Methods</h3>
+                <pre>class Student:
+    def __init__(self, name): # Constructor
+        self.name = name
+    
+    def greet(self):
+        print(f"Hi {self.name}")</pre>
+                <div class="hl"><code>self</code> represents the instance of the class and is required as the first parameter in instance methods.</div>
+            </div>
+            <div class="card">
+                <h3>Inheritance</h3>
+                <ul>
+                    <li><b>Single:</b> Child inherits from one Parent.</li>
+                    <li><b>Multiple:</b> Child inherits from multiple Parents.</li>
+                    <li><b>Multilevel:</b> A chain of inheritance (A -> B -> C).</li>
+                </ul>
+                <div class="tip">MCQ tip: Use <code>super()</code> to call parent class methods. Python uses MRO (Method Resolution Order).</div>
+            </div>
+        </div>
+
+        <!-- MODULES -->
+        <div class="sec" id="modules">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-indigo-900">4. Modules and Packages</h2>
+                <p class="text-gray-500 text-sm">math · datetime · import system</p>
+            </div>
+            <div class="card">
+                <h3>The <code>math</code> Module</h3>
+                <table>
+                    <tr><th>Func</th><th>Result</th></tr>
+                    <tr><td><code>math.ceil(4.1)</code></td><td>5</td></tr>
+                    <tr><td><code>math.floor(4.9)</code></td><td>4</td></tr>
+                    <tr><td><code>math.sqrt(16)</code></td><td>4.0 (float)</td></tr>
+                </table>
+            </div>
+            <div class="card">
+                <h3>The <code>datetime</code> Module</h3>
+                <pre>import datetime
+now = datetime.datetime.now()
+print(now.strftime("%Y-%m-%d"))</pre>
+            </div>
+        </div>
+
+        <!-- EXCEPTIONS -->
+        <div class="sec" id="exceptions">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-indigo-900">5. Exception Handling</h2>
+                <p class="text-gray-500 text-sm">try · except · else · finally</p>
+            </div>
+            <div class="card">
+                <h3>Handling Errors</h3>
+                <pre>try:
+    res = 10 / 0
+except ZeroDivisionError:
+    print("Error!")
+finally:
+    print("Always runs")</pre>
+                <div class="tip">MCQ tip: <code>finally</code> block executes even if a <code>return</code> statement is encountered in try/except.</div>
+            </div>
+        </div>
+
+        <!-- THREADS -->
+        <div class="sec" id="threads">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-indigo-900">6. Multithreading</h2>
+                <p class="text-gray-500 text-sm">Threading module · Synchronization</p>
+            </div>
+            <div class="card">
+                <h3>Basic Threading</h3>
+                <pre>import threading
+t = threading.Thread(target=function_name)
+t.start()
+t.join() # Wait for thread to end</pre>
+                <div class="hl">Threads share the same memory space within a process.</div>
+            </div>
+        </div>
+
+        <!-- TKINTER -->
+        <div class="sec" id="tkinter">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-indigo-900">7. Tkinter GUI</h2>
+                <p class="text-gray-500 text-sm">Widgets · Geometry Managers</p>
+            </div>
+            <div class="card">
+                <h3>Geometry Managers</h3>
+                <ul>
+                    <li><code>pack()</code>: Stacked placement</li>
+                    <li><code>grid()</code>: Row/Column placement</li>
+                    <li><code>place()</code>: X/Y absolute placement</li>
+                </ul>
+                <div class="warn">Trap: Never mix <code>pack()</code> and <code>grid()</code> in the same container!</div>
+            </div>
+        </div>
+
+        <!-- REGEX -->
+        <div class="sec" id="regex">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-indigo-900">8. Regular Expressions</h2>
+                <p class="text-gray-500 text-sm">re module · Patterns</p>
+            </div>
+            <div class="card">
+                <h3>Common Patterns</h3>
+                <ul>
+                    <li><code>\d</code>: Digits</li>
+                    <li><code>\w</code>: Alphanumeric</li>
+                    <li><code>+</code>: 1 or more</li>
+                    <li><code>*</code>: 0 or more</li>
+                </ul>
+                <div class="tip"><code>re.match()</code> checks start of string; <code>re.search()</code> checks entire string.</div>
+            </div>
+        </div>
+
+        <!-- FILES -->
+        <div class="sec" id="files">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-indigo-900">9. File Operations</h2>
+                <p class="text-gray-500 text-sm">Read · Write · Append</p>
+            </div>
+            <div class="card">
+                <h3>File Modes</h3>
+                <table>
+                    <tr><th>Mode</th><th>Action</th></tr>
+                    <tr><td><code>'r'</code></td><td>Read (Default)</td></tr>
+                    <tr><td><code>'w'</code></td><td>Write (Overwrite)</td></tr>
+                    <tr><td><code>'a'</code></td><td>Append</td></tr>
+                </table>
+                <pre>with open("file.txt", "r") as f:
+    data = f.read()</pre>
+                <div class="hl">The <code>with</code> statement automatically closes the file.</div>
+            </div>
+            
+            <!-- Footer Practice buttons -->
+            <div class="mt-8 p-6 bg-indigo-50 rounded-2xl border border-indigo-100">
+                <p class="text-indigo-900 font-semibold mb-3">Dive deeper into any topic</p>
+                <div class="flex flex-wrap gap-3">
+                    <button class="bg-white border border-indigo-200 text-indigo-700 px-4 py-2 rounded-lg text-sm hover:bg-indigo-600 hover:text-white transition-colors">Practice MCQs on data structures ↗</button>
+                    <button class="bg-white border border-indigo-200 text-indigo-700 px-4 py-2 rounded-lg text-sm hover:bg-indigo-600 hover:text-white transition-colors">MCQs on OOP and exceptions ↗</button>
+                    <button class="bg-white border border-indigo-200 text-indigo-700 px-4 py-2 rounded-lg text-sm hover:bg-indigo-600 hover:text-white transition-colors">MCQs on Tkinter and regex ↗</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const totalTopics = 9;
+    let exploredTopics = new Set([0]);
+
+    function sw(id, index) {
+        // Update Sections
+        document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+        document.getElementById(id).classList.add('on');
+        
+        // Update Nav Buttons
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+        const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(b => b.innerText.toLowerCase().includes(id.substring(0,3)));
+        if(activeBtn) activeBtn.classList.add('on');
+        
+        // Scroll to top of content
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Update Progress
+        exploredTopics.add(index);
+        updateProgress();
+    }
+
+    function updateProgress() {
+        const count = exploredTopics.size;
+        const percent = Math.round((count / totalTopics) * 100);
+        
+        document.getElementById('progress-fill').style.width = percent + '%';
+        document.getElementById('progress-text').innerText = `${count} / ${totalTopics} topics explored`;
+        document.getElementById('progress-percent').innerText = `${percent}% progress`;
+    }
+
+    // Handle button state globally if event isn't passed (standard nav clicks)
+    document.getElementById('nav').addEventListener('click', (e) => {
+        if(e.target.tagName === 'BUTTON') {
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+            e.target.classList.add('on');
+        }
+    });
+</script>
+
+</body>
+</html>
