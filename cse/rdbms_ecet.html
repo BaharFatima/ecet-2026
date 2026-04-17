@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="RDBMS TS ECET study guide with complete syllabus notes, tables, SQL examples, and MCQ practice." />
+<title>RDBMS TS ECET Study Guide</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Arial,sans-serif;background:#e5e5e5;color:#1f2937;padding:24px}
+button{font:inherit}
+.app{max-width:980px;margin:0 auto}
+.header{background:linear-gradient(135deg,#5d73ea,#7b49b6);padding:42px 24px;border-radius:18px;box-shadow:0 12px 30px rgba(0,0,0,.12);text-align:center}
+.header h1{font-size:46px;font-weight:700;color:#fff;line-height:1.15}
+.header p{font-size:19px;color:#eef2ff;margin-top:10px}
+.progress-bar{background:rgba(255,255,255,.25);border-radius:999px;height:10px;margin:20px 0 10px;overflow:hidden}
+.progress-fill{height:100%;background:#fff;border-radius:999px;transition:width .4s ease}
+.progress-label{font-size:13px;color:#eef2ff;text-align:right}
+.toolbar{margin:20px 0 4px;border-bottom:1px solid #d1d5db;padding-bottom:18px}
+.toolbar-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.info-pill{padding:8px 12px;border-radius:999px;font-size:12px;font-weight:600;box-shadow:0 2px 6px rgba(15,23,42,.06)}
+.info-pill.score{background:rgba(255,255,255,.85);color:#6b7280}
+.info-pill.progress{background:#eef2ff;color:#4f46e5}
+.nav{display:flex;flex-wrap:wrap;gap:10px}
+.nav-btn{font-size:14px;padding:11px 16px;border-radius:12px;border:1px solid #d1d5db;cursor:pointer;background:#f9fafb;color:#111827;transition:.2s;font-weight:600}
+.nav-btn:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.08)}
+.nav-btn.active{background:#5b7cfa;color:#fff;border-color:#5b7cfa}
+.nav-btn.done{border-color:#5b7cfa;color:#5b7cfa;background:#fff}
+.content{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:28px;box-shadow:0 12px 28px rgba(0,0,0,.06)}
+.topic-title{font-size:32px;font-weight:700;color:#4f46e5;margin-bottom:6px;line-height:1.2}
+.topic-subtitle{font-size:15px;color:#6b7280;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #e5e7eb;font-style:italic}
+.section{margin-bottom:22px}
+.section:last-child{margin-bottom:0}
+.section-title{font-size:14px;font-weight:700;margin-bottom:10px;color:#111827}
+.badge{font-size:12px;padding:6px 10px;border-radius:999px;font-weight:700;display:inline-flex;align-items:center}
+.badge-blue{background:#dbeafe;color:#1d4ed8}
+.badge-green{background:#dcfce7;color:#166534}
+.badge-amber{background:#fef3c7;color:#92400e}
+.badge-red{background:#fee2e2;color:#991b1b}
+.concept,.mcq-box,.code-box,.key-table,.tip-box{margin-top:10px}
+.concept{background:#f3f4f6;border-left:4px solid #94a3b8;border-radius:12px;padding:14px;line-height:1.7;color:#1f2937}
+.concept strong{font-weight:700}
+.mcq-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;background:#fff}
+.mcq-q{font-weight:700;margin-bottom:10px;line-height:1.6;color:#111827}
+.mcq-opts{display:flex;flex-direction:column;gap:8px}
+.mcq-opt{padding:10px 12px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;text-align:left;color:#1f2937;transition:.18s}
+.mcq-opt:hover{border-color:#8ea2ff;background:#f5f7ff}
+.mcq-opt.correct{background:#dcfce7;border-color:#86efac;color:#166534}
+.mcq-opt.wrong{background:#fee2e2;border-color:#fca5a5;color:#991b1b}
+.mcq-opt:disabled{cursor:default}
+.explanation{font-size:13px;margin-top:10px;padding:10px;background:#f8fafc;border-radius:10px;line-height:1.6;color:#475569}
+.key-table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:14px}
+.key-table th,.key-table td{padding:10px 12px;border-bottom:1px solid #e5e7eb;text-align:left;vertical-align:top}
+.key-table th{background:#f8fafc;color:#111827}
+.key-table td{color:#334155;background:#fff}
+.key-table tr:nth-child(even) td{background:#fbfbfc}
+.code-box{background:#111827;color:#d1fae5;padding:14px;border-radius:12px;white-space:pre-wrap;overflow:auto;line-height:1.7;font-family:"SFMono-Regular",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:12px}
+.btn-row{display:flex;gap:10px;margin-top:18px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.btn{padding:12px 18px;border-radius:12px;border:1px solid #d1d5db;cursor:pointer;background:#f3f4f6;color:#111827;font-weight:600;transition:.2s}
+.btn:hover{background:#fff}
+.btn-primary{background:#5b7cfa;color:#fff;border-color:#5b7cfa}
+.btn-primary:hover{background:#4d6ef1}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.score-chip{font-size:14px;color:#6b7280}
+@media (max-width:768px){
+  body{padding:16px}
+  .header{padding:32px 18px}
+  .header h1{font-size:32px}
+  .header p{font-size:16px}
+  .content{padding:20px}
+  .topic-title{font-size:26px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <h1>RDBMS - TS ECET Exam Preparation</h1>
+    <p>Comprehensive guide with MCQ-focused explanations for all topics</p>
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+    <div class="progress-label" id="prog-label">0 / 13 topics completed</div>
+  </div>
+  <div class="toolbar">
+    <div class="toolbar-top">
+      <div class="info-pill score" id="scoreSummary">Score: 0 / 0</div>
+      <div class="info-pill progress" id="progressSummary">0% progress</div>
+    </div>
+    <div class="nav" id="nav"></div>
+  </div>
+  <div class="content" id="content"></div>
+  <div class="btn-row">
+    <button class="btn" id="prevBtn" onclick="navigate(-1)">← Previous</button>
+    <span class="score-chip" id="scoreChip">Practiced 0 MCQs</span>
+    <button class="btn btn-primary" id="nextBtn" onclick="navigate(1)">Next →</button>
+  </div>
+</div>
+<script>
+const topics = [
+{
+  title:"1. Database System Concepts & Data Abstraction",
+  sub:"Abstraction levels, data independence, database users",
+  sections:[
+    {type:"concepts",title:"Core Concepts",badge:"blue",items:[
+      "<strong>Database:</strong> Organized collection of related data. DBMS is software to manage it.",
+      "<strong>3 Levels of Abstraction:</strong> Physical (how data is stored) → Logical (what data is stored, relationships) → View (subset of data visible to user).",
+      "<strong>Physical Independence:</strong> Change storage without affecting logical schema.",
+      "<strong>Logical Independence:</strong> Change logical schema without affecting user views (harder to achieve).",
+      "<strong>Data Models:</strong> Hierarchical, Network, Relational (most common), Object-Oriented.",
+      "<strong>Schema vs Instance:</strong> Schema = structure (design). Instance = actual data at a point in time.",
+      "<strong>DDL</strong> defines schema. <strong>DML</strong> manipulates data. <strong>DCL</strong> controls access."
+    ]},
+    {type:"table",title:"Data Abstraction Levels",badge:"green",headers:["Level","Description","Example"],rows:[
+      ["Physical","How data is stored on disk","B-tree index, file blocks"],
+      ["Logical","Tables, columns, relationships","Employee(id, name, dept)"],
+      ["View","What user sees","Only name and salary visible"]
+    ]},
+    {type:"mcqs",title:"Practice MCQs",badge:"amber",mcqs:[
+      {q:"Which level of abstraction describes HOW data is physically stored?",opts:["View level","Logical level","Physical level","Conceptual level"],ans:2,exp:"Physical level deals with low-level storage structures like files, indexes, and block organization on disk."},
+      {q:"Modifying the physical storage without affecting the logical schema is called:",opts:["Logical independence","Physical independence","Data abstraction","Schema separation"],ans:1,exp:"Physical data independence means changes to physical storage don't impact the logical schema or application programs."},
+      {q:"The actual data stored in a database at a particular moment is called:",opts:["Schema","Meta-data","Instance","View"],ans:2,exp:"Instance (or database state) refers to the collection of information stored at a particular moment. Schema is the overall design."}
+    ]}
+  ]
+},
+{
+  title:"2. Entity-Relationship (ER) Model",
+  sub:"Entities, attributes, relationships, ER diagram components",
+  sections:[
+    {type:"concepts",title:"ER Model Basics",badge:"blue",items:[
+      "<strong>Entity:</strong> Real-world object (e.g., Student, Course). Represented as rectangle.",
+      "<strong>Attribute:</strong> Property of entity. Oval shape. Types: Simple, Composite, Multivalued (double oval), Derived (dashed oval).",
+      "<strong>Primary Key:</strong> Attribute(s) that uniquely identify an entity. Underlined in ER diagram.",
+      "<strong>Relationship:</strong> Association between entities. Diamond shape.",
+      "<strong>Weak Entity:</strong> Cannot be uniquely identified by own attributes alone. Uses double rectangle. Has partial key (dashed underline).",
+      "<strong>Cardinality:</strong> 1:1 (one-to-one), 1:N (one-to-many), M:N (many-to-many).",
+      "<strong>Participation:</strong> Total (double line — every entity must participate) vs Partial (single line)."
+    ]},
+    {type:"table",title:"ER Diagram Symbols",badge:"green",headers:["Symbol","Meaning"],rows:[
+      ["Rectangle","Entity set"],
+      ["Double Rectangle","Weak entity set"],
+      ["Ellipse/Oval","Attribute"],
+      ["Dashed Oval","Derived attribute"],
+      ["Double Oval","Multivalued attribute"],
+      ["Diamond","Relationship set"],
+      ["Double Diamond","Identifying relationship"],
+      ["Underline","Primary key attribute"],
+      ["Dashed Underline","Partial key (weak entity)"]
+    ]},
+    {type:"mcqs",title:"Practice MCQs",badge:"amber",mcqs:[
+      {q:"Which symbol represents a weak entity in an ER diagram?",opts:["Single rectangle","Double rectangle","Diamond","Double ellipse"],ans:1,exp:"A weak entity set is represented by a double rectangle. It depends on an identifying (strong) entity for its existence."},
+      {q:"A multivalued attribute in an ER diagram is shown as:",opts:["Single oval","Dashed oval","Double oval","Rectangle"],ans:2,exp:"Double oval represents multivalued attributes (e.g., Phone numbers — a person can have multiple phones)."},
+      {q:"In an ER diagram, total participation of an entity is shown by:",opts:["Single line","Double line","Dashed line","Arrow"],ans:1,exp:"Total participation (every entity must participate in the relationship) is shown by a double line between entity and relationship."},
+      {q:"A relationship between two entities of the SAME type is called:",opts:["Binary relationship","Unary/recursive relationship","Ternary relationship","Aggregation"],ans:1,exp:"A unary or recursive relationship involves a single entity type related to itself. Example: Employee manages Employee."}
+    ]}
+  ]
+},
+{
+  title:"3. Relational Database Structure & Keys",
+  sub:"Relational model, tuples, attributes, all types of keys",
+  sections:[
+    {type:"concepts",title:"Relational Model Terms",badge:"blue",items:[
+      "<strong>Relation:</strong> A table with rows and columns.",
+      "<strong>Tuple:</strong> A row in a table.",
+      "<strong>Attribute:</strong> A column in a table.",
+      "<strong>Degree:</strong> Number of attributes (columns) in a relation.",
+      "<strong>Cardinality:</strong> Number of tuples (rows) in a relation.",
+      "<strong>Domain:</strong> Set of allowed values for an attribute.",
+      "<strong>NULL:</strong> Represents unknown or missing value — not zero or empty string."
+    ]},
+    {type:"table",title:"Types of Keys",badge:"red",headers:["Key Type","Definition","Example"],rows:[
+      ["Super Key","Any set of attributes that uniquely identifies a tuple","{EmpID}, {EmpID, Name}"],
+      ["Candidate Key","Minimal super key — no subset can be a super key","{EmpID}, {Email}"],
+      ["Primary Key","Chosen candidate key; cannot be NULL","EmpID chosen as PK"],
+      ["Alternate Key","Candidate keys not chosen as PK","Email (not chosen)"],
+      ["Foreign Key","References PK of another table; ensures referential integrity","DeptID in Employee → Dept table"],
+      ["Composite Key","PK made of 2+ attributes","(StudentID + CourseID)"],
+      ["Surrogate Key","System-generated artificial key","Auto-increment ID"]
+    ]},
+    {type:"mcqs",title:"Practice MCQs",badge:"amber",mcqs:[
+      {q:"A table has columns: EmpID, Name, Email, Phone. If both EmpID and Email are unique, they are both:",opts:["Primary keys","Candidate keys","Foreign keys","Super keys only"],ans:1,exp:"Candidate keys are minimal super keys that can uniquely identify tuples. Both EmpID and Email qualify. Only one is chosen as the primary key."},
+      {q:"The number of rows in a relation is called:",opts:["Degree","Domain","Cardinality","Arity"],ans:2,exp:"Cardinality = number of tuples (rows). Degree = number of attributes (columns)."},
+      {q:"A foreign key value MUST:",opts:["Be unique in its own table","Match a primary key value in the referenced table or be NULL","Never be NULL","Always be an integer"],ans:1,exp:"A foreign key must either match an existing primary key value in the referenced table OR be NULL (if allowed). This is referential integrity."},
+      {q:"Which key can have NULL values?",opts:["Primary key","Candidate key","Foreign key","Super key"],ans:2,exp:"Foreign keys can be NULL (indicating no relationship). Primary keys and candidate keys cannot be NULL."}
+    ]}
+  ]
+},
+{
+  title:"4. Functional Dependencies & Normalization",
+  sub:"FD, closure, 1NF, 2NF, 3NF, BCNF — with MCQ patterns",
+  sections:[
+    {type:"concepts",title:"Functional Dependencies",badge:"blue",items:[
+      "<strong>FD (X → Y):</strong> For every tuple, if two tuples have same X value, they must have same Y value.",
+      "<strong>Trivial FD:</strong> Y ⊆ X (e.g., {A,B} → A). Always holds.",
+      "<strong>Armstrong's Axioms:</strong> Reflexivity, Augmentation, Transitivity.",
+      "<strong>Attribute Closure (X+):</strong> All attributes functionally determined by X.",
+      "<strong>Candidate Key Test:</strong> If X+ = all attributes, then X is a superkey."
+    ]},
+    {type:"table",title:"Normal Forms — Quick Reference",badge:"red",headers:["NF","Condition","Removes"],rows:[
+      ["1NF","All attributes atomic; no repeating groups","Multi-valued cells"],
+      ["2NF","1NF + no partial dependency (non-prime attr fully depends on PK)","Partial dependencies"],
+      ["3NF","2NF + no transitive dependency (non-prime → non-prime)","Transitive dependencies"],
+      ["BCNF","For every FD X→Y, X must be a superkey","Anomalies 3NF misses"]
+    ]},
+    {type:"concepts",title:"Normal Form Rules to Remember",badge:"blue",items:[
+      "<strong>Partial Dependency:</strong> Non-prime attribute depends on PART of composite primary key. Violates 2NF.",
+      "<strong>Transitive Dependency:</strong> A → B → C where A is PK, B and C are non-prime. Violates 3NF.",
+      "<strong>BCNF:</strong> Stricter than 3NF. In every FD X→Y, X must be superkey. BCNF always in 3NF, but 3NF not always in BCNF.",
+      "<strong>Lossless decomposition:</strong> Joining decomposed tables must recreate original. BCNF always lossless.",
+      "<strong>Dependency preservation:</strong> 3NF guarantees this; BCNF may not."
+    ]},
+    {type:"mcqs",title:"Practice MCQs",badge:"amber",mcqs:[
+      {q:"Table: (StudentID, CourseID, StudentName, CourseName, Grade). StudentName depends only on StudentID. This violates:",opts:["1NF","2NF","3NF","BCNF"],ans:1,exp:"StudentName depends only on StudentID (part of composite PK). This is a partial dependency — violates 2NF. The table is in 1NF but not 2NF."},
+      {q:"A relation R(A,B,C) with FDs: A→B, B→C. Here A is PK. The dependency A→C via B is:",opts:["Partial dependency","Transitive dependency","Trivial dependency","Full dependency"],ans:1,exp:"A→B→C where A is PK and B,C are non-prime attributes. B→C is a transitive dependency, violating 3NF."},
+      {q:"BCNF requires that for every non-trivial FD X→Y:",opts:["Y must be a prime attribute","X must be a superkey","X must be a candidate key only","Y must be a key"],ans:1,exp:"In BCNF, for every non-trivial FD X→Y, X must be a superkey. This is stricter than 3NF (which allows Y to be a prime attribute)."},
+      {q:"Which normal form eliminates partial dependencies?",opts:["1NF","2NF","3NF","BCNF"],ans:1,exp:"2NF eliminates partial dependencies. A relation is in 2NF if it is in 1NF and every non-prime attribute is fully functionally dependent on the entire primary key."}
+    ]}
+  ]
+},
+{
+  title:"5. Transactions & ACID Properties",
+  sub:"Transaction states, ACID, concurrency issues, schedules",
+  sections:[
+    {type:"concepts",title:"ACID Properties",badge:"blue",items:[
+      "<strong>Atomicity:</strong> Transaction is all-or-nothing. If any part fails, entire transaction is rolled back.",
+      "<strong>Consistency:</strong> Database moves from one valid state to another. Constraints are never violated.",
+      "<strong>Isolation:</strong> Concurrent transactions appear to execute serially. Intermediate states not visible to others.",
+      "<strong>Durability:</strong> Once committed, changes persist even after system failure (ensured by logs)."
+    ]},
+    {type:"table",title:"Transaction States",badge:"green",headers:["State","Description"],rows:[
+      ["Active","Transaction is executing"],
+      ["Partially Committed","Final statement executed, not yet committed"],
+      ["Committed","Successfully completed; changes written to DB"],
+      ["Failed","Normal execution cannot proceed"],
+      ["Aborted","Transaction rolled back; DB restored to state before transaction"]
+    ]},
+    {type:"concepts",title:"Concurrency Issues",badge:"red",items:[
+      "<strong>Dirty Read:</strong> T2 reads data written by uncommitted T1. If T1 aborts, T2 has wrong data.",
+      "<strong>Non-repeatable Read:</strong> T1 reads same data twice, gets different values (T2 modified it in between).",
+      "<strong>Phantom Read:</strong> T1 executes same query twice, gets different set of rows (T2 inserted/deleted rows).",
+      "<strong>Lost Update:</strong> T2 overwrites T1's update without reading T1's value first."
+    ]},
+    {type:"mcqs",title:"Practice MCQs",badge:"amber",mcqs:[
+      {q:"Which ACID property ensures that once a transaction is committed, it survives system failures?",opts:["Atomicity","Consistency","Isolation","Durability"],ans:3,exp:"Durability ensures committed transactions persist permanently, even after crashes. This is typically achieved through transaction logs and write-ahead logging (WAL)."},
+      {q:"A transaction reads a data item written by another uncommitted transaction. This is called:",opts:["Lost update","Phantom read","Dirty read","Non-repeatable read"],ans:2,exp:"Dirty read occurs when a transaction reads data written by another transaction that hasn't committed yet. If the writer aborts, the reader has invalid data."},
+      {q:"After a ROLLBACK, the transaction goes to which state?",opts:["Failed","Committed","Aborted","Partially committed"],ans:2,exp:"After rollback (undo all changes), the transaction enters the Aborted state. The database is restored to its state before the transaction began."},
+      {q:"Which ACID property is maintained by integrity constraints?",opts:["Atomicity","Consistency","Isolation","Durability"],ans:1,exp:"Consistency ensures the database remains in a valid state after the transaction. Integrity constraints (PK, FK, CHECK) enforce consistency."}
+    ]}
+  ]
+},
+{
+  title:"6. SQL — Data Types, Operators & Constraints",
+  sub:"All SQL data types, operators, and constraint types",
+  sections:[
+    {type:"table",title:"SQL Data Types",badge:"blue",headers:["Category","Data Type","Notes"],rows:[
+      ["Numeric","INT, SMALLINT, BIGINT","Whole numbers"],
+      ["Numeric","FLOAT, REAL, DOUBLE","Approximate decimals"],
+      ["Numeric","DECIMAL(p,s), NUMERIC","Exact decimals"],
+      ["String","CHAR(n)","Fixed-length string"],
+      ["String","VARCHAR(n)","Variable-length string"],
+      ["String","TEXT","Large text (no size limit)"],
+      ["Date/Time","DATE","YYYY-MM-DD"],
+      ["Date/Time","TIME","HH:MM:SS"],
+      ["Date/Time","TIMESTAMP/DATETIME","Date + Time combined"],
+      ["Boolean","BOOLEAN","TRUE/FALSE"]
+    ]},
+    {type:"table",title:"SQL Constraints",badge:"red",headers:["Constraint","Purpose"],rows:[
+      ["NOT NULL","Column cannot have NULL values"],
+      ["UNIQUE","All values in column must be distinct"],
+      ["PRIMARY KEY","NOT NULL + UNIQUE; uniquely identifies row"],
+      ["FOREIGN KEY","References PK of another table; referential integrity"],
+      ["CHECK","Ensures column values satisfy a condition"],
+      ["DEFAULT","Sets a default value if none provided"]
+    ]},
+    {type:"mcqs",title:"Practice MCQs",badge:"amber",mcqs:[
+      {q:"CHAR(10) vs VARCHAR(10) — which is correct?",opts:["Both store max 10 chars","CHAR always uses 10 bytes; VARCHAR uses actual length bytes","VARCHAR uses 10 bytes; CHAR uses actual length","Both use variable storage"],ans:1,exp:"CHAR(10) always allocates 10 bytes (pads with spaces if shorter). VARCHAR(10) allocates only what's needed + 1-2 length bytes. CHAR is faster for fixed-length data; VARCHAR saves space for variable data."},
+      {q:"Which constraint ensures a column value must match a value in another table?",opts:["UNIQUE","CHECK","FOREIGN KEY","NOT NULL"],ans:2,exp:"FOREIGN KEY constraint ensures referential integrity — the value must exist as a primary key in the referenced table (or be NULL if allowed)."},
+      {q:"PRIMARY KEY is equivalent to:",opts:["NOT NULL only","UNIQUE only","NOT NULL + UNIQUE","UNIQUE + CHECK"],ans:2,exp:"PRIMARY KEY = NOT NULL + UNIQUE. A primary key column cannot be null and must have unique values across all rows."}
+    ]}
+  ]
+},
+{
+  title:"7. DDL & DML Commands",
+  sub:"CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT",
+  sections:[
+    {type:"concepts",title:"DDL — Data Definition Language",badge:"blue",items:[
+      "<strong>CREATE TABLE:</strong> Creates a new table with column definitions and constraints.",
+      "<strong>ALTER TABLE:</strong> Adds/modifies/drops columns or constraints.",
+      "<strong>DROP TABLE:</strong> Permanently removes a table and all its data.",
+      "<strong>TRUNCATE:</strong> Removes all rows from table but keeps structure. Faster than DELETE (no logs per row).",
+      "<strong>RENAME:</strong> Renames a table or column."
+    ]},
+    {type:"code",title:"DDL Examples",badge:"blue",code:`CREATE TABLE Student (
+  sid   INT PRIMARY KEY,
+  name  VARCHAR(50) NOT NULL,
+  age   INT CHECK(age >= 18),
+  email VARCHAR(100) UNIQUE
+);
+ALTER TABLE Student ADD phone VARCHAR(15);
+ALTER TABLE Student DROP COLUMN phone;
+DROP TABLE Student;`},
+    {type:"concepts",title:"DML — Data Manipulation Language",badge:"green",items:[
+      "<strong>INSERT:</strong> Adds new rows to a table.",
+      "<strong>UPDATE:</strong> Modifies existing rows. Always use WHERE to avoid updating all rows!",
+      "<strong>DELETE:</strong> Removes rows. With WHERE = selective; without WHERE = all rows deleted.",
+      "<strong>SELECT:</strong> Retrieves data. Most complex and important DML command.",
+      "<strong>DDL vs DML:</strong> DDL changes structure. DML changes data."
+    ]},
+    {type:"code",title:"DML Examples",badge:"green",code:`INSERT INTO Student VALUES (1, 'Ravi', 20, 'ravi@mail.com');
+UPDATE Student SET age = 21 WHERE sid = 1;
+DELETE FROM Student WHERE sid = 1;
+SELECT name, age FROM Student WHERE age > 18 ORDER BY name;`},
+    {type:"table",title:"DELETE vs TRUNCATE vs DROP",badge:"red",headers:["Feature","DELETE","TRUNCATE","DROP"],rows:[
+      ["Removes","Specific rows","All rows","Entire table"],
+      ["WHERE clause","Yes","No","No"],
+      ["Rollback","Yes (DML)","No (DDL)","No (DDL)"],
+      ["Triggers","Fires","Doesn't fire","Doesn't fire"],
+      ["Space released","No","Yes","Yes"]
+    ]},
+    {type:"mcqs",title:"Practice MCQs",badge:"amber",mcqs:[
+      {q:"Which command removes all rows from a table but keeps the table structure, and CANNOT be rolled back?",opts:["DELETE","DROP","TRUNCATE","REMOVE"],ans:2,exp:"TRUNCATE removes all rows quickly (DDL operation) and cannot be rolled back. DROP removes the entire table. DELETE is DML and can be rolled back."},
+      {q:"To add a new column to an existing table, which command is used?",opts:["CREATE","INSERT","ALTER TABLE ... ADD","UPDATE"],ans:2,exp:"ALTER TABLE tablename ADD columnname datatype — this adds a new column to an existing table without affecting existing data."},
+      {q:"Which DML statement is used to modify existing data in a table?",opts:["INSERT","MODIFY","UPDATE","ALTER"],ans:2,exp:"UPDATE modifies existing rows. INSERT adds new rows. ALTER is DDL (modifies structure). MODIFY is not a standard SQL command."}
+    ]}
+  ]
+},
+{
+  title:"8. SQL Functions",
+  sub:"Numeric, aggregate, scalar, date, and string functions",
+  sections:[
+    {type:"table",title:"Aggregate Functions",badge:"red",headers:["Function","Purpose","Note"],rows:[
+      ["COUNT(*)","Count all rows","Includes NULLs"],
+      ["COUNT(col)","Count non-NULL values","Ignores NULLs"],
+      ["SUM(col)","Sum of values","Numeric only"],
+      ["AVG(col)","Average value","Ignores NULLs"],
+      ["MAX(col)","Maximum value","Works on strings too"],
+      ["MIN(col)","Minimum value","Works on strings too"]
+    ]},
+    {type:"table",title:"String Functions",badge:"blue",headers:["Function","Example","Result"],rows:[
+      ["UPPER(str)","UPPER('hello')","'HELLO'"],
+      ["LOWER(str)","LOWER('WORLD')","'world'"],
+      ["LENGTH(str)","LENGTH('abc')","3"],
+      ["SUBSTR(s,m,n)","SUBSTR('hello',2,3)","'ell'"],
+      ["CONCAT(s1,s2)","CONCAT('Hi',' ','You')","'Hi You'"],
+      ["TRIM(str)","TRIM('  hi  ')","'hi'"],
+      ["REPLACE(s,f,r)","REPLACE('abc','b','x')","'axc'"],
+      ["INSTR(s,sub)","INSTR('hello','ll')","3 (position)"]
+    ]},
+    {type:"table",title:"Numeric & Date Functions",badge:"green",headers:["Function","Purpose"],rows:[
+      ["ABS(n)","Absolute value"],
+      ["MOD(n,m)","Remainder of n/m"],
+      ["ROUND(n,d)","Round to d decimal places"],
+      ["CEIL/CEILING(n)","Smallest integer ≥ n"],
+      ["FLOOR(n)","Largest integer ≤ n"],
+      ["POWER(n,p)","n raised to power p"],
+      ["SYSDATE / NOW()","Current date and time"],
+      ["TO_DATE(str,fmt)","Convert string to date"],
+      ["MONTHS_BETWEEN(d1,d2)","Number of months between dates"],
+      ["ADD_MONTHS(d,n)","Add n months to date"]
+    ]},
+    {type:"mcqs",title:"Practice MCQs",badge:"amber",mcqs:[
+      {q:"SELECT COUNT(*) vs SELECT COUNT(salary) — difference when some salaries are NULL?",opts:["Both give same result","COUNT(*) includes NULLs; COUNT(salary) doesn't","COUNT(salary) includes NULLs; COUNT(*) doesn't","Both exclude NULLs"],ans:1,exp:"COUNT(*) counts all rows including those with NULL values. COUNT(column) counts only non-NULL values in that column. This is a very common MCQ trap!"},
+      {q:"Which function returns the position of a substring within a string?",opts:["SUBSTR","INSTR","POSITION_OF","LOCATE"],ans:1,exp:"INSTR(string, substring) returns the position (1-based) of the first occurrence of substring within string. SUBSTR extracts a substring, it doesn't find position."},
+      {q:"ROUND(45.678, 1) returns:",opts:["45","45.6","45.7","46"],ans:2,exp:"ROUND(45.678, 1) rounds to 1 decimal place. Since the second decimal (7) ≥ 5, it rounds up: 45.7."},
+      {q:"Which aggregate function ignores NULL values when computing its result?",opts:["COUNT(*) only","All aggregate functions except COUNT(*)","No aggregate function ignores NULL","COUNT(*) and SUM only"],ans:1,exp:"All aggregate functions (SUM, AVG, MAX, MIN, COUNT(col)) ignore NULL values. Only COUNT(*) includes NULLs since it counts rows, not column values."}
+    ]}
+  ]
+},
+{
+  title:"9. JOIN Statements",
+  sub:"INNER, LEFT, RIGHT, FULL, CROSS, SELF joins with examples",
+  sections:[
+    {type:"table",title:"Types of JOINs",badge:"blue",headers:["JOIN Type","Returns","Keyword"],rows:[
+      ["INNER JOIN","Rows matching in BOTH tables","JOIN or INNER JOIN"],
+      ["LEFT JOIN","All rows from left + matched from right (NULL if no match)","LEFT JOIN / LEFT OUTER JOIN"],
+      ["RIGHT JOIN","All rows from right + matched from left (NULL if no match)","RIGHT JOIN / RIGHT OUTER JOIN"],
+      ["FULL OUTER JOIN","All rows from both tables; NULL where no match","FULL OUTER JOIN"],
+      ["CROSS JOIN","Cartesian product (all combinations)","CROSS JOIN"],
+      ["SELF JOIN","Table joined with itself","JOIN with alias"]
+    ]},
+    {type:"code",title:"JOIN Examples",badge:"green",code:`-- INNER JOIN (only matching rows)
+SELECT e.name, d.dname
+FROM Employee e INNER JOIN Department d
+ON e.dept_id = d.dept_id;
+-- LEFT JOIN (all employees, even without dept)
+SELECT e.name, d.dname
+FROM Employee e LEFT JOIN Department d
+ON e.dept_id = d.dept_id;
+-- SELF JOIN (manager relationship)
+SELECT e.name, m.name AS manager
+FROM Employee e JOIN Employee m
+ON e.mgr_id = m.emp_id;`},
+    {type:"mcqs",title:"Practice MCQs",badge:"amber",mcqs:[
+      {q:"Employee table has 5 rows, Department has 3 rows. CROSS JOIN will produce:",opts:["5 rows","3 rows","8 rows","15 rows"],ans:3,exp:"CROSS JOIN produces the Cartesian product = 5 × 3 = 15 rows. Every row from Employee is combined with every row from Department."},
+      {q:"Which JOIN returns all rows from the LEFT table and NULL for non-matching right rows?",opts:["INNER JOIN","RIGHT OUTER JOIN","LEFT OUTER JOIN","FULL OUTER JOIN"],ans:2,exp:"LEFT OUTER JOIN returns all rows from the left table. For rows with no match in the right table, NULL is returned for right table columns."},
+      {q:"A manager is also an employee. To get employee name and their manager's name from one Employee table, use:",opts:["INNER JOIN with Department","SELF JOIN","CROSS JOIN","FULL OUTER JOIN"],ans:1,exp:"SELF JOIN joins the Employee table with itself. Use two aliases: e (employee) and m (manager), join on e.mgr_id = m.emp_id."},
+      {q:"INNER JOIN between tables A(4 rows) and B(5 rows) where only 2 rows match returns:",opts:["4 rows","5 rows","2 rows","9 rows"],ans:2,exp:"INNER JOIN returns only the matching rows — 2 in this case. It excludes non-matching rows from both tables."}
+    ]}
+  ]
+},
+{
+  title:"10. Views, Sequences, Synonyms & Indexes",
+  sub:"Creating and using views, sequences, synonyms, index types",
+  sections:[
+    {type:"concepts",title:"Views",badge:"blue",items:[
+      "<strong>View:</strong> A virtual table based on a SELECT query. Doesn't store data physically.",
+      "<strong>Uses:</strong> Security (hide sensitive columns), simplify complex queries, logical data independence.",
+      "<strong>Updatable View:</strong> Views without GROUP BY, DISTINCT, aggregate functions, ROWNUM can be updated.",
+      "<strong>WITH CHECK OPTION:</strong> Prevents rows that don't satisfy view's WHERE condition from being inserted/updated through the view.",
+      "<strong>Materialized View:</strong> Actually stores query results physically. Must be refreshed. Faster reads."
+    ]},
+    {type:"code",title:"DDL for Views, Sequences, Synonyms, Indexes",badge:"green",code:`-- View
+CREATE VIEW high_salary AS
+  SELECT name, salary FROM Employee WHERE salary > 50000;
+-- Sequence (Oracle)
+CREATE SEQUENCE emp_seq START WITH 1 INCREMENT BY 1;
+SELECT emp_seq.NEXTVAL FROM dual;  -- get next value
+SELECT emp_seq.CURRVAL FROM dual;  -- get current value
+-- Synonym
+CREATE SYNONYM emp FOR HR.Employee;
+-- Index (speeds up SELECT, slows down INSERT/UPDATE)
+CREATE INDEX idx_name ON Employee(name);
+CREATE UNIQUE INDEX idx_email ON Employee(email);`},
+    {type:"table",title:"Index Types",badge:"red",headers:["Index Type","Description"],rows:[
+      ["Unique Index","No duplicate values; auto-created for PK"],
+      ["Composite Index","Index on multiple columns"],
+      ["Clustered Index","Data rows physically sorted by index key (1 per table)"],
+      ["Non-Clustered Index","Separate structure; pointer to actual data (many per table)"],
+      ["Bitmap Index","For low-cardinality columns (few distinct values); used in DW"]
+    ]},
+    {type:"mcqs",title:"Practice MCQs",badge:"amber",mcqs:[
+      {q:"A view in SQL is:",opts:["A physical table with stored data","A virtual table based on a query","A type of index","A stored procedure"],ans:1,exp:"A view is a virtual table — it's a stored SELECT query. It doesn't store data itself. When queried, it executes the underlying SELECT dynamically."},
+      {q:"NEXTVAL and CURRVAL are properties of which Oracle object?",opts:["View","Synonym","Sequence","Index"],ans:2,exp:"Sequences in Oracle generate unique numbers. NEXTVAL returns the next value (and advances the sequence); CURRVAL returns the current value of the sequence."},
+      {q:"Which index type is automatically created when you define a PRIMARY KEY?",opts:["Bitmap index","Non-clustered index","Unique index","Composite index"],ans:2,exp:"A UNIQUE index is automatically created when you define a PRIMARY KEY constraint. This enforces uniqueness and enables fast lookups by primary key."},
+      {q:"What is the purpose of CREATE SYNONYM emp FOR HR.Employee?",opts:["Creates a copy of HR.Employee","Creates an alias 'emp' for HR.Employee","Creates an index on HR.Employee","Creates a view of HR.Employee"],ans:1,exp:"A synonym creates an alternative name (alias) for a database object. 'emp' becomes a shorthand for 'HR.Employee', useful for cross-schema access or simplifying long names."}
+    ]}
+  ]
+},
+{
+  title:"11. PL/SQL Basics — Data Types & Control Statements",
+  sub:"PL/SQL block structure, data types, IF, LOOP, CASE",
+  sections:[
+    {type:"concepts",title:"PL/SQL Block Structure",badge:"blue",items:[
+      "<strong>DECLARE:</strong> (Optional) Variable and constant declarations.",
+      "<strong>BEGIN:</strong> Executable statements — the main logic.",
+      "<strong>EXCEPTION:</strong> (Optional) Error handling.",
+      "<strong>END;</strong> Ends the block.",
+      "<strong>Anonymous Block:</strong> Not stored in DB; runs once. Named blocks (procedures/functions) are stored."
+    ]},
+    {type:"code",title:"PL/SQL Control Structures",badge:"green",code:`-- IF-ELSIF-ELSE
+IF salary > 50000 THEN
+  DBMS_OUTPUT.PUT_LINE('High');
+ELSIF salary > 30000 THEN
+  DBMS_OUTPUT.PUT_LINE('Medium');
+ELSE
+  DBMS_OUTPUT.PUT_LINE('Low');
+END IF;
+-- LOOP types
+FOR i IN 1..5 LOOP          -- FOR loop
+  DBMS_OUTPUT.PUT_LINE(i);
+END LOOP;
+WHILE x < 10 LOOP           -- WHILE loop
+  x := x + 1;
+END LOOP;
+LOOP                         -- Simple loop with EXIT
+  EXIT WHEN counter > 5;
+  counter := counter + 1;
+END LOOP;`},
+    {type:"table",title:"PL/SQL Data Types",badge:"blue",headers:["Type","Description"],rows:[
+      ["VARCHAR2(n)","Variable-length string (most common)"],
+      ["NUMBER(p,s)","Numeric with precision and scale"],
+      ["DATE","Date and time value"],
+      ["BOOLEAN","TRUE, FALSE, or NULL"],
+      ["%TYPE","Copies datatype of a column: emp.salary%TYPE"],
+      ["%ROWTYPE","Copies structure of entire row: emp%ROWTYPE"],
+      ["CONSTANT","Declares unchangeable value: PI CONSTANT NUMBER := 3.14"]
+    ]},
+    {type:"mcqs",title:"Practice MCQs",badge:"amber",mcqs:[
+      {q:"In PL/SQL, v_sal Employee.salary%TYPE means:",opts:["v_sal is of type NUMBER","v_sal has same datatype as salary column in Employee","v_sal copies the value of salary","v_sal is a reference to salary"],ans:1,exp:"%TYPE anchors the variable's datatype to a table column's datatype. If Employee.salary is NUMBER(10,2), then v_sal becomes NUMBER(10,2) automatically. This ensures type compatibility."},
+      {q:"Which section of a PL/SQL block is MANDATORY?",opts:["DECLARE","BEGIN","EXCEPTION","All three"],ans:1,exp:"Only the BEGIN...END section is mandatory. DECLARE (for variables) and EXCEPTION (for error handling) are optional. But you need at least BEGIN END; with at least one statement."},
+      {q:"In PL/SQL, what does EXIT WHEN condition do inside a LOOP?",opts:["Exits the program","Exits the loop when condition is TRUE","Skips current iteration","Raises an exception"],ans:1,exp:"EXIT WHEN condition exits the loop immediately when the condition evaluates to TRUE. It's the standard way to terminate a simple LOOP."}
+    ]}
+  ]
+},
+{
+  title:"12. PL/SQL — Procedures, Functions & Recursion",
+  sub:"Stored procedures, functions, parameters, recursion",
+  sections:[
+    {type:"table",title:"Procedure vs Function",badge:"blue",headers:["Feature","Procedure","Function"],rows:[
+      ["Returns value","No (uses OUT params)","Yes (RETURN clause)"],
+      ["Called with","EXECUTE or in PL/SQL","In SQL query or PL/SQL"],
+      ["Use in SQL","Cannot be used directly","Can be used in SELECT"],
+      ["Parameters","IN, OUT, IN OUT","IN only (typically)"],
+      ["Purpose","Perform actions","Compute and return value"]
+    ]},
+    {type:"code",title:"Procedure and Function Examples",badge:"green",code:`-- Stored Procedure with IN and OUT params
+CREATE OR REPLACE PROCEDURE get_salary(
+  p_id   IN  Employee.emp_id%TYPE,
+  p_sal  OUT Employee.salary%TYPE
+) AS
+BEGIN
+  SELECT salary INTO p_sal FROM Employee WHERE emp_id = p_id;
+END;
+-- Function
+CREATE OR REPLACE FUNCTION calc_bonus(p_sal NUMBER)
+RETURN NUMBER AS
+BEGIN
+  RETURN p_sal * 0.10;
+END;
+-- Recursion: Factorial
+CREATE OR REPLACE FUNCTION factorial(n NUMBER)
+RETURN NUMBER AS
+BEGIN
+  IF n <= 1 THEN RETURN 1;
+  ELSE RETURN n * factorial(n-1);
+  END IF;
+END;`},
+    {type:"mcqs",title:"Practice MCQs",badge:"amber",mcqs:[
+      {q:"Which parameter mode allows a PL/SQL procedure to both receive and return a value?",opts:["IN","OUT","IN OUT","RETURN"],ans:2,exp:"IN OUT parameter passes a value to the subprogram AND can receive a modified value back. IN = read only inside. OUT = write only (returns value). IN OUT = read and write."},
+      {q:"A PL/SQL function MUST have:",opts:["At least one IN parameter","A RETURN statement","An EXCEPTION block","An OUT parameter"],ans:1,exp:"A function must have at least one RETURN statement that returns a value of the declared return type. Without RETURN, it's a procedure. Parameters are optional."},
+      {q:"CREATE OR REPLACE PROCEDURE means:",opts:["Creates only if not existing","Replaces existing; creates if not existing","Always drops and recreates","Creates a temporary procedure"],ans:1,exp:"OR REPLACE compiles and replaces the procedure if it already exists (without dropping it explicitly). If it doesn't exist, it creates it. This preserves privileges granted on the procedure."}
+    ]}
+  ]
+},
+{
+  title:"13. PL/SQL — Cursors, Exceptions & Triggers",
+  sub:"Implicit/explicit cursors, exception types, trigger syntax",
+  sections:[
+    {type:"table",title:"Cursors",badge:"blue",headers:["Type","Description"],rows:[
+      ["Implicit Cursor","Auto-created by Oracle for DML & single-row SELECT. Attributes: %FOUND, %NOTFOUND, %ROWCOUNT, %ISOPEN"],
+      ["Explicit Cursor","Manually declared for multi-row queries. Steps: DECLARE → OPEN → FETCH → CLOSE"],
+      ["Cursor FOR Loop","Simplest — auto opens, fetches, and closes. Recommended."],
+      ["REF Cursor","Pointer to a cursor; can be passed between programs (dynamic)"]
+    ]},
+    {type:"code",title:"Cursor and Exception Examples",badge:"green",code:`-- Explicit Cursor
+DECLARE
+  CURSOR c_emp IS SELECT name, salary FROM Employee;
+  v_rec c_emp%ROWTYPE;
+BEGIN
+  OPEN c_emp;
+  LOOP
+    FETCH c_emp INTO v_rec;
+    EXIT WHEN c_emp%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE(v_rec.name);
+  END LOOP;
+  CLOSE c_emp;
+END;
+-- Exception Handling
+BEGIN
+  SELECT salary INTO v_sal FROM Employee WHERE emp_id = 99;
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('Employee not found');
+  WHEN TOO_MANY_ROWS THEN
+    DBMS_OUTPUT.PUT_LINE('Multiple rows returned');
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+END;`},
+    {type:"table",title:"Triggers",badge:"red",headers:["Concept","Details"],rows:[
+      ["BEFORE Trigger","Fires before the DML operation (can modify :NEW values)"],
+      ["AFTER Trigger","Fires after the DML operation"],
+      ["ROW-LEVEL Trigger","Fires once per row affected (FOR EACH ROW)"],
+      ["STATEMENT-LEVEL","Fires once per DML statement (default)"],
+      [":NEW","New row values (INSERT, UPDATE)"],
+      [":OLD","Old row values (DELETE, UPDATE)"],
+      ["INSTEAD OF","Used on views; fires instead of the DML operation"]
+    ]},
+    {type:"code",title:"Trigger Example",badge:"green",code:`CREATE OR REPLACE TRIGGER trg_audit
+BEFORE UPDATE ON Employee
+FOR EACH ROW
+BEGIN
+  INSERT INTO Audit_Log(emp_id, old_sal, new_sal, chg_date)
+  VALUES(:OLD.emp_id, :OLD.salary, :NEW.salary, SYSDATE);
+END;`},
+    {type:"mcqs",title:"Practice MCQs",badge:"amber",mcqs:[
+      {q:"Which cursor attribute returns TRUE if the last FETCH returned no row?",opts:["%FOUND","%NOTFOUND","%ROWCOUNT","%ISOPEN"],ans:1,exp:"%NOTFOUND is TRUE when the last FETCH found no row (end of cursor). %FOUND is TRUE when FETCH returned a row. Use EXIT WHEN cursor_name%NOTFOUND to stop the loop."},
+      {q:"Which built-in exception is raised when a SELECT INTO returns no rows?",opts:["ZERO_DIVIDE","NO_DATA_FOUND","TOO_MANY_ROWS","VALUE_ERROR"],ans:1,exp:"NO_DATA_FOUND is raised when a SELECT INTO finds no matching rows. TOO_MANY_ROWS is raised when SELECT INTO returns more than one row."},
+      {q:"A BEFORE ROW trigger fires:",opts:["Once per DML statement","Once for each row affected, before the change","Once for each row, after the change","Only on SELECT statements"],ans:1,exp:"BEFORE + FOR EACH ROW trigger fires once for each row being modified, BEFORE the actual change is made to the database. This allows you to modify :NEW values before they're written."},
+      {q:"In a trigger, :OLD.salary refers to:",opts:["The new salary after update","The salary before the change","The default salary value","A cursor variable"],ans:1,exp:":OLD contains the row's values BEFORE the DML operation. :NEW contains values AFTER (or the values being inserted/updated). :OLD is not available for INSERT; :NEW is not available for DELETE."}
+    ]}
+  ]
+}
+];
+let current = 0;
+let completed = new Set();
+let totalScore = 0;
+let totalAttempted = 0;
+let answered = {};
+const totalQuestions = topics.reduce((sum, topic) => {
+  return sum + topic.sections.reduce((sectionSum, section) => {
+    return sectionSum + (section.type === 'mcqs' ? section.mcqs.length : 0);
+  }, 0);
+}, 0);
+function renderNav(){
+  const nav = document.getElementById('nav');
+  nav.innerHTML = topics.map((t,i)=>`<button class="nav-btn ${i===current?'active':''} ${completed.has(i)?'done':''}" onclick="goTo(${i})" title="${t.title.replace(/"/g,'&quot;')}">${i+1}</button>`).join('');
+}
+function renderContent(){
+  const t = topics[current];
+  let html = `<div class="topic-title">${t.title}</div><div class="topic-subtitle">${t.sub}</div>`;
+  t.sections.forEach((sec,si)=>{
+    html += `<div class="section">`;
+    const bClass = `badge-${sec.badge||'blue'}`;
+    html += `<div class="section-title"><span class="badge ${bClass}">${sec.title}</span></div>`;
+    if(sec.type==='concepts'){
+      sec.items.forEach(item=>{ html += `<div class="concept">${item}</div>`; });
+    }
+    if(sec.type==='table'){
+      html += `<table class="key-table"><thead><tr>${sec.headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>`;
+      sec.rows.forEach(row=>{ html += `<tr>${row.map(cell=>`<td>${cell}</td>`).join('')}</tr>`; });
+      html += `</tbody></table>`;
+    }
+    if(sec.type==='code'){
+      html += `<div class="code-box">${sec.code.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
+    }
+    if(sec.type==='mcqs'){
+      sec.mcqs.forEach((mcq,mi)=>{
+        const key = `${current}-${si}-${mi}`;
+        const state = answered[key];
+        html += `<div class="mcq-box"><div class="mcq-q">Q${mi+1}: ${mcq.q}</div><div class="mcq-opts">`;
+        mcq.opts.forEach((opt,oi)=>{
+          let cls = '';
+          if(state !== undefined){
+            if(oi === mcq.ans) cls = 'correct';
+            else if(oi === state) cls = 'wrong';
+          }
+          html += `<button class="mcq-opt ${cls}" ${state!==undefined?'disabled':''} onclick="checkAnswer(${current},${si},${mi},${oi})">${String.fromCharCode(65+oi)}. ${opt}</button>`;
+        });
+        html += `</div>`;
+        if(state !== undefined){
+          html += `<div class="explanation">${state===mcq.ans?'✓ Correct! ':'✗ Wrong. '}${mcq.exp}</div>`;
+        }
+        html += `</div>`;
+      });
+    }
+    html += `</div>`;
+  });
+  document.getElementById('content').innerHTML = html;
+  updateProgress();
+  updateFooterButtons();
+}
+function updateProgress(){
+  const done = completed.size;
+  const pct = Math.round(done / topics.length * 100);
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = `${done} / ${topics.length} topics completed`;
+  document.getElementById('progressSummary').textContent = `${pct}% progress`;
+  document.getElementById('scoreSummary').textContent = `Score: ${totalScore} / ${totalAttempted}`;
+  document.getElementById('scoreChip').textContent = `Practiced ${totalAttempted} of ${totalQuestions} MCQs`;
+}
+function updateFooterButtons(){
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === topics.length - 1;
+}
+function checkAnswer(ti,si,mi,oi){
+  const key = `${ti}-${si}-${mi}`;
+  if(answered[key] !== undefined) return;
+  const mcq = topics[ti].sections[si].mcqs[mi];
+  answered[key] = oi;
+  totalAttempted++;
+  if(oi === mcq.ans) totalScore++;
+  renderContent();
+}
+function goTo(i){
+  if(i === current || i < 0 || i >= topics.length) return;
+  completed.add(current);
+  current = i;
+  renderNav();
+  renderContent();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function navigate(dir){
+  const next = current + dir;
+  if(next < 0 || next >= topics.length) return;
+  completed.add(current);
+  current = next;
+  renderNav();
+  renderContent();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+renderNav();
+renderContent();
+</script>
+</body>
+</html>
