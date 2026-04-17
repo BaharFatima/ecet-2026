@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Technologies - TS ECET Exam Prep</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f3f4f6;
+    color: #1f2937;
+    line-height: 1.6;
+    padding: 30px 20px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.hero {
+    background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+    border-radius: 20px;
+    padding: 40px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.hero p {
+    font-size: 1rem;
+    opacity: 0.95;
+    margin-bottom: 25px;
+}
+
+.progress-bar {
+    background: rgba(255,255,255,0.25);
+    height: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.progress-fill {
+    background: white;
+    height: 100%;
+    width: 11%;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.tab {
+    background: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    color: #374151;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.tab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.tab.active {
+    background: #7c3aed;
+    color: white;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-title {
+    color: #1e3a8a;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.section-subtitle {
+    color: #6b7280;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.badge {
+    display: inline-block;
+    background: #ede9fe;
+    color: #7c3aed;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    color: #4f46e5;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.card h4 {
+    color: #1e3a8a;
+    margin: 20px 0 10px;
+    font-size: 1.1rem;
+}
+
+.card ul {
+    padding-left: 22px;
+    margin: 10px 0;
+}
+
+.card li {
+    margin-bottom: 10px;
+    color: #374151;
+}
+
+.card p {
+    margin-bottom: 12px;
+    color: #374151;
+}
+
+code {
+    background: #f3f4f6;
+    color: #be185d;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+pre {
+    background: #1f2937;
+    color: #e5e7eb;
+    padding: 18px;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 15px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+pre code {
+    background: transparent;
+    color: #e5e7eb;
+    padding: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+th {
+    background: #7c3aed;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #fafafa;
+}
+
+tr:last-child td { border-bottom: none; }
+
+.alert {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.alert.danger {
+    background: #fee2e2;
+    border-left-color: #ef4444;
+}
+
+.alert.success {
+    background: #d1fae5;
+    border-left-color: #10b981;
+}
+
+.quiz-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.quiz-question {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e3a8a;
+    margin-bottom: 15px;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quiz-option {
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    padding: 12px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    font-size: 0.95rem;
+    color: #374151;
+    font-family: inherit;
+}
+
+.quiz-option:hover {
+    border-color: #7c3aed;
+    background: #f5f3ff;
+}
+
+.quiz-option.correct {
+    background: #d1fae5;
+    border-color: #10b981;
+    color: #065f46;
+}
+
+.quiz-option.wrong {
+    background: #fee2e2;
+    border-color: #ef4444;
+    color: #991b1b;
+}
+
+.quiz-option:disabled { cursor: not-allowed; }
+
+.quiz-feedback {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    display: none;
+}
+
+.quiz-feedback.show { display: block; }
+
+.quiz-stats {
+    background: linear-gradient(135deg, #7c3aed, #6366f1);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.quiz-stats h3 { color: white; margin-bottom: 5px; }
+
+@media (max-width: 600px) {
+    .hero h1 { font-size: 1.5rem; }
+    .card { padding: 20px; }
+    .tab { padding: 10px 16px; font-size: 0.85rem; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>Web Technologies - TS ECET Exam Prep</h1>
+        <p>Comprehensive guide with MCQ-focused explanations for all syllabus topics</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-info">
+            <span id="topicsCount">1 / 9 topics explored</span>
+            <span id="progressPercent">11% progress</span>
+        </div>
+    </div>
+
+    <div class="tabs" id="tabs">
+        <button class="tab active" data-tab="internet">Internet</button>
+        <button class="tab" data-tab="html">HTML</button>
+        <button class="tab" data-tab="css">CSS</button>
+        <button class="tab" data-tab="xml">XML</button>
+        <button class="tab" data-tab="js">JavaScript</button>
+        <button class="tab" data-tab="php">PHP</button>
+        <button class="tab" data-tab="db">Database</button>
+        <button class="tab" data-tab="sessions">Sessions</button>
+        <button class="tab" data-tab="quiz">Quiz</button>
+    </div>
+
+    <!-- Internet Section -->
+    <div class="section active" id="internet">
+        <h2 class="section-title">1. Internet Fundamentals</h2>
+        <p class="section-subtitle">HTTP · DNS · Client-Server · Common Ports</p>
+        <div class="card">
+            <span class="badge">OVERVIEW</span>
+            <h3>Key Concepts</h3>
+            <ul>
+                <li><strong>HTTP Protocol:</strong> Stateless protocol on port 80</li>
+                <li><strong>HTTPS:</strong> Secure HTTP on port 443</li>
+                <li><strong>DNS:</strong> Converts domain names to IP addresses</li>
+                <li><strong>Client-Server Model:</strong> Browser requests, server responds</li>
+            </ul>
+            <h4>Common Ports</h4>
+            <table>
+                <tr><th>Protocol</th><th>Port</th></tr>
+                <tr><td>HTTP</td><td>80</td></tr>
+                <tr><td>HTTPS</td><td>443</td></tr>
+                <tr><td>FTP</td><td>21</td></tr>
+                <tr><td>SMTP</td><td>25</td></tr>
+                <tr><td>POP3</td><td>110</td></tr>
+                <tr><td>MySQL</td><td>3306</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- HTML Section -->
+    <div class="section" id="html">
+        <h2 class="section-title">2. HTML Tags with Attributes</h2>
+        <p class="section-subtitle">Headings · Semantic tags · Forms · Tables</p>
+        <div class="card">
+            <span class="badge">TAG REFERENCE</span>
+            <h3>Important HTML Tags</h3>
+            <ul>
+                <li><strong>Heading Tags:</strong> &lt;h1&gt; to &lt;h6&gt; - h1 largest, h6 smallest</li>
+                <li><strong>&lt;q&gt;:</strong> Short quotation - browsers auto-add quotes</li>
+                <li><strong>&lt;strong&gt;:</strong> Bold with semantic meaning (use over &lt;b&gt;)</li>
+                <li><strong>&lt;small&gt;:</strong> Smaller text for footnotes, disclaimers</li>
+                <li><strong>&lt;ins&gt;:</strong> Inserted text - shows underline</li>
+                <li><strong>&lt;del&gt;:</strong> Deleted text - shows strikethrough</li>
+                <li><strong>&lt;sub&gt;:</strong> Subscript (H₂O)</li>
+                <li><strong>&lt;sup&gt;:</strong> Superscript (E=mc²)</li>
+            </ul>
+            <div class="alert danger">
+                <strong>⚠️ Deprecated (Don't Use):</strong> &lt;font&gt;, &lt;marquee&gt;, &lt;frame&gt;, &lt;big&gt;
+            </div>
+            <h4>Categories</h4>
+            <ul>
+                <li><strong>Formatting:</strong> &lt;b&gt;, &lt;i&gt;, &lt;u&gt;, &lt;strike&gt;</li>
+                <li><strong>Semantic:</strong> &lt;strong&gt;, &lt;em&gt;, &lt;q&gt;, &lt;small&gt;</li>
+                <li><strong>Special:</strong> &lt;sub&gt;, &lt;sup&gt;, &lt;ins&gt;, &lt;del&gt;</li>
+            </ul>
+        </div>
+        <div class="card">
+            <span class="badge">FORMS & TABLES</span>
+            <h3>Forms and Tables</h3>
+            <ul>
+                <li><strong>Form Method:</strong> GET (URL, ~2KB) vs POST (body, larger, secure)</li>
+                <li><strong>File Uploads:</strong> <code>enctype="multipart/form-data"</code></li>
+                <li><strong>Input Types:</strong> text, password, email, number, date, checkbox, radio, file, submit, reset</li>
+                <li><strong>Table Elements:</strong> &lt;table&gt;, &lt;tr&gt;, &lt;th&gt;, &lt;td&gt;, &lt;thead&gt;, &lt;tbody&gt;, &lt;tfoot&gt;</li>
+                <li><strong>Merging Cells:</strong> colspan (columns), rowspan (rows)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- CSS Section -->
+    <div class="section" id="css">
+        <h2 class="section-title">3. Cascading Style Sheets (CSS)</h2>
+        <p class="section-subtitle">Selectors · Specificity · Box Model · Pseudo-classes</p>
+        <div class="card">
+            <span class="badge">METHODS</span>
+            <h3>Three Ways to Add CSS</h3>
+            <ul>
+                <li><strong>Inline:</strong> <code>style="color: red;"</code></li>
+                <li><strong>Internal:</strong> &lt;style&gt; tag in &lt;head&gt;</li>
+                <li><strong>External:</strong> <code>&lt;link rel="stylesheet" href="style.css"&gt;</code></li>
+            </ul>
+            <h4>CSS Specificity</h4>
+            <table>
+                <tr><th>Selector Type</th><th>Specificity</th></tr>
+                <tr><td>Inline style</td><td>1000 points</td></tr>
+                <tr><td>ID selector (#id)</td><td>100 points</td></tr>
+                <tr><td>Class selector (.class)</td><td>10 points</td></tr>
+                <tr><td>Element selector (p)</td><td>1 point</td></tr>
+            </table>
+        </div>
+        <div class="card">
+            <span class="badge">PROPERTIES</span>
+            <h3>Important CSS Properties</h3>
+            <ul>
+                <li><strong>Box Model:</strong> margin (outer), padding (inner), border, width, height</li>
+                <li><strong>Display:</strong> block, inline, inline-block, none, flex, grid</li>
+                <li><strong>Positioning:</strong> static, relative, absolute, fixed, sticky</li>
+                <li><strong>Text:</strong> color, font-family, font-size, text-align, text-decoration</li>
+                <li><strong>Flexbox:</strong> display: flex, flex-direction, justify-content, align-items</li>
+            </ul>
+            <h4>Pseudo-classes & Pseudo-elements</h4>
+            <ul>
+                <li><code>a:hover</code> - When mouse hovers</li>
+                <li><code>a:visited</code> - After link is visited</li>
+                <li><code>a:active</code> - While clicking</li>
+                <li><code>::before</code> / <code>::after</code> - Insert content</li>
+                <li><code>::first-line</code> - First line of text</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- XML Section -->
+    <div class="section" id="xml">
+        <h2 class="section-title">4. XML (eXtensible Markup Language)</h2>
+        <p class="section-subtitle">Structure · DTD · Comparison with HTML</p>
+        <div class="card">
+            <span class="badge">KEY POINTS</span>
+            <h3>XML Essentials</h3>
+            <ul>
+                <li>Self-descriptive markup - tags describe data</li>
+                <li>Focus on WHAT data IS (vs HTML focuses on HOW it looks)</li>
+                <li>Must have XML declaration: <code>&lt;?xml version="1.0"?&gt;</code></li>
+                <li>Must have one root element</li>
+                <li>Tags are case-sensitive</li>
+                <li>Proper nesting required</li>
+                <li>DTD (Document Type Definition) can validate structure</li>
+            </ul>
+            <h4>XML vs HTML</h4>
+            <table>
+                <tr><th>Language</th><th>Purpose</th><th>Tags</th></tr>
+                <tr><td>HTML</td><td>Presentation (how it looks)</td><td>Fixed tags</td></tr>
+                <tr><td>XML</td><td>Data (what it is)</td><td>Custom tags</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- JavaScript Section -->
+    <div class="section" id="js">
+        <h2 class="section-title">5. JavaScript</h2>
+        <p class="section-subtitle">Data types · Operators · Loops · Methods</p>
+        <div class="card">
+            <span class="badge">DATA TYPES</span>
+            <h3>7 Primitive Data Types</h3>
+            <ul>
+                <li><strong>String:</strong> "hello", 'world', `template`</li>
+                <li><strong>Number:</strong> 25, 3.14, Infinity, NaN</li>
+                <li><strong>Boolean:</strong> true, false</li>
+                <li><strong>Null:</strong> intentional absence</li>
+                <li><strong>Undefined:</strong> variable not assigned</li>
+                <li><strong>Symbol:</strong> unique identifier (ES6)</li>
+                <li><strong>Object:</strong> {}, [], functions</li>
+            </ul>
+            <div class="alert">
+                <strong>⚡ Equality:</strong> <code>==</code> only compares value (5 == "5" is TRUE).
+                <code>===</code> compares value AND type. <strong>Always use ===</strong>
+            </div>
+        </div>
+        <div class="card">
+            <span class="badge">METHODS</span>
+            <h3>String & Array Methods</h3>
+            <h4>String Methods</h4>
+            <ul>
+                <li><code>length</code>, <code>toUpperCase()</code>, <code>toLowerCase()</code></li>
+                <li><code>charAt(0)</code>, <code>substring(start, end)</code></li>
+                <li><code>split()</code>, <code>indexOf()</code>, <code>replace()</code></li>
+            </ul>
+            <h4>Array Methods</h4>
+            <ul>
+                <li><strong>Mutating:</strong> push(), pop(), shift(), unshift(), splice(), reverse(), sort()</li>
+                <li><strong>Non-mutating:</strong> slice(), concat(), join(), map(), filter(), reduce()</li>
+            </ul>
+            <h4>Loops</h4>
+            <ul>
+                <li><code>for-in</code>: Iterate over object KEYS</li>
+                <li><code>for-of</code>: Iterate over array VALUES</li>
+                <li><code>forEach()</code>: Call function for each element</li>
+            </ul>
+        </div>
+        <div class="card">
+            <span class="badge">CONCEPTS</span>
+            <h3>Important JS Concepts</h3>
+            <ul>
+                <li><strong>Hoisting:</strong> Function declarations hoisted; var declarations hoisted but not initialized</li>
+                <li><strong>Scope:</strong> var is function-scoped; let/const are block-scoped</li>
+                <li><strong>Closure:</strong> Inner function can access outer function variables</li>
+                <li><strong>this:</strong> Refers to current object context</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PHP Section -->
+    <div class="section" id="php">
+        <h2 class="section-title">6. PHP</h2>
+        <p class="section-subtitle">Server-side scripting · Forms · OOP</p>
+        <div class="card">
+            <span class="badge">BASICS</span>
+            <h3>PHP Syntax & Data Types</h3>
+            <p>PHP code goes between <code>&lt;?php</code> and <code>?&gt;</code> - executed on server.</p>
+            <h4>Data Types</h4>
+            <ul>
+                <li>String, Integer, Float, Boolean</li>
+                <li>Array: <code>[1, 2, 3]</code> or <code>["key" =&gt; "value"]</code></li>
+                <li>NULL, Object</li>
+            </ul>
+            <h4>Operators</h4>
+            <ul>
+                <li><strong>Concatenation:</strong> <code>.</code> (dot operator)</li>
+                <li><strong>Spaceship:</strong> <code>&lt;=&gt;</code> (returns 1, -1, or 0)</li>
+                <li>Use <code>===</code> for strict comparison</li>
+            </ul>
+        </div>
+        <div class="card">
+            <span class="badge">FUNCTIONS</span>
+            <h3>Key Functions</h3>
+            <h4>String Functions</h4>
+            <ul>
+                <li><code>strlen()</code>, <code>strtoupper()</code>, <code>strtolower()</code></li>
+                <li><code>substr()</code>, <code>str_replace()</code>, <code>strpos()</code></li>
+                <li><code>explode()</code>, <code>implode()</code>, <code>trim()</code></li>
+            </ul>
+            <h4>Array Functions</h4>
+            <ul>
+                <li><code>count()</code>, <code>array_push()</code>, <code>array_pop()</code></li>
+                <li><code>in_array()</code>, <code>array_key_exists()</code></li>
+                <li><code>array_merge()</code>, <code>sort()</code>, <code>ksort()</code></li>
+            </ul>
+        </div>
+        <div class="card">
+            <span class="badge">SUPER GLOBALS</span>
+            <h3>PHP Super Globals</h3>
+            <ul>
+                <li><code>$_GET[]</code> - URL parameters, visible, ~2KB, not secure</li>
+                <li><code>$_POST[]</code> - Form body, hidden, larger, secure</li>
+                <li><code>$_SESSION[]</code> - Server-side session variables</li>
+                <li><code>$_COOKIE[]</code> - Cookie values</li>
+                <li><code>$_FILES[]</code> - Uploaded files</li>
+                <li><code>$_SERVER[]</code> - Server variables</li>
+                <li><code>$_REQUEST[]</code> - GET + POST + COOKIE</li>
+            </ul>
+            <h4>GET vs POST</h4>
+            <table>
+                <tr><th>Feature</th><th>GET</th><th>POST</th></tr>
+                <tr><td>Visibility</td><td>Visible in URL</td><td>Hidden in body</td></tr>
+                <tr><td>Size Limit</td><td>~2KB</td><td>Larger</td></tr>
+                <tr><td>Security</td><td>Not secure</td><td>Secure</td></tr>
+                <tr><td>Use Case</td><td>Search</td><td>Login</td></tr>
+            </table>
+        </div>
+        <div class="card">
+            <span class="badge">OOP</span>
+            <h3>Classes and Objects</h3>
+            <ul>
+                <li><strong>Access Modifiers:</strong> public, private, protected</li>
+                <li><strong>Constructor:</strong> <code>__construct()</code> runs when object created</li>
+                <li><strong>$this:</strong> Refers to current object</li>
+                <li><strong>Inheritance:</strong> <code>class Child extends Parent</code></li>
+                <li><strong>Abstract Classes:</strong> Cannot be instantiated, used as template</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Database Section -->
+    <div class="section" id="db">
+        <h2 class="section-title">7. Database Access Concepts</h2>
+        <p class="section-subtitle">SQL · Prepared Statements · PDO</p>
+        <div class="card">
+            <span class="badge">⚠️ CRITICAL</span>
+            <h3>SQL Injection Prevention</h3>
+            <div class="alert danger">
+                <strong>Vulnerable Code:</strong>
+            </div>
+<pre><code>$id = $_GET["id"];
+$result = $conn-&gt;query("SELECT * FROM students WHERE id = " . $id);
+// User can input: 1 OR 1=1 (returns all records!)</code></pre>
+            <div class="alert success">
+                <strong>Secure Code - Use Prepared Statements:</strong>
+            </div>
+<pre><code>$stmt = $conn-&gt;prepare("SELECT * FROM students WHERE id = ?");
+$stmt-&gt;execute([$_GET["id"]]);
+// Separates data from SQL code - prevents injection</code></pre>
+        </div>
+        <div class="card">
+            <span class="badge">PDO</span>
+            <h3>PHP Data Objects (PDO)</h3>
+            <ul>
+                <li>Modern secure way to access databases</li>
+                <li>Works with multiple database types</li>
+                <li>Uses prepared statements by default</li>
+                <li>Provides exception handling</li>
+            </ul>
+            <h4>Basic SQL Commands</h4>
+<pre><code>CREATE TABLE students (id INT, name VARCHAR(100));
+INSERT INTO students VALUES (1, "John");
+SELECT * FROM students WHERE age &gt; 20;
+UPDATE students SET age = 21 WHERE id = 1;
+DELETE FROM students WHERE id = 1;</code></pre>
+        </div>
+    </div>
+
+    <!-- Sessions Section -->
+    <div class="section" id="sessions">
+        <h2 class="section-title">8. Sessions and Cookies</h2>
+        <p class="section-subtitle">Client-side vs Server-side storage</p>
+        <div class="card">
+            <span class="badge">COOKIES</span>
+            <h3>Cookies</h3>
+            <ul>
+                <li>Stored on CLIENT browser</li>
+                <li>Sent with every HTTP request</li>
+                <li>Size limit: ~4KB per cookie</li>
+                <li>Not secure - user can view/modify</li>
+                <li>Use for: Preferences, tracking</li>
+            </ul>
+<pre><code>// Create
+setcookie("name", "value", time()+3600, "/");
+// Access
+$_COOKIE["name"];</code></pre>
+        </div>
+        <div class="card">
+            <span class="badge">SESSIONS</span>
+            <h3>Sessions</h3>
+            <ul>
+                <li>Data stored on SERVER</li>
+                <li>Identified by Session ID in cookie</li>
+                <li>Large data can be stored</li>
+                <li>More secure - data never visible to user</li>
+                <li>Use for: Login, shopping cart</li>
+            </ul>
+<pre><code>session_start(); // call first!
+$_SESSION["username"] = "John";
+session_destroy(); // end session</code></pre>
+        </div>
+        <div class="card">
+            <span class="badge">COMPARISON</span>
+            <h3>Cookies vs Sessions</h3>
+            <table>
+                <tr><th>Feature</th><th>Cookie</th><th>Session</th></tr>
+                <tr><td>Storage</td><td>Client (Browser)</td><td>Server</td></tr>
+                <tr><td>Size</td><td>~4KB</td><td>Large</td></tr>
+                <tr><td>Security</td><td>Low</td><td>High</td></tr>
+                <tr><td>Best For</td><td>Preferences</td><td>Login data</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Quiz Section -->
+    <div class="section" id="quiz">
+        <h2 class="section-title">9. MCQ Practice Quiz</h2>
+        <p class="section-subtitle">Test your knowledge with interactive questions</p>
+        <div class="quiz-stats">
+            <h3 id="scoreDisplay">Score: 0 / 0</h3>
+            <p>Click options to test yourself!</p>
+        </div>
+        <div id="quizContainer"></div>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "Which HTTP method is used for sensitive data?", opts: ["GET", "POST", "PUT", "DELETE"], a: 1 },
+    { q: "Which is the largest heading tag?", opts: ["h6", "h3", "h1", "header"], a: 2 },
+    { q: "Difference between <strong> and <b>?", opts: ["No difference", "<strong> is semantic", "<b> is semantic", "<strong> is deprecated"], a: 1 },
+    { q: "What does <ins> tag represent?", opts: ["Inserted text", "Italic text", "Indent", "Insert image"], a: 0 },
+    { q: "Which attribute spans table columns?", opts: ["rowspan", "colspan", "span", "merge"], a: 1 },
+    { q: "Required enctype for file upload?", opts: ["text/plain", "application/json", "multipart/form-data", "form/data"], a: 2 },
+    { q: "Highest CSS specificity?", opts: ["Element", "Class", "ID", "Inline"], a: 3 },
+    { q: "Which CSS property creates outer space?", opts: ["padding", "margin", "border", "spacing"], a: 1 },
+    { q: "Pseudo-class for visited links?", opts: ["a:hover", "a:visited", "a:active", "a:link"], a: 1 },
+    { q: "What does display: none do?", opts: ["Hides but reserves space", "Removes from flow", "Makes transparent", "Disables clicks"], a: 1 },
+    { q: "Purpose of XML?", opts: ["Styling", "Self-descriptive data markup", "Programming", "Database"], a: 1 },
+    { q: "DTD stands for?", opts: ["Data Type Definition", "Document Type Definition", "Document Tag Definition", "Data Tag Document"], a: 1 },
+    { q: "typeof undefined returns?", opts: ["null", "undefined", "object", "NaN"], a: 1 },
+    { q: "Result of 5 + '5' in JavaScript?", opts: ["10", "'55'", "55", "Error"], a: 1 },
+    { q: "Difference between == and ===?", opts: ["No difference", "=== is strict (type matters)", "== is strict", "=== is deprecated"], a: 1 },
+    { q: "Which array method adds to the end?", opts: ["shift()", "unshift()", "push()", "pop()"], a: 2 },
+    { q: "for-of loop iterates over?", opts: ["Object keys", "Array values", "Object methods", "Indexes"], a: 1 },
+    { q: "POST data accessed via?", opts: ["$_GET", "$_POST", "$_REQUEST only", "$POST"], a: 1 },
+    { q: "PHP string concatenation operator?", opts: ["+", ".", "&", ","], a: 1 },
+    { q: "Function to get array size?", opts: ["size()", "length()", "count()", "len()"], a: 2 },
+    { q: "Convert array to string?", opts: ["explode()", "implode()", "join()", "split()"], a: 1 },
+    { q: "Static method call syntax?", opts: ["obj.method()", "ClassName::methodName()", "ClassName->method()", "static method()"], a: 1 },
+    { q: "How to prevent SQL injection?", opts: ["Use mysql_query", "Prepared statements", "Hide errors", "Use GET method"], a: 1 },
+    { q: "How to start PHP session?", opts: ["start_session()", "session_start()", "session_begin()", "$_SESSION->start()"], a: 1 },
+    { q: "Which is more secure?", opts: ["Cookies", "Sessions", "Both same", "Neither"], a: 1 },
+    { q: "Where are session data stored?", opts: ["Browser", "Server", "URL", "Database only"], a: 1 }
+];
+
+const quizContainer = document.getElementById('quizContainer');
+let score = 0, answered = 0;
+
+quizData.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.innerHTML = `
+        <div class="quiz-question">Q${idx + 1}. ${item.q}</div>
+        <div class="quiz-options">
+            ${item.opts.map((opt, i) => `<button class="quiz-option" data-idx="${i}">${String.fromCharCode(65+i)}. ${opt}</button>`).join('')}
+        </div>
+        <div class="quiz-feedback"></div>
+    `;
+    quizContainer.appendChild(card);
+
+    const buttons = card.querySelectorAll('.quiz-option');
+    const feedback = card.querySelector('.quiz-feedback');
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (card.dataset.done) return;
+            card.dataset.done = "1";
+            const chosen = parseInt(btn.dataset.idx);
+            answered++;
+            buttons.forEach((b, i) => {
+                b.disabled = true;
+                if (i === item.a) b.classList.add('correct');
+                else if (i === chosen) b.classList.add('wrong');
+            });
+            if (chosen === item.a) {
+                score++;
+                feedback.textContent = "✅ Correct!";
+                feedback.style.background = "#d1fae5";
+                feedback.style.color = "#065f46";
+            } else {
+                feedback.textContent = `❌ Wrong! Correct answer: ${item.opts[item.a]}`;
+                feedback.style.background = "#fee2e2";
+                feedback.style.color = "#991b1b";
+            }
+            feedback.classList.add('show');
+            document.getElementById('scoreDisplay').textContent = `Score: ${score} / ${answered}`;
+        });
+    });
+});
+
+// Tab switching
+const tabs = document.querySelectorAll('.tab');
+const sections = document.querySelectorAll('.section');
+const visited = new Set(['internet']);
+
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        tabs.forEach(t => t.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(target).classList.add('active');
+        visited.add(target);
+        updateProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+});
+
+function updateProgress() {
+    const total = 9;
+    const count = visited.size;
+    const percent = Math.round((count / total) * 100);
+    document.getElementById('progressFill').style.width = percent + '%';
+    document.getElementById('topicsCount').textContent = `${count} / ${total} topics explored`;
+    document.getElementById('progressPercent').textContent = `${percent}% progress`;
+}
+</script>
+</body>
+</html>
