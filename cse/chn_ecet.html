@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TS ECET Hardware & Networking Study Guide</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  color: #1a1a1a;
+  background: #f5f5f5;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.quick-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #f9f9f9;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.stat-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: #667eea;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.content {
+  padding: 2rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 2rem;
+}
+
+.tab-btn {
+  padding: 1rem 1.5rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: #666;
+  transition: all 0.3s;
+}
+
+.tab-btn:hover {
+  color: #667eea;
+}
+
+.tab-btn.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.topic-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.topic-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.topic-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem;
+  background: #f9f9f9;
+  cursor: pointer;
+  user-select: none;
+}
+
+.topic-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.importance-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #667eea;
+  color: white;
+}
+
+.importance-badge.critical {
+  background: #e74c3c;
+}
+
+.expand-icon {
+  font-size: 18px;
+  transition: transform 0.3s;
+  color: #667eea;
+}
+
+.topic-card.expanded .expand-icon {
+  transform: rotate(180deg);
+}
+
+.topic-content {
+  display: none;
+  padding: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.topic-card.expanded .topic-content {
+  display: block;
+}
+
+.content-section {
+  margin-bottom: 1.5rem;
+}
+
+.content-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #667eea;
+  margin-bottom: 0.75rem;
+}
+
+.key-points {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.8;
+  margin-left: 1.5rem;
+  list-style: disc;
+}
+
+.key-points li {
+  margin-bottom: 0.6rem;
+}
+
+.mcq-section {
+  background: #f0f4ff;
+  border-left: 4px solid #667eea;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+
+.mcq-question {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.75rem;
+}
+
+.mcq-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 13px;
+}
+
+.option {
+  padding: 0.6rem 1rem;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.option:hover {
+  border-color: #667eea;
+  background: #f9f9f9;
+}
+
+.option.selected {
+  border-color: #667eea;
+  background: #e8ecff;
+}
+
+.option.correct {
+  border-color: #27ae60;
+  background: #d5f4e6;
+  color: #27ae60;
+  font-weight: 500;
+}
+
+.option.incorrect {
+  border-color: #e74c3c;
+  background: #fadbd8;
+  color: #e74c3c;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.comparison-cell {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.comparison-label {
+  font-weight: 600;
+  color: #667eea;
+  margin-bottom: 0.5rem;
+  font-size: 13px;
+}
+
+.comparison-value {
+  color: #555;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.formula-box {
+  background: #e8ecff;
+  color: #667eea;
+  padding: 1rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  margin: 0.75rem 0;
+  border-left: 4px solid #667eea;
+}
+
+.note-box {
+  background: #fffbea;
+  color: #b8860b;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 13px;
+  margin-top: 1rem;
+  border-left: 4px solid #ffc107;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 1.5rem;
+  }
+  
+  .header h1 {
+    font-size: 22px;
+  }
+  
+  .content {
+    padding: 1rem;
+  }
+  
+  .tabs {
+    flex-wrap: wrap;
+  }
+  
+  .tab-btn {
+    padding: 0.75rem 1rem;
+    font-size: 13px;
+  }
+}
+
+.print-note {
+  background: #e8f4f8;
+  border-left: 4px solid #3498db;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #2c3e50;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>TS ECET Computer Hardware & Networking</h1>
+    <p>Complete Study Guide for MCQ Preparation</p>
+  </div>
+
+  <div class="quick-stats">
+    <div class="stat-card">
+      <div class="stat-value">2</div>
+      <div class="stat-label">Main Sections</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">25+</div>
+      <div class="stat-label">Topics</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">100+</div>
+      <div class="stat-label">MCQ Patterns</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">∞</div>
+      <div class="stat-label">Success ✓</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="print-note">
+      <strong>💡 How to Use This Guide:</strong> Click on any topic to expand it. Study the key points, comparison grids, and MCQ examples. Topics marked "CRITICAL" appear most frequently in exams.
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('hardware')">💻 Hardware</button>
+      <button class="tab-btn" onclick="switchTab('networking')">🌐 Networking</button>
+    </div>
+
+    <!-- HARDWARE TAB -->
+    <div id="hardware" class="tab-content active">
+      
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            BIOS (Basic Input/Output System)
+            <span class="importance-badge critical">CRITICAL</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">What is BIOS?</div>
+            <ul class="key-points">
+              <li>Firmware that initializes hardware before OS loads</li>
+              <li>Runs POST (Power-On Self Test) at startup</li>
+              <li>Provides runtime services for OS and applications</li>
+              <li>Stored in ROM (non-volatile memory)</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Key Functions (MCQ Focus):</div>
+            <ul class="key-points">
+              <li><strong>Boot process control</strong> - determines boot device order</li>
+              <li><strong>Hardware detection</strong> - identifies installed hardware</li>
+              <li><strong>System clock management</strong></li>
+              <li><strong>Device initialization</strong> - enables peripherals</li>
+              <li><strong>Security</strong> - password protection, boot protection</li>
+            </ul>
+          </div>
+          <div class="mcq-section">
+            <div class="mcq-question">Which memory type stores BIOS?</div>
+            <div class="mcq-options">
+              <div class="option" onclick="selectOption(this, true)">ROM (Read-Only Memory)</div>
+              <div class="option" onclick="selectOption(this, false)">RAM</div>
+              <div class="option" onclick="selectOption(this, false)">Hard Disk</div>
+              <div class="option" onclick="selectOption(this, false)">Flash Memory only</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            Motherboard Components
+            <span class="importance-badge critical">CRITICAL</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">Main Components:</div>
+            <ul class="key-points">
+              <li><strong>CPU Socket</strong> - holds processor</li>
+              <li><strong>Chipset</strong> - controls communication between CPU and other components (North Bridge & South Bridge)</li>
+              <li><strong>Memory slots (DIMM)</strong> - RAM installation</li>
+              <li><strong>BIOS/CMOS</strong> - firmware storage</li>
+              <li><strong>Power connectors</strong> - 24-pin main, 4-pin/8-pin CPU</li>
+              <li><strong>Expansion slots</strong> - PCI, PCIe for add-on cards</li>
+              <li><strong>I/O ports</strong> - USB, Serial, Parallel, Network</li>
+              <li><strong>Voltage Regulators</strong> - stabilize power for CPU</li>
+            </ul>
+          </div>
+          <div class="comparison-grid">
+            <div class="comparison-cell">
+              <div class="comparison-label">North Bridge</div>
+              <div class="comparison-value">Connects: CPU ↔ RAM, GPU (fast)</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">South Bridge</div>
+              <div class="comparison-value">Connects: Storage, USB, Audio (slow)</div>
+            </div>
+          </div>
+          <div class="mcq-section">
+            <div class="mcq-question">The chipset component that connects CPU to RAM is:</div>
+            <div class="mcq-options">
+              <div class="option" onclick="selectOption(this, true)">North Bridge</div>
+              <div class="option" onclick="selectOption(this, false)">South Bridge</div>
+              <div class="option" onclick="selectOption(this, false)">Northgate</div>
+              <div class="option" onclick="selectOption(this, false)">Memory Controller</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            SMPS (Switched Mode Power Supply)
+            <span class="importance-badge">HIGH</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">What is SMPS?</div>
+            <ul class="key-points">
+              <li>Converts AC power to regulated DC power</li>
+              <li>Uses switching technology (efficient, less heat)</li>
+              <li>Provides multiple voltage rails: +12V, +5V, +3.3V, -12V</li>
+              <li>Contains protection circuits for overcurrent, overvoltage</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Advantages over Linear PSU:</div>
+            <ul class="key-points">
+              <li>Higher efficiency (70-90% vs 40-50%)</li>
+              <li>Lighter and smaller</li>
+              <li>Less heat generation</li>
+              <li>Wide input voltage range</li>
+              <li>Faster response to load changes</li>
+            </ul>
+          </div>
+          <div class="mcq-section">
+            <div class="mcq-question">SMPS efficiency is approximately:</div>
+            <div class="mcq-options">
+              <div class="option" onclick="selectOption(this, false)">40-50%</div>
+              <div class="option" onclick="selectOption(this, true)">70-90%</div>
+              <div class="option" onclick="selectOption(this, false)">10-20%</div>
+              <div class="option" onclick="selectOption(this, false)">95-98%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            Processors (CPU)
+            <span class="importance-badge critical">CRITICAL</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">Key Characteristics to Know:</div>
+            <ul class="key-points">
+              <li><strong>Clock Speed (GHz)</strong> - Instructions per second (higher = faster)</li>
+              <li><strong>Cores</strong> - Parallel processing units (Dual-core, Quad-core, etc.)</li>
+              <li><strong>Threads</strong> - Execution units (2x cores with hyperthreading)</li>
+              <li><strong>Cache</strong> - L1, L2, L3 (faster memory on CPU)</li>
+              <li><strong>TDP</strong> - Thermal Design Power (heat output in watts)</li>
+              <li><strong>Instruction Set</strong> - x86, x64, ARM</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Common MCQ Patterns:</div>
+            <ul class="key-points">
+              <li>Cache hierarchy: L1 (smallest, fastest) → L3 (largest, slower)</li>
+              <li>Multi-core advantages: better multitasking, parallel processing</li>
+              <li>Hyperthreading: allows 2 threads per core</li>
+              <li>Front-Side Bus (FSB): connects CPU to chipset</li>
+            </ul>
+          </div>
+          <div class="comparison-grid">
+            <div class="comparison-cell">
+              <div class="comparison-label">L1 Cache</div>
+              <div class="comparison-value">64-128 KB per core, Fastest</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">L2 Cache</div>
+              <div class="comparison-value">256KB-1MB per core</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">L3 Cache</div>
+              <div class="comparison-value">2-32 MB shared, Slower</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            Memory Systems
+            <span class="importance-badge critical">CRITICAL</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">Types of Memory (MCQ Important):</div>
+            <ul class="key-points">
+              <li><strong>RAM (Volatile)</strong> - DRAM, SRAM (fastest, temporary)</li>
+              <li><strong>ROM (Non-volatile)</strong> - stores BIOS, permanent</li>
+              <li><strong>Cache (Volatile)</strong> - extremely fast, on CPU</li>
+              <li><strong>Virtual Memory</strong> - Disk space as RAM extension</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">RAM Types Comparison:</div>
+            <div class="comparison-grid">
+              <div class="comparison-cell">
+                <div class="comparison-label">DRAM</div>
+                <div class="comparison-value">Dynamic RAM, needs refresh, slower, cheaper</div>
+              </div>
+              <div class="comparison-cell">
+                <div class="comparison-label">SRAM</div>
+                <div class="comparison-value">Static RAM, no refresh, faster, expensive</div>
+              </div>
+              <div class="comparison-cell">
+                <div class="comparison-label">DDR4/DDR5</div>
+                <div class="comparison-value">Double/Quad Data Rate, faster than DDR3</div>
+              </div>
+              <div class="comparison-cell">
+                <div class="comparison-label">SDRAM</div>
+                <div class="comparison-value">Synchronous DRAM, synced with bus</div>
+              </div>
+            </div>
+          </div>
+          <div class="note-box">
+            <strong>★ Key Concept:</strong> Virtual Memory allows OS to use disk as RAM when physical RAM is full, but it's much slower than actual RAM.
+          </div>
+          <div class="mcq-section">
+            <div class="mcq-question">Which memory is volatile and loses data when powered off?</div>
+            <div class="mcq-options">
+              <div class="option" onclick="selectOption(this, true)">RAM (DRAM)</div>
+              <div class="option" onclick="selectOption(this, false)">ROM</div>
+              <div class="option" onclick="selectOption(this, false)">Hard Disk</div>
+              <div class="option" onclick="selectOption(this, false)">Flash Memory</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            Mass Storage Devices
+            <span class="importance-badge">HIGH</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">Hard Disk Drive (HDD):</div>
+            <ul class="key-points">
+              <li><strong>Mechanical</strong> - spinning platters, moving read/write head</li>
+              <li><strong>Slower access</strong> - 5400-7200 RPM typical</li>
+              <li><strong>Large capacity</strong> - 1-10 TB common</li>
+              <li><strong>Cheaper per GB</strong></li>
+              <li><strong>Parameters:</strong> Seek time, Access time, Transfer rate</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Solid State Drive (SSD):</div>
+            <ul class="key-points">
+              <li><strong>Electronic</strong> - no moving parts (flash memory)</li>
+              <li><strong>Fast access</strong> - microseconds</li>
+              <li><strong>Reliable</strong> - no mechanical failure</li>
+              <li><strong>Lower power consumption</strong></li>
+              <li><strong>More expensive per GB</strong> but prices dropping</li>
+            </ul>
+          </div>
+          <div class="comparison-grid">
+            <div class="comparison-cell">
+              <div class="comparison-label">HDD Speed</div>
+              <div class="comparison-value">5-10 ms access time</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">SSD Speed</div>
+              <div class="comparison-value">0.1 ms access time</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">HDD Capacity</div>
+              <div class="comparison-value">Cost-effective, large</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">SSD Capacity</div>
+              <div class="comparison-value">Expensive for large sizes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            Input & Output Devices
+            <span class="importance-badge">MEDIUM</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">Input Devices:</div>
+            <ul class="key-points">
+              <li><strong>Keyboard</strong> - character input, PS/2 or USB</li>
+              <li><strong>Mouse</strong> - cursor control, pointer device</li>
+              <li><strong>Trackpad</strong> - laptop input</li>
+              <li><strong>Scanner</strong> - converts documents to digital</li>
+              <li><strong>Microphone</strong> - audio input</li>
+              <li><strong>Webcam</strong> - video input</li>
+              <li><strong>Joystick</strong> - gaming input</li>
+              <li><strong>Touchscreen</strong> - direct input with touch</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Output Devices:</div>
+            <ul class="key-points">
+              <li><strong>Monitor</strong> - CRT/LCD/LED displays, resolution in pixels</li>
+              <li><strong>Printer</strong> - laser, inkjet, thermal output</li>
+              <li><strong>Speaker</strong> - audio output</li>
+              <li><strong>Projector</strong> - displays on large surface</li>
+              <li><strong>Plotter</strong> - vector graphics printing</li>
+              <li><strong>Headphones</strong> - personal audio</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Display Technologies:</div>
+            <ul class="key-points">
+              <li><strong>Resolution</strong> - 1920×1080 (Full HD), 2560×1440 (QHD)</li>
+              <li><strong>Refresh Rate</strong> - 60 Hz, 144 Hz (gaming)</li>
+              <li><strong>Response Time</strong> - milliseconds (gaming: &lt;5ms)</li>
+              <li><strong>Aspect Ratio</strong> - 16:9 widescreen standard</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- NETWORKING TAB -->
+    <div id="networking" class="tab-content">
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            Network Classification
+            <span class="importance-badge critical">CRITICAL</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">LAN (Local Area Network):</div>
+            <ul class="key-points">
+              <li><strong>Range:</strong> Building/Campus (10m - 1km)</li>
+              <li><strong>Speed:</strong> 100 Mbps to 10 Gbps</li>
+              <li><strong>Examples:</strong> Office networks, school labs</li>
+              <li><strong>Tech:</strong> Ethernet, WiFi</li>
+              <li><strong>Ownership:</strong> Single organization</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">MAN (Metropolitan Area Network):</div>
+            <ul class="key-points">
+              <li><strong>Range:</strong> City/Large campus (5km - 50km)</li>
+              <li><strong>Speed:</strong> 1-100 Mbps typically</li>
+              <li><strong>Examples:</strong> City WiFi, Cable TV networks</li>
+              <li><strong>Tech:</strong> Leased lines, microwave</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">WAN (Wide Area Network):</div>
+            <ul class="key-points">
+              <li><strong>Range:</strong> Global (100s of km)</li>
+              <li><strong>Speed:</strong> Variable, usually slower</li>
+              <li><strong>Examples:</strong> Internet, Satellite networks</li>
+              <li><strong>Tech:</strong> Routers, satellites, undersea cables</li>
+              <li><strong>Ownership:</strong> Multiple providers</li>
+            </ul>
+          </div>
+          <div class="comparison-grid">
+            <div class="comparison-cell">
+              <div class="comparison-label">LAN</div>
+              <div class="comparison-value">≤1 km, Fast, Local</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">MAN</div>
+              <div class="comparison-value">5-50 km, City-scale</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">WAN</div>
+              <div class="comparison-value">100+ km, Global</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            Network Topologies
+            <span class="importance-badge critical">CRITICAL</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">Bus Topology:</div>
+            <ul class="key-points">
+              <li>Single cable backbone, all nodes tap into it</li>
+              <li><strong>Advantage:</strong> Simple, low cost, easy to install</li>
+              <li><strong>Disadvantage:</strong> Cable break = network down, difficult to troubleshoot</li>
+              <li><strong>Old Ethernet</strong> used this</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Ring Topology:</div>
+            <ul class="key-points">
+              <li>Nodes form circle, data travels in one direction</li>
+              <li><strong>Advantage:</strong> Organized, no collisions (Token Ring)</li>
+              <li><strong>Disadvantage:</strong> One break disrupts entire network</li>
+              <li><strong>Tech:</strong> Token Ring (mostly obsolete)</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Star Topology:</div>
+            <ul class="key-points">
+              <li>Central hub/switch, all devices connect to center</li>
+              <li><strong>Advantage:</strong> One node failure doesn't affect others, easy to manage</li>
+              <li><strong>Disadvantage:</strong> Hub failure = entire network down</li>
+              <li><strong>Most common</strong> in modern LANs</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Mesh Topology:</div>
+            <ul class="key-points">
+              <li>Every device connects to every other device</li>
+              <li><strong>Advantage:</strong> No single point of failure, redundant paths</li>
+              <li><strong>Disadvantage:</strong> High cost, complex wiring, overhead</li>
+              <li><strong>Full mesh vs Partial mesh</strong> (partial is practical)</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Hybrid Topology:</div>
+            <ul class="key-points">
+              <li>Combination of two or more topologies</li>
+              <li><strong>Example:</strong> Star + Mesh (backbone mesh, star departments)</li>
+              <li><strong>Flexible</strong> and scalable</li>
+            </ul>
+          </div>
+          <div class="mcq-section">
+            <div class="mcq-question">Which topology has a single point of failure at the central hub?</div>
+            <div class="mcq-options">
+              <div class="option" onclick="selectOption(this, true)">Star</div>
+              <div class="option" onclick="selectOption(this, false)">Ring</div>
+              <div class="option" onclick="selectOption(this, false)">Mesh</div>
+              <div class="option" onclick="selectOption(this, false)">Bus</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            OSI Reference Model
+            <span class="importance-badge critical">CRITICAL</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">The 7 Layers (Bottom to Top):</div>
+            <ul class="key-points">
+              <li><strong>1. Physical:</strong> Cables, hubs, repeaters, bits</li>
+              <li><strong>2. Data Link:</strong> Frames, MAC addresses, switches, bridges</li>
+              <li><strong>3. Network:</strong> Packets, IP addresses, routers</li>
+              <li><strong>4. Transport:</strong> Segments, TCP/UDP, end-to-end delivery</li>
+              <li><strong>5. Session:</strong> Dialogs, connections, session management</li>
+              <li><strong>6. Presentation:</strong> Encryption, compression, data format</li>
+              <li><strong>7. Application:</strong> HTTP, HTTPS, FTP, SMTP, DNS</li>
+            </ul>
+          </div>
+          <div class="note-box">
+            <strong>★ Memory Trick:</strong> "Please Do Not Throw Sausage Pizza Away" (Physical, Data Link, Network, Transport, Session, Presentation, Application)
+          </div>
+          <div class="content-section">
+            <div class="section-title">Key Points for MCQ:</div>
+            <ul class="key-points">
+              <li>Physical layer = raw bits (1s and 0s)</li>
+              <li>Data Link = MAC addresses (addresses within LAN)</li>
+              <li>Network = IP addresses (addresses across networks)</li>
+              <li>Transport = TCP (reliable) vs UDP (fast)</li>
+              <li>Layer 3 devices = Routers; Layer 2 devices = Switches</li>
+            </ul>
+          </div>
+          <div class="mcq-section">
+            <div class="mcq-question">Which OSI layer does a switch operate at?</div>
+            <div class="mcq-options">
+              <div class="option" onclick="selectOption(this, false)">Physical (Layer 1)</div>
+              <div class="option" onclick="selectOption(this, true)">Data Link (Layer 2)</div>
+              <div class="option" onclick="selectOption(this, false)">Network (Layer 3)</div>
+              <div class="option" onclick="selectOption(this, false)">Transport (Layer 4)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            TCP/IP Reference Model
+            <span class="importance-badge">HIGH</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">4-Layer Model (Simpler than OSI):</div>
+            <ul class="key-points">
+              <li><strong>1. Link Layer:</strong> Hardware addressing, PPP, Ethernet</li>
+              <li><strong>2. Internet Layer:</strong> IP, ICMP, routing</li>
+              <li><strong>3. Transport Layer:</strong> TCP, UDP</li>
+              <li><strong>4. Application Layer:</strong> HTTP, HTTPS, FTP, SMTP, DNS, Telnet</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">TCP vs UDP (MCQ Important):</div>
+            <div class="comparison-grid">
+              <div class="comparison-cell">
+                <div class="comparison-label">TCP</div>
+                <div class="comparison-value">Connection-oriented, reliable, ordered, slower (file transfer)</div>
+              </div>
+              <div class="comparison-cell">
+                <div class="comparison-label">UDP</div>
+                <div class="comparison-value">Connectionless, fast, unreliable, out-of-order (streaming)</div>
+              </div>
+            </div>
+          </div>
+          <div class="note-box">
+            <strong>★ Key Concept:</strong> TCP is like calling (connection first), UDP is like texting (just send).
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            LAN Cables & Connectors
+            <span class="importance-badge">HIGH</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">Coaxial Cable:</div>
+            <ul class="key-points">
+              <li><strong>Structure:</strong> Inner conductor, insulation, braided shield, outer jacket</li>
+              <li><strong>Impedance:</strong> 50Ω (RF) or 75Ω (Cable TV)</li>
+              <li><strong>Old Ethernet:</strong> 10Base5 (thick), 10Base2 (thin)</li>
+              <li><strong>Advantages:</strong> Good shielding, long distance</li>
+              <li><strong>Disadvantages:</strong> Bulky, expensive, obsolete for LANs</li>
+              <li><strong>Connector:</strong> BNC connector</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Twisted-Pair Cable:</div>
+            <ul class="key-points">
+              <li><strong>Structure:</strong> 4 pairs of twisted copper wires</li>
+              <li><strong>UTP (Unshielded):</strong> Standard, no shielding, cheaper</li>
+              <li><strong>STP (Shielded):</strong> Better EMI protection, expensive</li>
+              <li><strong>Categories:</strong> Cat5, Cat5e, Cat6, Cat6a, Cat7, Cat8</li>
+              <li><strong>Standard Ethernet:</strong> 10/100/1000 Mbps (most common)</li>
+              <li><strong>Max Length:</strong> 100 meters</li>
+              <li><strong>Connector:</strong> RJ-45</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Optical Fiber Cable:</div>
+            <ul class="key-points">
+              <li><strong>Structure:</strong> Glass core, cladding, jacket</li>
+              <li><strong>Signal:</strong> Light pulses (immune to EMI)</li>
+              <li><strong>Single Mode:</strong> 1 light path, long distance (10+ km)</li>
+              <li><strong>Multi Mode:</strong> Multiple light paths, shorter distance (2 km)</li>
+              <li><strong>Advantages:</strong> Fastest, longest distance, immune to EMI</li>
+              <li><strong>Disadvantages:</strong> Expensive, requires special equipment</li>
+              <li><strong>Connector:</strong> SC, ST, LC</li>
+            </ul>
+          </div>
+          <div class="comparison-grid">
+            <div class="comparison-cell">
+              <div class="comparison-label">Coaxial</div>
+              <div class="comparison-value">Obsolete, shielded, 185m max</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">Twisted-Pair</div>
+              <div class="comparison-value">Standard, 100m, Cat5/Cat6</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">Fiber</div>
+              <div class="comparison-value">Fastest, 10+ km, expensive</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            Ethernet
+            <span class="importance-badge">HIGH</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">What is Ethernet?</div>
+            <ul class="key-points">
+              <li><strong>Most popular</strong> LAN technology</li>
+              <li><strong>Standard:</strong> IEEE 802.3</li>
+              <li><strong>Access method:</strong> CSMA/CD (Carrier Sense Multiple Access/Collision Detection)</li>
+              <li><strong>Frame format:</strong> Destination MAC, Source MAC, Type, Data, CRC</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Ethernet Standards:</div>
+            <ul class="key-points">
+              <li><strong>10Base-T:</strong> 10 Mbps over Twisted-Pair</li>
+              <li><strong>100Base-TX (Fast Ethernet):</strong> 100 Mbps</li>
+              <li><strong>1000Base-T (Gigabit):</strong> 1 Gbps (Cat5e+ required)</li>
+              <li><strong>10GbE:</strong> 10 Gbps (Cat6a+ required)</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">CSMA/CD Process:</div>
+            <ul class="key-points">
+              <li><strong>Carrier Sense:</strong> Listen for existing traffic</li>
+              <li><strong>Multiple Access:</strong> Share the medium</li>
+              <li><strong>Collision Detection:</strong> Detect if collision occurs</li>
+              <li><strong>Backoff:</strong> Wait random time, then retry</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            LAN Devices
+            <span class="importance-badge critical">CRITICAL</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">Repeater (Layer 1 - Physical):</div>
+            <ul class="key-points">
+              <li>Regenerates signal, extends cable length</li>
+              <li>No intelligence, amplifies noise too</li>
+              <li>Creates single collision domain</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Hub (Layer 1 - Physical):</div>
+            <ul class="key-points">
+              <li>Multi-port repeater (4, 8, 16 ports)</li>
+              <li>Broadcasts to all ports (no switching)</li>
+              <li>Single collision domain (all ports share bandwidth)</li>
+              <li><strong>Obsolete</strong> - replaced by switches</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Bridge (Layer 2 - Data Link):</div>
+            <ul class="key-points">
+              <li>Reads MAC addresses, filters frames</li>
+              <li>Segments collision domains</li>
+              <li>Reduces traffic on each segment</li>
+              <li>Slower than switch (software-based)</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Switch (Layer 2 - Data Link):</div>
+            <ul class="key-points">
+              <li>High-speed bridge with many ports</li>
+              <li>Creates separate collision domain per port</li>
+              <li>MAC address learning (learns which MAC on which port)</li>
+              <li>Full-duplex (simultaneous two-way)</li>
+              <li>Standard in modern LANs</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Router (Layer 3 - Network):</div>
+            <ul class="key-points">
+              <li>Routes packets between networks using IP addresses</li>
+              <li>Separates broadcast domains</li>
+              <li>Connects LANs together</li>
+              <li>Reads routing tables to forward packets</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Gateway (Layer 7 - Application):</div>
+            <ul class="key-points">
+              <li>Converts data formats between incompatible systems</li>
+              <li>Protocol translation (e.g., email gateway)</li>
+              <li>Oldest device type (most complex)</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">NIC - Network Interface Card:</div>
+            <ul class="key-points">
+              <li>Hardware in each computer</li>
+              <li>Converts data for transmission on network cable</li>
+              <li>Has MAC address (burned-in address)</li>
+              <li>10/100/1000 Mbps speeds</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Modem (Modulator-Demodulator):</div>
+            <ul class="key-points">
+              <li>Converts digital ↔ analog signals</li>
+              <li>Used for dial-up, DSL, cable internet</li>
+              <li>Speed: 56 kbps (dial-up), 50+ Mbps (modern)</li>
+            </ul>
+          </div>
+          <div class="comparison-grid">
+            <div class="comparison-cell">
+              <div class="comparison-label">Repeater</div>
+              <div class="comparison-value">Layer 1, amplifies signal</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">Hub</div>
+              <div class="comparison-value">Layer 1, broadcasts</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">Bridge</div>
+              <div class="comparison-value">Layer 2, filters MAC</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">Switch</div>
+              <div class="comparison-value">Layer 2, fast bridge</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">Router</div>
+              <div class="comparison-value">Layer 3, routes IP</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">Gateway</div>
+              <div class="comparison-value">Layer 7, format convert</div>
+            </div>
+          </div>
+          <div class="mcq-section">
+            <div class="mcq-question">Which device operates at Layer 3 and makes decisions based on IP addresses?</div>
+            <div class="mcq-options">
+              <div class="option" onclick="selectOption(this, false)">Switch</div>
+              <div class="option" onclick="selectOption(this, false)">Bridge</div>
+              <div class="option" onclick="selectOption(this, true)">Router</div>
+              <div class="option" onclick="selectOption(this, false)">Hub</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            Network Protocols
+            <span class="importance-badge">HIGH</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">HTTP (HyperText Transfer Protocol):</div>
+            <ul class="key-points">
+              <li><strong>Port:</strong> 80</li>
+              <li><strong>Purpose:</strong> Web browsing</li>
+              <li><strong>Method:</strong> Stateless, uses TCP</li>
+              <li><strong>Security:</strong> No encryption (plain text)</li>
+              <li><strong>Requests:</strong> GET, POST, PUT, DELETE, HEAD, OPTIONS</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">HTTPS (HTTP Secure):</div>
+            <ul class="key-points">
+              <li><strong>Port:</strong> 443</li>
+              <li><strong>Purpose:</strong> Secure web browsing</li>
+              <li><strong>Security:</strong> SSL/TLS encryption</li>
+              <li><strong>Certificate:</strong> Uses digital certificates (PKI)</li>
+              <li><strong>Speed:</strong> Slightly slower than HTTP due to encryption</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">FTP (File Transfer Protocol):</div>
+            <ul class="key-points">
+              <li><strong>Port:</strong> 21 (control), 20 (data)</li>
+              <li><strong>Purpose:</strong> File transfer</li>
+              <li><strong>Method:</strong> Two connections (control + data)</li>
+              <li><strong>Security:</strong> No encryption (vulnerable)</li>
+              <li><strong>Authentication:</strong> Username and password</li>
+              <li><strong>Modern alternative:</strong> SFTP (Secure FTP)</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">SMTP (Simple Mail Transfer Protocol):</div>
+            <ul class="key-points">
+              <li><strong>Port:</strong> 25 (standard), 587 (submission), 465 (SMTPS)</li>
+              <li><strong>Purpose:</strong> Sending email</li>
+              <li><strong>Method:</strong> Push model (client → server)</li>
+              <li><strong>Security:</strong> STARTTLS or SMTPS for encryption</li>
+              <li><strong>Pair with:</strong> POP3 or IMAP for receiving</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Telnet:</div>
+            <ul class="key-points">
+              <li><strong>Port:</strong> 23</li>
+              <li><strong>Purpose:</strong> Remote login, terminal emulation</li>
+              <li><strong>Security:</strong> No encryption (plain text)</li>
+              <li><strong>Replaced by:</strong> SSH (Secure Shell)</li>
+              <li><strong>Status:</strong> Obsolete due to security concerns</li>
+            </ul>
+          </div>
+          <div class="comparison-grid">
+            <div class="comparison-cell">
+              <div class="comparison-label">HTTP</div>
+              <div class="comparison-value">Port 80, unencrypted web</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">HTTPS</div>
+              <div class="comparison-value">Port 443, encrypted web</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">FTP</div>
+              <div class="comparison-value">Port 21, file transfer</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">SMTP</div>
+              <div class="comparison-value">Port 25, send email</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">Telnet</div>
+              <div class="comparison-value">Port 23, remote login (obsolete)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            TCP/IP Addressing (IP Classes)
+            <span class="importance-badge critical">CRITICAL</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">IP Address Format:</div>
+            <ul class="key-points">
+              <li><strong>32-bit address</strong> (IPv4) divided into 4 octets</li>
+              <li><strong>Dotted decimal:</strong> 192.168.1.1</li>
+              <li><strong>Each octet:</strong> 0-255 (8 bits)</li>
+              <li><strong>Network portion + Host portion</strong> (determined by subnet mask)</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">IP Classes (Classful Addressing):</div>
+            <ul class="key-points">
+              <li><strong>Class A:</strong> 1.0.0.0 - 126.0.0.0 | Default mask /8 | 16M+ hosts</li>
+              <li><strong>Class B:</strong> 128.0.0.0 - 191.255.0.0 | Default mask /16 | 65K hosts</li>
+              <li><strong>Class C:</strong> 192.0.0.0 - 223.255.255.0 | Default mask /24 | 254 hosts</li>
+              <li><strong>Class D:</strong> 224.0.0.0 - 239.255.255.255 | Multicast</li>
+              <li><strong>Class E:</strong> 240.0.0.0 - 255.255.255.255 | Reserved</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Special IP Addresses:</div>
+            <ul class="key-points">
+              <li><strong>127.0.0.1:</strong> Loopback (localhost)</li>
+              <li><strong>0.0.0.0:</strong> Default route, "this network"</li>
+              <li><strong>255.255.255.255:</strong> Broadcast (all hosts)</li>
+              <li><strong>First address:</strong> Network address (host bits = 0)</li>
+              <li><strong>Last address:</strong> Broadcast address (host bits = 1)</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Private IP Ranges (RFC 1918):</div>
+            <ul class="key-points">
+              <li><strong>Class A:</strong> 10.0.0.0 - 10.255.255.255</li>
+              <li><strong>Class B:</strong> 172.16.0.0 - 172.31.255.255</li>
+              <li><strong>Class C:</strong> 192.168.0.0 - 192.168.255.255</li>
+              <li><strong>Not routable</strong> on Internet (for local networks)</li>
+            </ul>
+          </div>
+          <div class="comparison-grid">
+            <div class="comparison-cell">
+              <div class="comparison-label">Class A</div>
+              <div class="comparison-value">1-126, 16M hosts</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">Class B</div>
+              <div class="comparison-value">128-191, 65K hosts</div>
+            </div>
+            <div class="comparison-cell">
+              <div class="comparison-label">Class C</div>
+              <div class="comparison-value">192-223, 254 hosts</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggleCard(this)">
+          <div class="topic-title">
+            IP Subnetting
+            <span class="importance-badge">HIGH</span>
+          </div>
+          <div class="expand-icon">▼</div>
+        </div>
+        <div class="topic-content">
+          <div class="content-section">
+            <div class="section-title">What is Subnetting?</div>
+            <ul class="key-points">
+              <li>Dividing single network into multiple logical sub-networks</li>
+              <li>Uses <strong>subnet mask</strong> to determine network/host portions</li>
+              <li>Improves efficiency and security</li>
+              <li>Uses CIDR notation: /24 means first 24 bits = network</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Common Subnet Masks:</div>
+            <ul class="key-points">
+              <li><strong>/24 (255.255.255.0):</strong> Class C, 254 usable hosts</li>
+              <li><strong>/25 (255.255.255.128):</strong> 126 usable hosts</li>
+              <li><strong>/26 (255.255.255.192):</strong> 62 usable hosts</li>
+              <li><strong>/27 (255.255.255.224):</strong> 30 usable hosts</li>
+              <li><strong>/28 (255.255.255.240):</strong> 14 usable hosts</li>
+              <li><strong>/29 (255.255.255.248):</strong> 6 usable hosts</li>
+              <li><strong>/30 (255.255.255.252):</strong> 2 usable hosts (point-to-point)</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Subnet Calculation Formula:</div>
+            <div class="formula-box">
+              Usable Hosts = 2^(32 - prefix_length) - 2<br/>
+              Example: /24 = 2^(32-24) - 2 = 2^8 - 2 = 256 - 2 = 254 hosts
+            </div>
+          </div>
+          <div class="content-section">
+            <div class="section-title">Example Breakdown (192.168.1.0/24):</div>
+            <ul class="key-points">
+              <li><strong>Network:</strong> 192.168.1.0</li>
+              <li><strong>First host:</strong> 192.168.1.1</li>
+              <li><strong>Last host:</strong> 192.168.1.254</li>
+              <li><strong>Broadcast:</strong> 192.168.1.255</li>
+              <li><strong>Usable hosts:</strong> 254</li>
+            </ul>
+          </div>
+          <div class="note-box">
+            <strong>★ MCQ Tip:</strong> Always subtract 2 from the total (network address and broadcast address can't be assigned to hosts)
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function switchTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(el => {
+    el.classList.remove('active');
+  });
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  document.getElementById(tabName).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function toggleCard(headerElement) {
+  const card = headerElement.closest('.topic-card');
+  card.classList.toggle('expanded');
+}
+
+function selectOption(element, isCorrect) {
+  const optionsContainer = element.parentElement;
+  optionsContainer.querySelectorAll('.option').forEach(opt => {
+    opt.classList.remove('selected', 'correct', 'incorrect');
+  });
+  
+  if (isCorrect) {
+    element.classList.add('correct');
+  } else {
+    element.classList.add('incorrect');
+  }
+  element.classList.add('selected');
+}
+</script>
+
+</body>
+</html>
