@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Architecture – TS ECET Master Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --surface: #ffffff;
+    --surface2: #f9f5ee;
+    --accent: #c0392b;
+    --accent2: #2c3e50;
+    --accent3: #e67e22;
+    --green: #27ae60;
+    --blue: #2980b9;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --border: #e2d9c8;
+    --code-bg: #1a1a2e;
+    --yellow-hi: #fff3cd;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.75;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(192,57,43,0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(230,126,34,0.04) 0%, transparent 50%);
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--accent2);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .header-stripe {
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent3), var(--blue));
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    background: var(--accent);
+    color: white;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 4px 12px;
+    border-radius: 3px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .header h1 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: clamp(16px, 3vw, 22px);
+    color: white;
+    letter-spacing: -0.5px;
+  }
+
+  .header-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    margin-left: auto;
+  }
+
+  /* LAYOUT */
+  .container { max-width: 1200px; margin: 0 auto; padding: 28px 20px; display: flex; gap: 28px; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 88px;
+    height: calc(100vh - 108px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .sidebar-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-left: 4px;
+  }
+
+  .nav-item {
+    display: block;
+    padding: 9px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+    text-decoration: none;
+    margin-bottom: 2px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-item:hover, .nav-item.active {
+    background: var(--accent2);
+    color: white;
+    border-left-color: var(--accent);
+  }
+
+  .nav-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent3);
+    margin-right: 6px;
+  }
+
+  /* MAIN */
+  .main { flex: 1; min-width: 0; }
+
+  /* PROGRESS */
+  .progress-bar {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+
+  /* SECTION CARD */
+  .section-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s;
+  }
+
+  .section-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+
+  .section-header {
+    padding: 18px 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    user-select: none;
+    background: white;
+    transition: background 0.2s;
+    border-left: 4px solid var(--border);
+  }
+
+  .section-card.open .section-header { border-left-color: var(--accent); background: #fdf9f7; }
+  .section-header:hover { background: #fdf9f7; }
+
+  .section-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(192,57,43,0.08);
+    border: 1px solid rgba(192,57,43,0.2);
+    padding: 3px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .section-arrow {
+    color: var(--text-muted);
+    font-size: 16px;
+    transition: transform 0.3s;
+  }
+
+  .section-card.open .section-arrow { transform: rotate(90deg); color: var(--accent); }
+
+  .section-body {
+    display: none;
+    padding: 0 22px 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-card.open .section-body { display: block; }
+
+  /* TOPIC BLOCKS */
+  .topic-block { margin: 20px 0; }
+
+  .topic-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--accent2);
+    margin-bottom: 10px;
+    padding: 6px 12px;
+    background: var(--surface2);
+    border-left: 3px solid var(--accent3);
+    border-radius: 0 4px 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  p { margin-bottom: 10px; }
+
+  /* CODE */
+  code {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    background: #f0ebe0;
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+
+  pre {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    background: var(--code-bg);
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+    line-height: 1.7;
+    margin: 12px 0;
+    color: #a8b2d8;
+    border-left: 3px solid var(--accent3);
+  }
+
+  pre .kw { color: #ff9e64; }
+  pre .cm { color: #565f89; }
+  pre .nu { color: #7dcfff; }
+  pre .hi { color: #9ece6a; }
+  pre .re { color: #f7768e; }
+
+  /* TABLE */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  th {
+    background: var(--accent2);
+    border: 1px solid #344;
+    padding: 10px 14px;
+    text-align: left;
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  td {
+    border: 1px solid var(--border);
+    padding: 9px 14px;
+    vertical-align: top;
+    font-family: 'Lora', serif;
+    font-size: 13.5px;
+  }
+
+  tr:nth-child(even) td { background: var(--surface2); }
+  tr:first-child td { font-weight: 600; }
+
+  /* INFO BOXES */
+  .info-box {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 12px 0;
+    font-size: 14.5px;
+  }
+
+  .info-box.tip {
+    background: #ebf5fb;
+    border-left: 3px solid var(--blue);
+    color: #1a4a6b;
+  }
+
+  .info-box.warn {
+    background: var(--yellow-hi);
+    border-left: 3px solid #f39c12;
+    color: #7d4e00;
+  }
+
+  .info-box.key {
+    background: rgba(192,57,43,0.05);
+    border-left: 3px solid var(--accent);
+    color: #5a1a15;
+  }
+
+  .info-box.green {
+    background: #eafaf1;
+    border-left: 3px solid var(--green);
+    color: #1a5c36;
+  }
+
+  .info-box strong {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+
+  ul, ol { padding-left: 22px; margin: 8px 0; }
+  li { margin-bottom: 5px; }
+
+  /* DIAGRAM BLOCKS */
+  .diagram {
+    background: var(--code-bg);
+    color: #7dcfff;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    padding: 16px;
+    border-radius: 6px;
+    margin: 12px 0;
+    overflow-x: auto;
+    line-height: 1.6;
+  }
+
+  /* MCQ SECTION */
+  .mcq-section {
+    margin-top: 22px;
+    background: #eafaf1;
+    border: 1px solid rgba(39,174,96,0.2);
+    border-radius: 8px;
+    padding: 18px;
+  }
+
+  .mcq-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--green);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mcq-title::before { content: '✦'; }
+
+  .mcq {
+    margin-bottom: 18px;
+    padding: 14px 16px;
+    background: white;
+    border-radius: 6px;
+    border-left: 3px solid var(--blue);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  .mcq-q {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .mcq-options { display: flex; flex-direction: column; gap: 5px; }
+
+  .mcq-opt {
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Lora', serif;
+    font-size: 13.5px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mcq-opt:hover { border-color: var(--blue); background: #ebf5fb; }
+  .mcq-opt.correct { background: #eafaf1; border-color: var(--green); color: #1a5c36; font-weight: bold; }
+  .mcq-opt.wrong { background: #fdf2f2; border-color: var(--accent); color: #8b1a1a; }
+
+  .opt-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    font-weight: 700;
+    width: 18px;
+    flex-shrink: 0;
+  }
+
+  .mcq-exp {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: #ebf5fb;
+    border-radius: 5px;
+    font-size: 13.5px;
+    color: #1a3a5c;
+    border-left: 2px solid var(--blue);
+    font-family: 'Lora', serif;
+  }
+
+  .mcq-exp.show { display: block; }
+
+  /* SCORE */
+  .score-final {
+    background: var(--accent2);
+    color: white;
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(192,57,43,0.4);
+    transition: all 0.2s;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+  }
+
+  .scroll-top:hover { background: #a93226; transform: translateY(-2px); }
+  .scroll-top.visible { display: flex; }
+
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .container { padding: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-stripe"></div>
+  <div class="header-inner">
+    <span class="badge">TS ECET</span>
+    <h1>Computer Architecture &amp; Organization</h1>
+    <span class="header-sub" id="clock">--:--</span>
+  </div>
+</div>
+
+<div class="container">
+  <nav class="sidebar">
+    <div class="sidebar-title">Topics</div>
+    <a class="nav-item" onclick="jumpTo(0)"><span class="nav-num">01</span>Functional Blocks &amp; Stored Program</a>
+    <a class="nav-item" onclick="jumpTo(1)"><span class="nav-num">02</span>Number Representations</a>
+    <a class="nav-item" onclick="jumpTo(2)"><span class="nav-num">03</span>Complements</a>
+    <a class="nav-item" onclick="jumpTo(3)"><span class="nav-num">04</span>Instruction Formats &amp; Addressing</a>
+    <a class="nav-item" onclick="jumpTo(4)"><span class="nav-num">05</span>Memory Hierarchy</a>
+    <a class="nav-item" onclick="jumpTo(5)"><span class="nav-num">06</span>Cache &amp; Associative Memory</a>
+    <a class="nav-item" onclick="jumpTo(6)"><span class="nav-num">07</span>I/O Organization &amp; Data Transfer</a>
+    <a class="nav-item" onclick="jumpTo(7)"><span class="nav-num">08</span>Bus System</a>
+    <a class="nav-item" onclick="jumpTo(8)"><span class="nav-num">09</span>Pipeline &amp; Parallel Processing</a>
+    <a class="nav-item" onclick="jumpTo(9)"><span class="nav-num">10</span>RISC vs CISC &amp; Flynn's</a>
+  </nav>
+
+  <div class="main">
+    <div class="progress-bar">
+      <span style="color:var(--text-muted)">Progress</span>
+      <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+      <span id="prog-text" style="color:var(--accent);font-weight:bold">0 / 10</span>
+    </div>
+
+    <!-- ===== SECTION 1 ===== -->
+    <div class="section-card" id="sec0">
+      <div class="section-header" onclick="toggle(0)">
+        <span class="section-num">01</span>
+        <span class="section-title">Functional Blocks of Digital Computer &amp; Stored Program Concept</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+        <div class="topic-block">
+          <div class="topic-title">Five Functional Units (Von Neumann Architecture)</div>
+          <div class="diagram">
+┌──────────────────────────────────────────────────────┐
+│                    CPU                               │
+│  ┌─────────────────┐    ┌──────────────────────┐    │
+│  │  Control Unit   │◄──►│  ALU                 │    │
+│  │  (CU)           │    │  (Arithmetic Logic   │    │
+│  │  Decodes &       │    │   Unit)              │    │
+│  │  Controls all   │    │  Does calculations   │    │
+│  └────────┬────────┘    └──────────────────────┘    │
+│           │                        ▲                 │
+└───────────┼────────────────────────┼─────────────────┘
+            ▼                        │
+    ┌────────────────┐    ┌──────────────────────┐
+    │  Memory Unit   │◄──►│  Input / Output Unit │
+    │  (Stores prog  │    │  (I/O)               │
+    │   & data)      │    └──────────────────────┘
+    └────────────────┘</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Unit</th><th>Function</th><th>Key Components</th></tr>
+              <tr><td><strong>Input Unit</strong></td><td>Accepts data from outside world</td><td>Keyboard, mouse, scanner</td></tr>
+              <tr><td><strong>Memory Unit</strong></td><td>Stores data and instructions</td><td>RAM, ROM, Cache</td></tr>
+              <tr><td><strong>ALU</strong></td><td>Performs arithmetic and logical operations</td><td>Adder, comparator, shifter</td></tr>
+              <tr><td><strong>Control Unit (CU)</strong></td><td>Directs all operations (fetch-decode-execute)</td><td>PC, IR, decoder</td></tr>
+              <tr><td><strong>Output Unit</strong></td><td>Sends results to outside world</td><td>Monitor, printer, speaker</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Stored Program Concept (Von Neumann)</div>
+          <p>Proposed by <strong>John von Neumann (1945)</strong>. Key idea: both <strong>program (instructions) and data</strong> are stored in the same memory, and instructions are executed sequentially.</p>
+          <ul>
+            <li>Instructions are stored in memory as binary numbers</li>
+            <li>CPU fetches instructions from memory one by one</li>
+            <li>CPU executes: <strong>Fetch → Decode → Execute</strong> cycle</li>
+            <li>Program Counter (PC) holds address of next instruction</li>
+            <li>Instruction Register (IR) holds current instruction being decoded</li>
+          </ul>
+          <div class="info-box key"><strong>Von Neumann Bottleneck</strong>
+            CPU and memory share the same bus for data and instructions — this limits speed. It's called the Von Neumann bottleneck. Harvard architecture solves this by using separate buses for data and instructions.
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Architecture</th><th>Von Neumann</th><th>Harvard</th></tr>
+              <tr><td>Memory</td><td>Single shared memory</td><td>Separate instruction &amp; data memory</td></tr>
+              <tr><td>Bus</td><td>Single bus</td><td>Two separate buses</td></tr>
+              <tr><td>Speed</td><td>Slower (bottleneck)</td><td>Faster (parallel access)</td></tr>
+              <tr><td>Used in</td><td>General PCs</td><td>Microcontrollers, DSP</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">CPU Registers</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Register</th><th>Full Name</th><th>Purpose</th></tr>
+              <tr><td><code>PC</code></td><td>Program Counter</td><td>Holds address of NEXT instruction</td></tr>
+              <tr><td><code>IR</code></td><td>Instruction Register</td><td>Holds CURRENT instruction being executed</td></tr>
+              <tr><td><code>MAR</code></td><td>Memory Address Register</td><td>Holds address of memory to access</td></tr>
+              <tr><td><code>MDR</code></td><td>Memory Data Register</td><td>Holds data read from / written to memory</td></tr>
+              <tr><td><code>AC</code></td><td>Accumulator</td><td>Stores intermediate results of ALU</td></tr>
+              <tr><td><code>SP</code></td><td>Stack Pointer</td><td>Points to top of the stack</td></tr>
+              <tr><td><code>PSW</code></td><td>Program Status Word</td><td>Flags (carry, zero, overflow, sign)</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q1. Which unit controls the sequence of operations in a computer?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q1')"><span class="opt-label">A</span>ALU</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q1')"><span class="opt-label">B</span>Control Unit</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q1')"><span class="opt-label">C</span>Memory Unit</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q1')"><span class="opt-label">D</span>Input Unit</div>
+            </div>
+            <div class="mcq-exp" id="q1">The Control Unit (CU) directs all operations in a computer — it fetches, decodes, and controls execution of instructions.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q2. The stored program concept was proposed by:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q2')"><span class="opt-label">A</span>Alan Turing</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q2')"><span class="opt-label">B</span>John von Neumann</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q2')"><span class="opt-label">C</span>Charles Babbage</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q2')"><span class="opt-label">D</span>Dennis Ritchie</div>
+            </div>
+            <div class="mcq-exp" id="q2">John von Neumann proposed the stored program concept in 1945 — instructions and data stored together in the same memory.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q3. Which register holds the address of the NEXT instruction to be executed?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q3')"><span class="opt-label">A</span>IR (Instruction Register)</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q3')"><span class="opt-label">B</span>PC (Program Counter)</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q3')"><span class="opt-label">C</span>MAR</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q3')"><span class="opt-label">D</span>Accumulator</div>
+            </div>
+            <div class="mcq-exp" id="q3">Program Counter (PC) always holds the address of the NEXT instruction. After fetching, PC is automatically incremented.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 2 ===== -->
+    <div class="section-card" id="sec1">
+      <div class="section-header" onclick="toggle(1)">
+        <span class="section-num">02</span>
+        <span class="section-title">Fixed Point &amp; Floating Point Number Representations</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+        <div class="topic-block">
+          <div class="topic-title">Fixed Point Representation</div>
+          <p>The decimal (binary) point is at a <strong>fixed position</strong>. All bits are used for magnitude + sign.</p>
+          <ul>
+            <li><strong>Unsigned:</strong> All bits represent magnitude. Range: 0 to 2ⁿ - 1</li>
+            <li><strong>Signed Magnitude:</strong> MSB = sign bit (0=+ve, 1=-ve). Range: -(2ⁿ⁻¹-1) to +(2ⁿ⁻¹-1)</li>
+            <li><strong>1's Complement:</strong> Negate by flipping all bits</li>
+            <li><strong>2's Complement:</strong> Negate by flipping bits and adding 1. Most widely used!</li>
+          </ul>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Representation</th><th>+5 (4-bit)</th><th>-5 (4-bit)</th><th>Range (n-bit)</th></tr>
+              <tr><td>Signed Magnitude</td><td>0101</td><td>1101</td><td>-(2ⁿ⁻¹-1) to +(2ⁿ⁻¹-1)</td></tr>
+              <tr><td>1's Complement</td><td>0101</td><td>1010</td><td>-(2ⁿ⁻¹-1) to +(2ⁿ⁻¹-1)</td></tr>
+              <tr><td>2's Complement</td><td>0101</td><td>1011</td><td>-2ⁿ⁻¹ to +(2ⁿ⁻¹-1)</td></tr>
+            </table>
+          </div>
+          <div class="info-box warn"><strong>2's Complement Trick</strong>
+            For 8-bit: range is -128 to +127. Note: -128 has no positive counterpart! 2's complement of 10000000 is still 10000000.
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Floating Point Representation (IEEE 754)</div>
+          <p>Used for very large or very small numbers. Format: <strong>± M × 2ᴱ</strong> (Mantissa × Base^Exponent)</p>
+          <div class="diagram">
+IEEE 754 Single Precision (32-bit):
+┌──┬──────────┬───────────────────────────┐
+│S │ Exponent │        Mantissa           │
+│1b│   8 bits │         23 bits           │
+└──┴──────────┴───────────────────────────┘
+ Sign  Biased exp      Fraction
+
+IEEE 754 Double Precision (64-bit):
+┌──┬─────────────┬──────────────────────────────┐
+│S │  Exponent   │           Mantissa            │
+│1b│   11 bits   │           52 bits             │
+└──┴─────────────┴──────────────────────────────┘</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Feature</th><th>Single Precision</th><th>Double Precision</th></tr>
+              <tr><td>Total bits</td><td>32</td><td>64</td></tr>
+              <tr><td>Sign bits</td><td>1</td><td>1</td></tr>
+              <tr><td>Exponent bits</td><td>8</td><td>11</td></tr>
+              <tr><td>Mantissa bits</td><td>23</td><td>52</td></tr>
+              <tr><td>Bias</td><td>127</td><td>1023</td></tr>
+              <tr><td>Range</td><td>±1.2×10⁻³⁸ to ±3.4×10³⁸</td><td>±5×10⁻³²⁴ to ±1.8×10³⁰⁸</td></tr>
+            </table>
+          </div>
+          <div class="info-box tip"><strong>Bias Formula</strong>
+            Stored exponent = Actual exponent + Bias. For 32-bit: Bias = 127. If actual exp = 3, stored = 3+127 = 130 = 10000010₂
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q4. How many bits are in the exponent field of IEEE 754 single precision?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'correct','q4')"><span class="opt-label">A</span>8</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q4')"><span class="opt-label">B</span>11</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q4')"><span class="opt-label">C</span>23</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q4')"><span class="opt-label">D</span>52</div>
+            </div>
+            <div class="mcq-exp" id="q4">Single precision (32-bit): 1 sign + 8 exponent + 23 mantissa. Double (64-bit): 1+11+52.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q5. The range of 8-bit 2's complement representation is:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q5')"><span class="opt-label">A</span>-127 to +127</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q5')"><span class="opt-label">B</span>-128 to +127</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q5')"><span class="opt-label">C</span>-128 to +128</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q5')"><span class="opt-label">D</span>0 to 255</div>
+            </div>
+            <div class="mcq-exp" id="q5">2's complement n-bit range: -2ⁿ⁻¹ to 2ⁿ⁻¹-1. For 8-bit: -128 to +127. (One extra negative number!)</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q6. Bias in IEEE 754 single precision floating point is:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q6')"><span class="opt-label">A</span>1023</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q6')"><span class="opt-label">B</span>127</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q6')"><span class="opt-label">C</span>255</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q6')"><span class="opt-label">D</span>128</div>
+            </div>
+            <div class="mcq-exp" id="q6">Single precision bias = 127. Double precision bias = 1023. Bias = 2^(k-1) - 1 where k = exponent bits.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 3 ===== -->
+    <div class="section-card" id="sec2">
+      <div class="section-header" onclick="toggle(2)">
+        <span class="section-num">03</span>
+        <span class="section-title">Complements (1's and 2's)</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+        <div class="topic-block">
+          <div class="topic-title">r's Complement and (r-1)'s Complement</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Type</th><th>Binary</th><th>Decimal (r=10)</th><th>How to find</th></tr>
+              <tr><td>1's Complement (r-1)</td><td>Flip all bits</td><td>9's comp = 9999...9 - N</td><td>0→1, 1→0 for each bit</td></tr>
+              <tr><td>2's Complement (r)</td><td>Flip bits + add 1</td><td>10's comp = 10ⁿ - N</td><td>1's comp + 1</td></tr>
+            </table>
+          </div>
+          <pre><span class="cm">Example: Find 2's complement of 10110</span>
+Step 1 — 1's complement: 01001  (flip all bits)
+Step 2 — Add 1:          01001
+                       +     1
+                        ──────
+                         01010  ← 2's complement of 10110
+
+<span class="cm">Shortcut: From rightmost bit, keep bits until first 1 (inclusive), then flip rest</span>
+10110 → keep '0', keep '1', flip rest → 0 1 0 1 0 → 01010 ✓</pre>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Subtraction using Complements</div>
+          <pre><span class="cm">To compute A - B using 2's complement:
+  = A + (2's complement of B)
+  If carry generated → ignore carry, result is positive
+  If no carry → result is negative (take 2's complement of result)</span>
+
+<span class="cm">Example: 1010 - 0110 (i.e., 10 - 6 = 4)</span>
+2's comp of 0110 = 1010
+    1010
+  + 1010
+  ──────
+  10100  → carry=1, ignore it → 0100 = 4 ✓</pre>
+          <div class="info-box key"><strong>Why 2's Complement is Preferred</strong>
+            • Only ONE representation of zero (unlike 1's complement which has +0 and -0)<br>
+            • Subtraction becomes addition → simpler hardware<br>
+            • Arithmetic carry works naturally
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q7. What is the 2's complement of 01101?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q7')"><span class="opt-label">A</span>10010</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q7')"><span class="opt-label">B</span>10011</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q7')"><span class="opt-label">C</span>01110</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q7')"><span class="opt-label">D</span>11010</div>
+            </div>
+            <div class="mcq-exp" id="q7">1's complement of 01101 = 10010. Add 1 → 10011. That's the 2's complement.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q8. 2's complement is preferred over 1's complement because:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q8')"><span class="opt-label">A</span>It uses fewer bits</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q8')"><span class="opt-label">B</span>It has a unique representation of zero</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q8')"><span class="opt-label">C</span>It requires more hardware</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q8')"><span class="opt-label">D</span>It supports floating point</div>
+            </div>
+            <div class="mcq-exp" id="q8">1's complement has two zeros (+0 = 0000 and -0 = 1111). 2's complement has only one zero, making arithmetic simpler.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 4 ===== -->
+    <div class="section-card" id="sec3">
+      <div class="section-header" onclick="toggle(3)">
+        <span class="section-num">04</span>
+        <span class="section-title">Instruction Formats &amp; Addressing Modes</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+        <div class="topic-block">
+          <div class="topic-title">Instruction Formats</div>
+          <p>An instruction consists of <strong>Opcode</strong> (operation) + <strong>Operand(s)</strong> (data/address).</p>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Type</th><th>Format</th><th>Example</th><th>Memory Refs</th></tr>
+              <tr><td>Zero Address</td><td>Opcode only</td><td>PUSH, POP (stack machine)</td><td>0</td></tr>
+              <tr><td>One Address</td><td>Opcode + 1 operand</td><td>LOAD A / ADD A</td><td>1</td></tr>
+              <tr><td>Two Address</td><td>Opcode + 2 operands</td><td>ADD R1, R2</td><td>2</td></tr>
+              <tr><td>Three Address</td><td>Opcode + 3 operands</td><td>ADD R1, R2, R3</td><td>3</td></tr>
+            </table>
+          </div>
+          <div class="info-box tip"><strong>Trade-off</strong>
+            More address fields → shorter programs but longer instruction words. Zero-address instructions use a stack (LIFO) with push/pop operations.
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Addressing Modes</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Mode</th><th>Effective Address</th><th>Example</th><th>Use</th></tr>
+              <tr><td><strong>Immediate</strong></td><td>Operand IS the data (no memory access)</td><td>MOV R1, #5 → R1=5</td><td>Constants</td></tr>
+              <tr><td><strong>Direct (Absolute)</strong></td><td>EA = Address field</td><td>MOV R1, 200 → R1=M[200]</td><td>Variables</td></tr>
+              <tr><td><strong>Indirect</strong></td><td>EA = M[Address field] (pointer)</td><td>EA = content of address given</td><td>Pointers</td></tr>
+              <tr><td><strong>Register</strong></td><td>Operand in register (no memory)</td><td>MOV R1, R2</td><td>Fastest</td></tr>
+              <tr><td><strong>Register Indirect</strong></td><td>EA = content of register</td><td>MOV R1, (R2) → EA=R2</td><td>Arrays</td></tr>
+              <tr><td><strong>Indexed</strong></td><td>EA = Base + Index register</td><td>MOV R1, 100(R2)</td><td>Arrays</td></tr>
+              <tr><td><strong>Base Register</strong></td><td>EA = Base register + displacement</td><td>Used in segmentation</td><td>Programs</td></tr>
+              <tr><td><strong>Relative</strong></td><td>EA = PC + displacement</td><td>Branch instructions</td><td>Branches</td></tr>
+              <tr><td><strong>Auto-increment</strong></td><td>EA = Rn, then Rn = Rn+1</td><td>MOV R1, (R2)+</td><td>Traversal</td></tr>
+              <tr><td><strong>Auto-decrement</strong></td><td>Rn = Rn-1, then EA = Rn</td><td>MOV R1, -(R2)</td><td>Stack ops</td></tr>
+            </table>
+          </div>
+          <div class="info-box warn"><strong>Speed Order (Fastest → Slowest)</strong>
+            Register &gt; Immediate &gt; Direct &gt; Register Indirect &gt; Indirect (requires 2 memory accesses)
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q9. In which addressing mode is the operand itself given in the instruction?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'correct','q9')"><span class="opt-label">A</span>Immediate</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q9')"><span class="opt-label">B</span>Direct</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q9')"><span class="opt-label">C</span>Indirect</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q9')"><span class="opt-label">D</span>Register</div>
+            </div>
+            <div class="mcq-exp" id="q9">Immediate addressing: the operand is the data itself (e.g., MOV R1, #5 means R1=5). No memory access needed.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q10. Which addressing mode requires TWO memory accesses to get the operand?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q10')"><span class="opt-label">A</span>Direct</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q10')"><span class="opt-label">B</span>Immediate</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q10')"><span class="opt-label">C</span>Indirect</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q10')"><span class="opt-label">D</span>Register</div>
+            </div>
+            <div class="mcq-exp" id="q10">Indirect: 1st access gets address from memory, 2nd access gets the actual operand from that address. Slowest mode.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q11. Which instruction format does a STACK machine use?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'correct','q11')"><span class="opt-label">A</span>Zero-address</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q11')"><span class="opt-label">B</span>One-address</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q11')"><span class="opt-label">C</span>Two-address</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q11')"><span class="opt-label">D</span>Three-address</div>
+            </div>
+            <div class="mcq-exp" id="q11">Zero-address instructions operate on a stack (push/pop). No explicit operands needed since top-of-stack is implicitly used.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 5 ===== -->
+    <div class="section-card" id="sec4">
+      <div class="section-header" onclick="toggle(4)">
+        <span class="section-num">05</span>
+        <span class="section-title">Memory Hierarchy &amp; Virtual Memory</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+        <div class="topic-block">
+          <div class="topic-title">Memory Hierarchy</div>
+          <div class="diagram">
+                    ┌──────────────┐
+                    │   CPU Regs   │ ← Fastest, Smallest, Most Expensive
+                    └──────┬───────┘
+                    ┌──────┴───────┐
+                    │  Cache (L1/L2/L3) │
+                    └──────┬───────┘
+                    ┌──────┴───────┐
+                    │   Main RAM   │
+                    └──────┬───────┘
+                    ┌──────┴───────┐
+                    │  Secondary   │ (HDD/SSD)
+                    └──────┬───────┘
+                    ┌──────┴───────┐
+                    │  Tertiary    │ ← Slowest, Largest, Cheapest
+                    └──────────────┘ (Tape, Optical)</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Level</th><th>Type</th><th>Speed</th><th>Size</th><th>Cost</th></tr>
+              <tr><td>L0</td><td>CPU Registers</td><td>~0.3ns</td><td>Bytes</td><td>Highest</td></tr>
+              <tr><td>L1</td><td>L1 Cache</td><td>~1ns</td><td>KB</td><td>Very High</td></tr>
+              <tr><td>L2</td><td>L2 Cache</td><td>~3-10ns</td><td>MB</td><td>High</td></tr>
+              <tr><td>L3</td><td>L3 Cache</td><td>~10-40ns</td><td>MB</td><td>Medium-High</td></tr>
+              <tr><td>L4</td><td>Main RAM</td><td>~60-100ns</td><td>GB</td><td>Medium</td></tr>
+              <tr><td>L5</td><td>SSD/HDD</td><td>ms range</td><td>TB</td><td>Low</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Virtual Memory</div>
+          <p>Virtual memory gives programs the illusion of having more RAM than physically exists by using <strong>disk space as extension of RAM</strong>.</p>
+          <ul>
+            <li>Programs use <strong>virtual addresses</strong>; hardware/OS maps them to physical addresses</li>
+            <li>Uses a <strong>Page Table</strong> to map virtual pages to physical frames</li>
+            <li><strong>Page fault</strong>: accessing a page not in RAM → OS loads it from disk</li>
+            <li><strong>TLB (Translation Lookaside Buffer)</strong>: fast cache for page table entries</li>
+            <li>Allows <strong>multiprogramming</strong> (multiple processes share RAM)</li>
+          </ul>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Term</th><th>Meaning</th></tr>
+              <tr><td>Page</td><td>Fixed-size block of virtual memory (typically 4KB)</td></tr>
+              <tr><td>Frame</td><td>Fixed-size block of physical memory (same size as page)</td></tr>
+              <tr><td>Page Table</td><td>Maps virtual page numbers to physical frame numbers</td></tr>
+              <tr><td>Page Fault</td><td>Page not in RAM; needs to be loaded from disk</td></tr>
+              <tr><td>Thrashing</td><td>Excessive page faults slow down the system</td></tr>
+              <tr><td>Segmentation</td><td>Variable-size memory blocks (code, data, stack segments)</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q12. Which is the fastest memory in the memory hierarchy?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'correct','q12')"><span class="opt-label">A</span>CPU Registers</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q12')"><span class="opt-label">B</span>Cache Memory</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q12')"><span class="opt-label">C</span>Main Memory (RAM)</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q12')"><span class="opt-label">D</span>Hard Disk</div>
+            </div>
+            <div class="mcq-exp" id="q12">CPU registers are the fastest (closest to CPU). The hierarchy: Registers > Cache > RAM > Disk > Tape.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q13. When a referenced page is not found in main memory, it is called:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q13')"><span class="opt-label">A</span>Cache miss</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q13')"><span class="opt-label">B</span>Page fault</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q13')"><span class="opt-label">C</span>Segmentation fault</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q13')"><span class="opt-label">D</span>Bus error</div>
+            </div>
+            <div class="mcq-exp" id="q13">Page fault occurs when a program accesses a virtual page not currently in physical RAM. OS then loads it from disk.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q14. TLB (Translation Lookaside Buffer) is used to:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q14')"><span class="opt-label">A</span>Store frequently used data</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q14')"><span class="opt-label">B</span>Speed up virtual-to-physical address translation</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q14')"><span class="opt-label">C</span>Store I/O device registers</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q14')"><span class="opt-label">D</span>Handle page faults</div>
+            </div>
+            <div class="mcq-exp" id="q14">TLB is a high-speed cache that stores recent page table entries to speed up virtual-to-physical address translation.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 6 ===== -->
+    <div class="section-card" id="sec5">
+      <div class="section-header" onclick="toggle(5)">
+        <span class="section-num">06</span>
+        <span class="section-title">Cache Memory &amp; Associative Memory</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+        <div class="topic-block">
+          <div class="topic-title">Cache Memory</div>
+          <p>Cache is a small, fast memory between CPU and RAM. It stores frequently accessed data/instructions.</p>
+          <ul>
+            <li><strong>Hit</strong>: Data found in cache → fast access</li>
+            <li><strong>Miss</strong>: Data NOT in cache → go to RAM (slow)</li>
+            <li><strong>Hit ratio</strong> = Hits / (Hits + Misses)</li>
+            <li><strong>Average access time</strong> = h × Tc + (1-h) × Tm (h = hit ratio, Tc = cache time, Tm = main memory time)</li>
+          </ul>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Mapping</th><th>How it Works</th><th>Advantage</th><th>Disadvantage</th></tr>
+              <tr><td><strong>Direct Mapping</strong></td><td>Each RAM block maps to exactly ONE cache line (index = block# mod cache size)</td><td>Simple, fast</td><td>High conflict misses</td></tr>
+              <tr><td><strong>Fully Associative</strong></td><td>Any RAM block can go to ANY cache line</td><td>No conflict misses</td><td>Expensive, slow search</td></tr>
+              <tr><td><strong>Set Associative</strong></td><td>Cache divided into sets; block maps to a set, can go to any line in set</td><td>Balance of both</td><td>More complex</td></tr>
+            </table>
+          </div>
+          <div class="info-box tip"><strong>Cache Replacement Policies</strong>
+            LRU (Least Recently Used) – most popular | FIFO (First In First Out) | LFU (Least Frequently Used) | Random
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Associative Memory (Content Addressable Memory – CAM)</div>
+          <p>Unlike normal RAM (accessed by <strong>address</strong>), associative memory is accessed by <strong>content (data)</strong>. Parallel search in all locations simultaneously.</p>
+          <ul>
+            <li>Each cell has both storage and comparison logic</li>
+            <li>A search key is applied; all locations compared simultaneously</li>
+            <li>Returns all matches in one cycle</li>
+            <li><strong>Used in:</strong> TLB, cache tags, network routers</li>
+            <li>More expensive than RAM but much faster for search operations</li>
+          </ul>
+          <div class="info-box key"><strong>Key Difference</strong>
+            RAM: given address → returns data | CAM/Associative: given data → returns matching address(es)
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q15. In direct mapping cache, a memory block maps to:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'correct','q15')"><span class="opt-label">A</span>Exactly one cache line</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q15')"><span class="opt-label">B</span>Any cache line</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q15')"><span class="opt-label">C</span>Any line within a set</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q15')"><span class="opt-label">D</span>Two specific lines</div>
+            </div>
+            <div class="mcq-exp" id="q15">Direct mapping: block# mod cache_size = cache line. Each RAM block maps to exactly ONE cache line. Simple but can cause conflicts.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q16. Associative memory is accessed by:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q16')"><span class="opt-label">A</span>Memory address</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q16')"><span class="opt-label">B</span>Content of the data</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q16')"><span class="opt-label">C</span>Offset value</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q16')"><span class="opt-label">D</span>Index register</div>
+            </div>
+            <div class="mcq-exp" id="q16">Associative (Content Addressable) Memory is searched by content, not by address. All locations are searched simultaneously.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q17. If cache access time is 10ns, RAM time is 100ns, hit ratio is 0.9, average access time is:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'correct','q17')"><span class="opt-label">A</span>19 ns</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q17')"><span class="opt-label">B</span>55 ns</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q17')"><span class="opt-label">C</span>100 ns</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q17')"><span class="opt-label">D</span>10 ns</div>
+            </div>
+            <div class="mcq-exp" id="q17">Avg = h×Tc + (1-h)×Tm = 0.9×10 + 0.1×100 = 9 + 10 = 19 ns.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 7 ===== -->
+    <div class="section-card" id="sec6">
+      <div class="section-header" onclick="toggle(6)">
+        <span class="section-num">07</span>
+        <span class="section-title">I/O Organization &amp; Modes of Data Transfer</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+        <div class="topic-block">
+          <div class="topic-title">Three Modes of I/O Data Transfer</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Mode</th><th>How it works</th><th>CPU Involvement</th><th>Speed</th></tr>
+              <tr><td><strong>Programmed I/O</strong></td><td>CPU continuously polls (checks) device status in a loop (busy-waiting)</td><td>100% — wastes CPU</td><td>Slowest</td></tr>
+              <tr><td><strong>Interrupt-Driven I/O</strong></td><td>CPU sends command, does other work; device sends interrupt when ready</td><td>Only during interrupt handling</td><td>Medium</td></tr>
+              <tr><td><strong>DMA (Direct Memory Access)</strong></td><td>DMA controller transfers data directly between device and memory; CPU only sets up transfer</td><td>Minimal (setup + completion)</td><td>Fastest</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Detailed: Each Mode</div>
+          <div class="info-box warn"><strong>Programmed I/O (Polling)</strong>
+            CPU sends command to I/O device, then keeps checking (polling) a status register in a loop until device is ready. Very wasteful — CPU does nothing useful while waiting (busy-wait loop).
+          </div>
+          <div class="info-box tip"><strong>Interrupt-Driven I/O</strong>
+            CPU sends command, continues doing other work. When I/O is done, device sends an INTERRUPT signal. CPU saves state, runs Interrupt Service Routine (ISR), then resumes. More efficient than polling. Types: maskable (can be disabled) and non-maskable (NMI, cannot be disabled).
+          </div>
+          <div class="info-box green"><strong>DMA (Direct Memory Access)</strong>
+            CPU programs the DMA controller (source address, destination, byte count, direction). DMA controller handles entire transfer directly between I/O device and RAM — CPU is free! When done, DMA sends interrupt. Uses <strong>cycle stealing</strong> (temporarily takes bus from CPU) or <strong>burst mode</strong>. Best for large data transfers (disk, network, audio).
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Interrupt Types</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Type</th><th>Caused by</th><th>Example</th></tr>
+              <tr><td>Hardware Interrupt</td><td>External device</td><td>Keyboard press, timer</td></tr>
+              <tr><td>Software Interrupt</td><td>Instruction (INT n)</td><td>System calls</td></tr>
+              <tr><td>Maskable</td><td>Can be disabled by CPU</td><td>Normal device interrupts</td></tr>
+              <tr><td>Non-Maskable (NMI)</td><td>Cannot be disabled</td><td>Power failure, memory error</td></tr>
+              <tr><td>Vectored</td><td>Device sends vector (address)</td><td>x86 IRQ system</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q18. In which mode does the CPU keep checking device status in a loop?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'correct','q18')"><span class="opt-label">A</span>Programmed I/O (Polling)</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q18')"><span class="opt-label">B</span>Interrupt-driven I/O</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q18')"><span class="opt-label">C</span>DMA</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q18')"><span class="opt-label">D</span>Memory-mapped I/O</div>
+            </div>
+            <div class="mcq-exp" id="q18">Programmed I/O (polling): CPU continuously checks status register in a loop (busy-waiting). Most wasteful of CPU time.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q19. DMA controller transfers data between:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q19')"><span class="opt-label">A</span>CPU and I/O device</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q19')"><span class="opt-label">B</span>I/O device and main memory directly</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q19')"><span class="opt-label">C</span>Cache and CPU</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q19')"><span class="opt-label">D</span>Secondary storage and cache</div>
+            </div>
+            <div class="mcq-exp" id="q19">DMA transfers data DIRECTLY between I/O device and main memory without involving the CPU. CPU only sets it up and gets notified when done.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q20. An interrupt that cannot be disabled by the CPU is called:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q20')"><span class="opt-label">A</span>Maskable interrupt</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q20')"><span class="opt-label">B</span>Non-Maskable Interrupt (NMI)</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q20')"><span class="opt-label">C</span>Software interrupt</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q20')"><span class="opt-label">D</span>Vectored interrupt</div>
+            </div>
+            <div class="mcq-exp" id="q20">NMI (Non-Maskable Interrupt) cannot be disabled. Used for critical events like power failure or memory parity errors.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 8 ===== -->
+    <div class="section-card" id="sec7">
+      <div class="section-header" onclick="toggle(7)">
+        <span class="section-num">08</span>
+        <span class="section-title">Bus System</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+        <div class="topic-block">
+          <div class="topic-title">Types of Buses</div>
+          <div class="diagram">
+CPU ─────────────────────────────────────── Memory
+ │          System Bus                        │
+ │  ┌──────────────────────────────────────┐  │
+ │  │ Address Bus (unidirectional →)       │  │
+ │  │ Data Bus (bidirectional ↔)           │  │
+ │  │ Control Bus (bidirectional ↔)        │  │
+ │  └──────────────────────────────────────┘  │
+ └────────────────── I/O Devices ─────────────┘</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Bus</th><th>Direction</th><th>Purpose</th><th>Width affects…</th></tr>
+              <tr><td><strong>Address Bus</strong></td><td>Unidirectional (CPU→Memory)</td><td>Carries memory address</td><td>Max addressable memory (2ⁿ bytes for n-bit)</td></tr>
+              <tr><td><strong>Data Bus</strong></td><td>Bidirectional</td><td>Transfers actual data</td><td>How much data per transfer (word size)</td></tr>
+              <tr><td><strong>Control Bus</strong></td><td>Bidirectional</td><td>Control signals (read/write, clock, interrupt)</td><td>Types of operations possible</td></tr>
+            </table>
+          </div>
+          <div class="info-box warn"><strong>Address Bus Formula</strong>
+            If address bus = n bits → can address 2ⁿ memory locations. 32-bit address bus = 2³² = 4GB addressable memory.
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Bus Arbitration</div>
+          <p>When multiple devices want the bus simultaneously, arbitration decides who gets it:</p>
+          <ul>
+            <li><strong>Daisy Chaining</strong>: Priority determined by physical position on chain. Simple but low-priority devices may starve.</li>
+            <li><strong>Centralized Parallel</strong>: All devices connected to central arbiter. Fast but complex.</li>
+            <li><strong>Distributed</strong>: Each device has its own arbitration logic. No single point of failure.</li>
+          </ul>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Bus Type</th><th>Description</th></tr>
+              <tr><td>Single Bus</td><td>All components share one bus — simple but slow (bottleneck)</td></tr>
+              <tr><td>Multiple Bus</td><td>Separate buses for different functions — faster, more complex</td></tr>
+              <tr><td>Synchronous Bus</td><td>Controlled by a common clock — all transfers at clock speed</td></tr>
+              <tr><td>Asynchronous Bus</td><td>Handshaking protocol — flexible, devices run at their own speed</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q21. A 16-bit address bus can access how much memory?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q21')"><span class="opt-label">A</span>16 KB</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q21')"><span class="opt-label">B</span>64 KB</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q21')"><span class="opt-label">C</span>32 KB</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q21')"><span class="opt-label">D</span>4 GB</div>
+            </div>
+            <div class="mcq-exp" id="q21">2¹⁶ = 65,536 = 64KB. Formula: 2^(address bits) locations. 32-bit → 4GB, 16-bit → 64KB.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q22. The data bus is:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q22')"><span class="opt-label">A</span>Unidirectional</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q22')"><span class="opt-label">B</span>Bidirectional</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q22')"><span class="opt-label">C</span>Only read</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q22')"><span class="opt-label">D</span>Only write</div>
+            </div>
+            <div class="mcq-exp" id="q22">Data bus is bidirectional — data flows both ways (CPU reads from memory and writes to memory). Address bus is unidirectional (CPU → memory only).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 9 ===== -->
+    <div class="section-card" id="sec8">
+      <div class="section-header" onclick="toggle(8)">
+        <span class="section-num">09</span>
+        <span class="section-title">Pipeline, Parallel Processing &amp; Vector Processing</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+        <div class="topic-block">
+          <div class="topic-title">Instruction Pipeline</div>
+          <p>Pipelining overlaps execution of multiple instructions — like an assembly line. A classic 5-stage pipeline:</p>
+          <div class="diagram">
+Stage:     IF      ID      EX      MEM     WB
+Instr 1: ──█───────█───────█───────█───────█
+Instr 2:         ──█───────█───────█───────█───────█
+Instr 3:                 ──█───────█───────█───────█───────█
+           t1      t2      t3      t4      t5      t6      t7
+
+IF = Instruction Fetch  |  ID = Instruction Decode
+EX = Execute            |  MEM = Memory Access  |  WB = Write Back</div>
+          <ul>
+            <li><strong>Without pipeline:</strong> k stages × n instructions = k×n cycles</li>
+            <li><strong>With pipeline:</strong> k + (n-1) cycles ≈ n cycles for large n</li>
+            <li><strong>Speedup</strong> = k (number of stages) for ideal case</li>
+          </ul>
+          <div class="info-box warn"><strong>Pipeline Hazards (Problems)</strong>
+            <strong>Structural hazard</strong>: resource conflict (two instructions need same hardware) |
+            <strong>Data hazard</strong>: instruction depends on result of previous (RAW, WAR, WAW) |
+            <strong>Control hazard</strong>: branch instructions — correct path not known yet
+          </div>
+          <div class="info-box tip"><strong>Solutions to Hazards</strong>
+            • Data forwarding/bypassing (data hazard) | • Branch prediction (control hazard) | • Pipeline stall/bubble insertion | • Out-of-order execution
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Arithmetic Pipeline</div>
+          <p>Used to pipeline arithmetic operations like floating-point addition. Example: FP Add pipeline:</p>
+          <pre>Stage 1: Compare exponents
+Stage 2: Align mantissas (right-shift smaller)
+Stage 3: Add mantissas
+Stage 4: Normalize result</pre>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Vector Processing</div>
+          <p>Operates on <strong>entire arrays (vectors) of data</strong> in one instruction, rather than one element at a time.</p>
+          <ul>
+            <li>Single vector instruction replaces a loop: <code>C = A + B</code> (where A, B are arrays)</li>
+            <li>Uses <strong>vector registers</strong> that hold multiple values</li>
+            <li>Heavily used in: scientific computing, graphics, multimedia</li>
+            <li>Examples: SIMD (SSE, AVX in x86), GPU processing</li>
+          </ul>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Parallel Processing</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+              <tr><td>Bit-level</td><td>Wider data paths (8→16→32→64-bit)</td><td>64-bit CPU</td></tr>
+              <tr><td>Instruction-level (ILP)</td><td>Pipeline, superscalar, out-of-order</td><td>Modern CPUs</td></tr>
+              <tr><td>Data-level (DLP)</td><td>Same op on multiple data (SIMD)</td><td>GPU, vector CPU</td></tr>
+              <tr><td>Task-level</td><td>Multiple processors on different tasks</td><td>Multi-core, clusters</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q23. In a 5-stage pipeline, how many cycles to execute 100 instructions (ideal case)?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q23')"><span class="opt-label">A</span>500</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q23')"><span class="opt-label">B</span>104</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q23')"><span class="opt-label">C</span>100</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q23')"><span class="opt-label">D</span>20</div>
+            </div>
+            <div class="mcq-exp" id="q23">Pipeline formula: k + (n-1) = 5 + (100-1) = 5 + 99 = 104 cycles. Without pipeline: 5×100 = 500 cycles.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q24. A hazard caused when branch instructions disrupt pipeline is called:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q24')"><span class="opt-label">A</span>Data hazard</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q24')"><span class="opt-label">B</span>Structural hazard</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q24')"><span class="opt-label">C</span>Control hazard</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q24')"><span class="opt-label">D</span>Resource hazard</div>
+            </div>
+            <div class="mcq-exp" id="q24">Control hazard (branch hazard): when a branch instruction is encountered, the correct next instruction is not known until branch is resolved.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q25. Vector processing is most suitable for:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q25')"><span class="opt-label">A</span>OS scheduling</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q25')"><span class="opt-label">B</span>Scientific computations with large arrays</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q25')"><span class="opt-label">C</span>Text processing</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q25')"><span class="opt-label">D</span>File management</div>
+            </div>
+            <div class="mcq-exp" id="q25">Vector processors excel at operations on arrays/vectors — used in scientific simulations, weather modelling, graphics, and machine learning (GPUs).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 10 ===== -->
+    <div class="section-card" id="sec9">
+      <div class="section-header" onclick="toggle(9)">
+        <span class="section-num">10</span>
+        <span class="section-title">Flynn's Classification &amp; RISC vs CISC</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+        <div class="topic-block">
+          <div class="topic-title">Flynn's Classification (1966)</div>
+          <p>Classifies computer architectures based on number of <strong>Instruction Streams (IS)</strong> and <strong>Data Streams (DS)</strong>:</p>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Class</th><th>Full Form</th><th>Description</th><th>Example</th></tr>
+              <tr><td><strong>SISD</strong></td><td>Single Instruction, Single Data</td><td>Classical Von Neumann — one instruction on one data at a time</td><td>Traditional single-core CPU</td></tr>
+              <tr><td><strong>SIMD</strong></td><td>Single Instruction, Multiple Data</td><td>Same instruction applied to multiple data simultaneously</td><td>Vector processors, GPUs, SSE/AVX</td></tr>
+              <tr><td><strong>MISD</strong></td><td>Multiple Instructions, Single Data</td><td>Multiple instructions on same data (rare in practice)</td><td>Fault-tolerant systems, space shuttle</td></tr>
+              <tr><td><strong>MIMD</strong></td><td>Multiple Instructions, Multiple Data</td><td>Multiple processors each executing different instructions on different data</td><td>Multi-core CPUs, clusters, distributed systems</td></tr>
+            </table>
+          </div>
+          <div class="info-box key"><strong>Exam Memory Tip</strong>
+            SISD = 1 processor (traditional) | SIMD = GPU / vector | MISD = very rare / theoretical | MIMD = modern multi-core systems
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">RISC vs CISC</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Feature</th><th>RISC</th><th>CISC</th></tr>
+              <tr><td><strong>Full Form</strong></td><td>Reduced Instruction Set Computer</td><td>Complex Instruction Set Computer</td></tr>
+              <tr><td><strong>Instructions</strong></td><td>Simple, few (≈100 or less)</td><td>Complex, many (hundreds)</td></tr>
+              <tr><td><strong>Instruction size</strong></td><td>Fixed length</td><td>Variable length</td></tr>
+              <tr><td><strong>Execution</strong></td><td>Each in 1 clock cycle (mostly)</td><td>May take multiple cycles</td></tr>
+              <tr><td><strong>Addressing modes</strong></td><td>Few (load/store only)</td><td>Many</td></tr>
+              <tr><td><strong>Registers</strong></td><td>Many general-purpose registers</td><td>Fewer registers</td></tr>
+              <tr><td><strong>Memory access</strong></td><td>Only LOAD and STORE instructions</td><td>Many memory-referencing instructions</td></tr>
+              <tr><td><strong>Pipelining</strong></td><td>Easy (fixed-length instructions)</td><td>Harder (variable-length)</td></tr>
+              <tr><td><strong>Hardware</strong></td><td>Simpler hardware, more compiler work</td><td>Complex hardware (microcode)</td></tr>
+              <tr><td><strong>Power consumption</strong></td><td>Lower</td><td>Higher</td></tr>
+              <tr><td><strong>Examples</strong></td><td>ARM, MIPS, SPARC, RISC-V</td><td>x86, x86-64 (Intel/AMD), VAX</td></tr>
+              <tr><td><strong>Used in</strong></td><td>Mobile, embedded, servers</td><td>Desktop PCs, laptops</td></tr>
+            </table>
+          </div>
+          <div class="info-box tip"><strong>Modern Reality</strong>
+            Modern x86 (CISC) CPUs internally translate CISC instructions into RISC-like micro-operations. So the distinction is blurring. ARM (RISC) dominates mobile/embedded; x86 (CISC) dominates desktops.
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q26. In Flynn's classification, GPU processing belongs to which category?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q26')"><span class="opt-label">A</span>SISD</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q26')"><span class="opt-label">B</span>SIMD</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q26')"><span class="opt-label">C</span>MISD</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q26')"><span class="opt-label">D</span>MIMD</div>
+            </div>
+            <div class="mcq-exp" id="q26">GPU applies the same shader/operation to thousands of pixels simultaneously → SIMD (Single Instruction, Multiple Data).</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q27. In RISC architecture, memory is accessed only through:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q27')"><span class="opt-label">A</span>Any arithmetic instruction</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q27')"><span class="opt-label">B</span>LOAD and STORE instructions only</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q27')"><span class="opt-label">C</span>All instructions can access memory</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q27')"><span class="opt-label">D</span>Only STORE instruction</div>
+            </div>
+            <div class="mcq-exp" id="q27">RISC uses load/store architecture — only LOAD and STORE can access memory. All other operations work on registers only.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q28. Which of the following is a RISC processor?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q28')"><span class="opt-label">A</span>Intel x86</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q28')"><span class="opt-label">B</span>AMD x86-64</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q28')"><span class="opt-label">C</span>ARM</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q28')"><span class="opt-label">D</span>VAX</div>
+            </div>
+            <div class="mcq-exp" id="q28">ARM is RISC (used in phones, Apple Silicon). Intel x86 and AMD are CISC. VAX is also CISC.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q29. Multi-core processors belong to which Flynn's category?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q29')"><span class="opt-label">A</span>SISD</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q29')"><span class="opt-label">B</span>SIMD</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q29')"><span class="opt-label">C</span>MISD</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q29')"><span class="opt-label">D</span>MIMD</div>
+            </div>
+            <div class="mcq-exp" id="q29">Multi-core CPUs run different instructions on different data in parallel → MIMD (Multiple Instruction, Multiple Data).</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q30. CISC has variable-length instructions. The advantage of this is:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'correct','q30')"><span class="opt-label">A</span>Denser code (fewer instructions needed for a task)</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q30')"><span class="opt-label">B</span>Easier pipelining</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q30')"><span class="opt-label">C</span>Less hardware needed</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q30')"><span class="opt-label">D</span>Faster execution always</div>
+            </div>
+            <div class="mcq-exp" id="q30">CISC complex instructions can do more per instruction → denser programs (fewer lines of code needed). Disadvantage: hard to pipeline due to variable instruction lengths.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINAL SCORE -->
+    <div class="score-final">
+      <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:22px;margin-bottom:6px;">📊 Your MCQ Score</div>
+      <div id="total-score" style="font-family:'Space Mono',monospace;font-size:30px;font-weight:bold;color:#f39c12;">0 / 30</div>
+      <div style="font-family:'Lora',serif;font-size:14px;color:rgba(255,255,255,0.6);margin-top:8px;">Click options to attempt MCQs. Green = correct, Red = wrong. Explanation shown after each attempt.</div>
+    </div>
+  </div>
+</div>
+
+<button class="scroll-top" id="scrollBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent = now.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
+  }
+  updateClock(); setInterval(updateClock, 1000);
+
+  const opened = new Set();
+  function toggle(i) {
+    const card = document.getElementById('sec'+i);
+    card.classList.toggle('open');
+    if(card.classList.contains('open')) opened.add(i); else opened.delete(i);
+    updateProgress();
+  }
+
+  function jumpTo(i) {
+    const card = document.getElementById('sec'+i);
+    if(!card.classList.contains('open')) { card.classList.add('open'); opened.add(i); updateProgress(); }
+    card.scrollIntoView({behavior:'smooth', block:'start'});
+    document.querySelectorAll('.nav-item').forEach((el,idx) => el.classList.toggle('active', idx===i));
+  }
+
+  function updateProgress() {
+    const pct = (opened.size / 10) * 100;
+    document.getElementById('prog').style.width = pct + '%';
+    document.getElementById('prog-text').textContent = opened.size + ' / 10';
+  }
+
+  let correct = 0, total = 0;
+  const answered = {};
+
+  function ans(el, type, qid) {
+    if(answered[qid]) return;
+    answered[qid] = true;
+    total++;
+    if(type==='correct') { el.classList.add('correct'); correct++; }
+    else {
+      el.classList.add('wrong');
+      el.parentElement.querySelectorAll('.mcq-opt').forEach(opt => {
+        if(opt.getAttribute('onclick') && opt.getAttribute('onclick').includes("'correct'")) opt.classList.add('correct');
+      });
+    }
+    const exp = document.getElementById(qid);
+    if(exp) exp.classList.add('show');
+    document.getElementById('total-score').textContent = correct + ' / ' + total;
+  }
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrollBtn').classList.toggle('visible', window.scrollY > 400);
+  });
+</script>
+</body>
+</html>
