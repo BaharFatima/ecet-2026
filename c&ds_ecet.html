@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C Programming & Data Structures – TS ECET Master Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --accent: #00d4ff;
+    --accent2: #ff6b35;
+    --accent3: #7c3aed;
+    --green: #00e676;
+    --yellow: #ffd600;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border: #1e2d45;
+    --code-bg: #0d1117;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #0a0e1a 0%, #111827 40%, #1a0a2e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 0 30px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    background: linear-gradient(135deg, var(--accent3), #a855f7);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  .header h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(20px, 4vw, 28px);
+    background: linear-gradient(90deg, var(--accent), #a855f7, var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-left: auto;
+  }
+
+  /* LAYOUT */
+  .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; display: flex; gap: 30px; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 110px;
+    height: calc(100vh - 130px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .sidebar-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding: 0 8px;
+  }
+
+  .nav-item {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+    text-decoration: none;
+    margin-bottom: 2px;
+  }
+
+  .nav-item:hover, .nav-item.active {
+    background: var(--surface);
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+
+  .nav-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent3);
+    margin-right: 6px;
+  }
+
+  /* MAIN */
+  .main { flex: 1; min-width: 0; }
+
+  /* PROGRESS */
+  .progress-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 12px 20px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent3), var(--accent));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+
+  /* SECTION CARD */
+  .section-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .section-card:hover { border-color: #2a3a55; }
+
+  .section-header {
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    user-select: none;
+    background: var(--surface);
+    transition: background 0.2s;
+  }
+
+  .section-header:hover { background: var(--surface2); }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent3);
+    background: rgba(124,58,237,0.1);
+    border: 1px solid rgba(124,58,237,0.3);
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .section-arrow {
+    color: var(--text-muted);
+    font-size: 18px;
+    transition: transform 0.3s;
+  }
+
+  .section-card.open .section-arrow { transform: rotate(90deg); }
+
+  .section-body {
+    display: none;
+    padding: 0 24px 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-card.open .section-body { display: block; }
+
+  /* CONTENT BLOCKS */
+  .topic-block {
+    margin: 20px 0;
+  }
+
+  .topic-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--accent);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .topic-title::before {
+    content: '▸';
+    color: var(--accent2);
+  }
+
+  p { margin-bottom: 10px; }
+
+  /* CODE */
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: var(--code-bg);
+    border: 1px solid #1e2d45;
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: #79c0ff;
+  }
+
+  pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: var(--code-bg);
+    border: 1px solid #1e2d45;
+    border-left: 3px solid var(--accent3);
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    line-height: 1.6;
+    margin: 12px 0;
+    color: #c9d1d9;
+  }
+
+  pre .kw { color: #ff7b72; }
+  pre .ty { color: #79c0ff; }
+  pre .cm { color: #6a737d; }
+  pre .st { color: #a5d6ff; }
+  pre .nu { color: #79c0ff; }
+  pre .fn { color: #d2a8ff; }
+
+  /* TABLE */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+
+  th {
+    background: rgba(0,212,255,0.08);
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    text-align: left;
+    color: var(--accent);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  td {
+    border: 1px solid var(--border);
+    padding: 9px 14px;
+    vertical-align: top;
+    font-size: 13px;
+    font-family: 'Crimson Pro', serif;
+  }
+
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  /* MCQ BOX */
+  .mcq-section {
+    margin-top: 24px;
+    background: rgba(0,230,118,0.03);
+    border: 1px solid rgba(0,230,118,0.15);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .mcq-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--green);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mcq-title::before { content: '⚡'; }
+
+  .mcq {
+    margin-bottom: 20px;
+    padding: 16px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent3);
+  }
+
+  .mcq-q {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .mcq-options { display: flex; flex-direction: column; gap: 6px; }
+
+  .mcq-opt {
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mcq-opt:hover { border-color: var(--accent); background: rgba(0,212,255,0.05); }
+  .mcq-opt.correct { background: rgba(0,230,118,0.1); border-color: var(--green); color: var(--green); }
+  .mcq-opt.wrong { background: rgba(255,107,53,0.1); border-color: var(--accent2); color: var(--accent2); }
+
+  .opt-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent3);
+    font-weight: 700;
+    width: 18px;
+    flex-shrink: 0;
+  }
+
+  .mcq-exp {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(0,212,255,0.05);
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--text-muted);
+    border-left: 2px solid var(--accent);
+  }
+
+  .mcq-exp.show { display: block; }
+
+  /* HIGHLIGHT BOXES */
+  .info-box {
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin: 14px 0;
+    font-size: 15px;
+  }
+
+  .info-box.tip {
+    background: rgba(0,212,255,0.06);
+    border-left: 3px solid var(--accent);
+  }
+
+  .info-box.warn {
+    background: rgba(255,214,0,0.06);
+    border-left: 3px solid var(--yellow);
+    color: #fef9c3;
+  }
+
+  .info-box.key {
+    background: rgba(124,58,237,0.08);
+    border-left: 3px solid var(--accent3);
+  }
+
+  .info-box strong {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+
+  ul, ol { padding-left: 22px; margin: 10px 0; }
+  li { margin-bottom: 6px; }
+
+  /* QUIZ SCORE */
+  .score-display {
+    font-family: 'JetBrains Mono', monospace;
+    text-align: center;
+    padding: 12px;
+    background: var(--surface2);
+    border-radius: 8px;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  /* Operator table highlight */
+  .op-hi { color: var(--accent2); font-weight: bold; }
+
+  /* Scroll to top */
+  .scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--accent3);
+    color: white;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+    transition: all 0.2s;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+  }
+
+  .scroll-top:hover { background: #6d28d9; transform: translateY(-2px); }
+  .scroll-top.visible { display: flex; }
+
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .container { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <span class="badge">TS ECET</span>
+    <h1>C Programming &amp; Data Structures</h1>
+    <p id="clock">Loading...</p>
+  </div>
+</div>
+
+<div class="container">
+  <!-- SIDEBAR NAV -->
+  <nav class="sidebar">
+    <div class="sidebar-title">Topics</div>
+    <a class="nav-item" onclick="jumpTo(0)"><span class="nav-num">01</span>Algorithms &amp; Flowcharts</a>
+    <a class="nav-item" onclick="jumpTo(1)"><span class="nav-num">02</span>C Tokens &amp; Data Types</a>
+    <a class="nav-item" onclick="jumpTo(2)"><span class="nav-num">03</span>Operators &amp; Expressions</a>
+    <a class="nav-item" onclick="jumpTo(3)"><span class="nav-num">04</span>Type Conversion &amp; Preprocessor</a>
+    <a class="nav-item" onclick="jumpTo(4)"><span class="nav-num">05</span>Decision &amp; Looping</a>
+    <a class="nav-item" onclick="jumpTo(5)"><span class="nav-num">06</span>Arrays &amp; Strings</a>
+    <a class="nav-item" onclick="jumpTo(6)"><span class="nav-num">07</span>Functions &amp; Scope</a>
+    <a class="nav-item" onclick="jumpTo(7)"><span class="nav-num">08</span>Storage Classes &amp; Recursion</a>
+    <a class="nav-item" onclick="jumpTo(8)"><span class="nav-num">09</span>Structures &amp; Unions</a>
+    <a class="nav-item" onclick="jumpTo(9)"><span class="nav-num">10</span>File Handling</a>
+  </nav>
+
+  <div class="main">
+    <!-- Progress -->
+    <div class="progress-bar">
+      <span style="font-size:12px;color:var(--text-muted)">Progress</span>
+      <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+      <span id="prog-text" style="color:var(--accent)">0 / 10</span>
+    </div>
+
+    <!-- ===== SECTION 1 ===== -->
+    <div class="section-card" id="sec0">
+      <div class="section-header" onclick="toggle(0)">
+        <span class="section-num">01</span>
+        <span class="section-title">Algorithms &amp; Flowcharts</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+
+        <div class="topic-block">
+          <div class="topic-title">Algorithm</div>
+          <p>An <strong>algorithm</strong> is a finite set of well-defined, step-by-step instructions to solve a problem. It must be: <strong>Input, Output, Definiteness, Finiteness, Effectiveness</strong>.</p>
+          <div class="info-box key"><strong>Key Properties (IODFE)</strong>
+            Input – zero or more inputs | Output – at least one output | Definiteness – unambiguous steps | Finiteness – terminates in finite steps | Effectiveness – each step is basic/feasible
+          </div>
+          <p><strong>Example – Find largest of 3 numbers:</strong></p>
+          <pre>Step 1: Start
+Step 2: Read A, B, C
+Step 3: If A > B and A > C then Large = A
+         Else if B > C then Large = B
+         Else Large = C
+Step 4: Print Large
+Step 5: Stop</pre>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Flowchart Symbols</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Symbol</th><th>Shape</th><th>Purpose</th></tr>
+              <tr><td>Terminal</td><td>Oval / Rounded Rectangle</td><td>Start / Stop</td></tr>
+              <tr><td>Process</td><td>Rectangle</td><td>Computation / Assignment</td></tr>
+              <tr><td>Decision</td><td>Diamond</td><td>Yes / No condition</td></tr>
+              <tr><td>Input/Output</td><td>Parallelogram</td><td>Read / Print</td></tr>
+              <tr><td>Flow Lines</td><td>Arrows</td><td>Direction of flow</td></tr>
+              <tr><td>Connector</td><td>Circle</td><td>Join / continue flow</td></tr>
+            </table>
+          </div>
+          <div class="info-box tip"><strong>Exam Tip</strong>Decision box has TWO exits (YES/NO). Terminal box used exactly TWICE (start &amp; stop).</div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+
+          <div class="mcq">
+            <div class="mcq-q">Q1. Which of the following is NOT a property of an algorithm?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q1')"><span class="opt-label">A</span>Finiteness</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q1')"><span class="opt-label">B</span>Definiteness</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q1')"><span class="opt-label">C</span>Infiniteness</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q1')"><span class="opt-label">D</span>Effectiveness</div>
+            </div>
+            <div class="mcq-exp" id="q1">An algorithm MUST be finite (terminate). "Infiniteness" is not a property – it would make the algorithm run forever.</div>
+          </div>
+
+          <div class="mcq">
+            <div class="mcq-q">Q2. What shape is used to represent a DECISION in a flowchart?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q2')"><span class="opt-label">A</span>Rectangle</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q2')"><span class="opt-label">B</span>Diamond</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q2')"><span class="opt-label">C</span>Parallelogram</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q2')"><span class="opt-label">D</span>Oval</div>
+            </div>
+            <div class="mcq-exp" id="q2">Diamond (rhombus) represents a decision/condition with YES and NO branches.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 2 ===== -->
+    <div class="section-card" id="sec1">
+      <div class="section-header" onclick="toggle(1)">
+        <span class="section-num">02</span>
+        <span class="section-title">C Tokens &amp; Data Types</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+
+        <div class="topic-block">
+          <div class="topic-title">C Tokens</div>
+          <p>Tokens are the smallest individual units in a C program. There are <strong>6 types</strong>:</p>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Token</th><th>Description</th><th>Example</th></tr>
+              <tr><td>Keywords</td><td>Reserved words with fixed meaning</td><td><code>int, if, while, return</code></td></tr>
+              <tr><td>Identifiers</td><td>Names for variables/functions</td><td><code>sum, count, myFunc</code></td></tr>
+              <tr><td>Constants</td><td>Fixed values</td><td><code>5, 3.14, 'A', "hello"</code></td></tr>
+              <tr><td>Strings</td><td>Sequence of characters in quotes</td><td><code>"hello"</code></td></tr>
+              <tr><td>Operators</td><td>Symbols for operations</td><td><code>+, -, *, /, %</code></td></tr>
+              <tr><td>Special Symbols</td><td>Punctuation characters</td><td><code>{ } [ ] ( ) ; ,</code></td></tr>
+            </table>
+          </div>
+          <div class="info-box warn"><strong>Identifier Rules</strong>
+            • Must start with letter or underscore (_) | • Cannot use keywords | • Case-sensitive (<code>Sum ≠ sum</code>) | • No spaces allowed</div>
+          <p><strong>C has 32 keywords</strong> (ANSI C). Common ones: <code>int, float, double, char, void, if, else, while, for, do, switch, case, break, continue, return, struct, union, typedef, sizeof, static, extern, auto, register</code></p>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Data Types</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Data Type</th><th>Size</th><th>Range</th><th>Format</th></tr>
+              <tr><td><code>char</code></td><td>1 byte</td><td>-128 to 127</td><td>%c</td></tr>
+              <tr><td><code>unsigned char</code></td><td>1 byte</td><td>0 to 255</td><td>%c</td></tr>
+              <tr><td><code>int</code></td><td>2 or 4 bytes</td><td>-32768 to 32767 (2B)</td><td>%d</td></tr>
+              <tr><td><code>unsigned int</code></td><td>2 or 4 bytes</td><td>0 to 65535 (2B)</td><td>%u</td></tr>
+              <tr><td><code>short int</code></td><td>2 bytes</td><td>-32768 to 32767</td><td>%hd</td></tr>
+              <tr><td><code>long int</code></td><td>4 bytes</td><td>-2147483648 to 2147483647</td><td>%ld</td></tr>
+              <tr><td><code>float</code></td><td>4 bytes</td><td>3.4e-38 to 3.4e+38</td><td>%f</td></tr>
+              <tr><td><code>double</code></td><td>8 bytes</td><td>1.7e-308 to 1.7e+308</td><td>%lf</td></tr>
+              <tr><td><code>long double</code></td><td>10 bytes</td><td>3.4e-4932 to 1.1e+4932</td><td>%Lf</td></tr>
+            </table>
+          </div>
+          <div class="info-box tip"><strong>Memory Trick</strong> char=1 | short=2 | int=4 | long=4 | float=4 | double=8 | long double=10 (typical 64-bit system)</div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q3. What is the size of <code>double</code> in C?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q3')"><span class="opt-label">A</span>4 bytes</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q3')"><span class="opt-label">B</span>8 bytes</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q3')"><span class="opt-label">C</span>2 bytes</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q3')"><span class="opt-label">D</span>10 bytes</div>
+            </div>
+            <div class="mcq-exp" id="q3">double is 8 bytes. float is 4 bytes and long double is 10 bytes.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q4. Which of the following is a VALID identifier in C?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q4')"><span class="opt-label">A</span>2variable</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q4')"><span class="opt-label">B</span>_myVar</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q4')"><span class="opt-label">C</span>int</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q4')"><span class="opt-label">D</span>my var</div>
+            </div>
+            <div class="mcq-exp" id="q4">_myVar is valid – starts with underscore. "2variable" starts with digit (invalid), "int" is a keyword (invalid), "my var" has a space (invalid).</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q5. How many keywords are there in ANSI C?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q5')"><span class="opt-label">A</span>28</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q5')"><span class="opt-label">B</span>32</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q5')"><span class="opt-label">C</span>64</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q5')"><span class="opt-label">D</span>16</div>
+            </div>
+            <div class="mcq-exp" id="q5">ANSI C has exactly 32 reserved keywords.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 3 ===== -->
+    <div class="section-card" id="sec2">
+      <div class="section-header" onclick="toggle(2)">
+        <span class="section-num">03</span>
+        <span class="section-title">Operators, Expressions, Precedence &amp; Associativity</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+
+        <div class="topic-block">
+          <div class="topic-title">Types of Operators</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Type</th><th>Operators</th><th>Example</th></tr>
+              <tr><td>Arithmetic</td><td>+ - * / %</td><td><code>a + b</code></td></tr>
+              <tr><td>Relational</td><td>== != &lt; &gt; &lt;= &gt;=</td><td><code>a &gt; b</code></td></tr>
+              <tr><td>Logical</td><td>&amp;&amp; || !</td><td><code>a&amp;&amp;b</code></td></tr>
+              <tr><td>Bitwise</td><td>&amp; | ^ ~ &lt;&lt; &gt;&gt;</td><td><code>a &amp; b</code></td></tr>
+              <tr><td>Assignment</td><td>= += -= *= /= %=</td><td><code>a += 5</code></td></tr>
+              <tr><td>Increment/Decrement</td><td>++ --</td><td><code>a++, --b</code></td></tr>
+              <tr><td>Conditional (Ternary)</td><td>? :</td><td><code>a?b:c</code></td></tr>
+              <tr><td>sizeof</td><td>sizeof()</td><td><code>sizeof(int)</code></td></tr>
+              <tr><td>Comma</td><td>,</td><td><code>a=1, b=2</code></td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Precedence &amp; Associativity (High → Low)</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Level</th><th>Operators</th><th>Associativity</th></tr>
+              <tr><td>1 (Highest)</td><td>() [] -> .</td><td>Left to Right</td></tr>
+              <tr><td>2</td><td>! ~ ++ -- + - * &amp; (unary) sizeof</td><td>Right to Left</td></tr>
+              <tr><td>3</td><td>* / %</td><td>Left to Right</td></tr>
+              <tr><td>4</td><td>+ -</td><td>Left to Right</td></tr>
+              <tr><td>5</td><td>&lt;&lt; &gt;&gt;</td><td>Left to Right</td></tr>
+              <tr><td>6</td><td>&lt; &lt;= &gt; &gt;=</td><td>Left to Right</td></tr>
+              <tr><td>7</td><td>== !=</td><td>Left to Right</td></tr>
+              <tr><td>8</td><td>&amp; (bitwise AND)</td><td>Left to Right</td></tr>
+              <tr><td>9</td><td>^ (bitwise XOR)</td><td>Left to Right</td></tr>
+              <tr><td>10</td><td>| (bitwise OR)</td><td>Left to Right</td></tr>
+              <tr><td>11</td><td>&amp;&amp;</td><td>Left to Right</td></tr>
+              <tr><td>12</td><td>||</td><td>Left to Right</td></tr>
+              <tr><td>13</td><td>?:</td><td>Right to Left</td></tr>
+              <tr><td>14</td><td>= += -= etc.</td><td>Right to Left</td></tr>
+              <tr><td>15 (Lowest)</td><td>, (comma)</td><td>Left to Right</td></tr>
+            </table>
+          </div>
+          <div class="info-box warn"><strong>Common Exam Trap</strong>
+            <code>a = b = 5</code> → Right to Left: b=5 first, then a=5. Both get 5. ✓<br>
+            <code>x = 5 + 3 * 2</code> → * has higher precedence: 3*2=6, then 5+6=11. x=11 ✓
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Pre vs Post Increment</div>
+          <pre><span class="ty">int</span> a = 5;
+<span class="ty">int</span> b = a++;   <span class="cm">// b=5, a=6 (post: use then increment)</span>
+<span class="ty">int</span> c = ++a;   <span class="cm">// a=7, c=7 (pre: increment then use)</span></pre>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q6. What is the value of <code>x</code> after: <code>int x = 5 + 3 * 2 - 1;</code></div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q6')"><span class="opt-label">A</span>15</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q6')"><span class="opt-label">B</span>10</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q6')"><span class="opt-label">C</span>16</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q6')"><span class="opt-label">D</span>14</div>
+            </div>
+            <div class="mcq-exp" id="q6">* has higher precedence: 3*2=6. Then left to right: 5+6=11, 11-1=10.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q7. If <code>a=10</code>, what does <code>b = a--</code> give? (value of b)</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'correct','q7')"><span class="opt-label">A</span>10</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q7')"><span class="opt-label">B</span>9</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q7')"><span class="opt-label">C</span>11</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q7')"><span class="opt-label">D</span>0</div>
+            </div>
+            <div class="mcq-exp" id="q7">Post-decrement: b gets value of a (10), then a decrements to 9. So b=10, a=9.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q8. Which operator has the LOWEST precedence in C?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q8')"><span class="opt-label">A</span>= (assignment)</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q8')"><span class="opt-label">B</span>|| (logical OR)</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q8')"><span class="opt-label">C</span>, (comma)</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q8')"><span class="opt-label">D</span>?: (ternary)</div>
+            </div>
+            <div class="mcq-exp" id="q8">The comma operator has the lowest precedence of all C operators.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 4 ===== -->
+    <div class="section-card" id="sec3">
+      <div class="section-header" onclick="toggle(3)">
+        <span class="section-num">04</span>
+        <span class="section-title">Type Conversion &amp; Preprocessor Directives</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+
+        <div class="topic-block">
+          <div class="topic-title">Type Conversion</div>
+          <p><strong>Implicit (Automatic):</strong> Compiler converts lower type to higher automatically in mixed expressions.</p>
+          <pre><span class="cm">// Hierarchy: char → int → long → float → double → long double</span>
+<span class="ty">int</span> a = 5;
+<span class="ty">float</span> b = 2.5;
+<span class="ty">float</span> c = a + b;  <span class="cm">// a is promoted to float → c = 7.5</span></pre>
+          <p><strong>Explicit (Type Casting):</strong> Programmer forces conversion using <code>(type)</code></p>
+          <pre><span class="ty">int</span> a = 7, b = 2;
+<span class="ty">float</span> c = (<span class="ty">float</span>)a / b;  <span class="cm">// c = 3.5 (NOT 3)</span>
+<span class="cm">// Without cast: 7/2 = 3 (integer division)</span></pre>
+          <div class="info-box warn"><strong>Common Mistake</strong>int/int = int (not float). Always cast if you want decimal result!</div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Preprocessor Directives</div>
+          <p>Preprocessor directives are processed BEFORE compilation. They start with <code>#</code>.</p>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Directive</th><th>Purpose</th><th>Example</th></tr>
+              <tr><td><code>#include</code></td><td>Include header files</td><td><code>#include &lt;stdio.h&gt;</code></td></tr>
+              <tr><td><code>#define</code></td><td>Define macro/constant</td><td><code>#define PI 3.14</code></td></tr>
+              <tr><td><code>#undef</code></td><td>Remove a macro</td><td><code>#undef PI</code></td></tr>
+              <tr><td><code>#ifdef</code></td><td>If macro is defined</td><td><code>#ifdef DEBUG</code></td></tr>
+              <tr><td><code>#ifndef</code></td><td>If macro NOT defined</td><td><code>#ifndef PI</code></td></tr>
+              <tr><td><code>#if / #else / #endif</code></td><td>Conditional compilation</td><td><code>#if X &gt; 0</code></td></tr>
+              <tr><td><code>#pragma</code></td><td>Compiler-specific instructions</td><td><code>#pragma once</code></td></tr>
+            </table>
+          </div>
+          <div class="info-box tip"><strong>Key Facts</strong>
+            • <code>#define PI 3.14</code> → no semicolon! It's text replacement.<br>
+            • <code>&lt;stdio.h&gt;</code> for printf/scanf | <code>&lt;string.h&gt;</code> for string functions | <code>&lt;math.h&gt;</code> for maths<br>
+            • <code>#include &lt;file&gt;</code> searches system path | <code>#include "file"</code> searches current directory first
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q9. What is the output? <code>printf("%d", 7/2);</code></div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q9')"><span class="opt-label">A</span>3.5</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q9')"><span class="opt-label">B</span>3</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q9')"><span class="opt-label">C</span>4</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q9')"><span class="opt-label">D</span>0</div>
+            </div>
+            <div class="mcq-exp" id="q9">int/int = int. 7/2 = 3 (truncated, not rounded). Use (float)7/2 for 3.5.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q10. Which preprocessor directive is used to include a header file?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q10')"><span class="opt-label">A</span>#define</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q10')"><span class="opt-label">B</span>#include</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q10')"><span class="opt-label">C</span>#pragma</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q10')"><span class="opt-label">D</span>#ifdef</div>
+            </div>
+            <div class="mcq-exp" id="q10">#include is used to include header files. #define is for macros/constants.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 5 ===== -->
+    <div class="section-card" id="sec4">
+      <div class="section-header" onclick="toggle(4)">
+        <span class="section-num">05</span>
+        <span class="section-title">Decision Making &amp; Looping Statements</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+
+        <div class="topic-block">
+          <div class="topic-title">Decision Making</div>
+          <pre><span class="cm">// if-else if-else ladder</span>
+<span class="kw">if</span> (condition1) { ... }
+<span class="kw">else if</span> (condition2) { ... }
+<span class="kw">else</span> { ... }
+
+<span class="cm">// switch-case (for integer/char constants only)</span>
+<span class="kw">switch</span>(expr) {
+  <span class="kw">case</span> 1: ...; <span class="kw">break</span>;
+  <span class="kw">case</span> 2: ...; <span class="kw">break</span>;
+  <span class="kw">default</span>: ...;
+}</pre>
+          <div class="info-box warn"><strong>Switch Rules</strong>
+            • switch expression must be integer or char (NOT float/string)<br>
+            • Without <code>break</code>, execution falls through to next case<br>
+            • <code>default</code> is optional but good practice
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Looping Statements</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Loop</th><th>Syntax</th><th>When to Use</th><th>Check</th></tr>
+              <tr><td><code>for</code></td><td><code>for(init;cond;update)</code></td><td>Known iterations</td><td>Entry</td></tr>
+              <tr><td><code>while</code></td><td><code>while(cond) {}</code></td><td>Unknown iterations</td><td>Entry</td></tr>
+              <tr><td><code>do-while</code></td><td><code>do {} while(cond);</code></td><td>Execute at least once</td><td>Exit</td></tr>
+            </table>
+          </div>
+          <pre><span class="cm">// for loop</span>
+<span class="kw">for</span>(<span class="ty">int</span> i=0; i&lt;5; i++) { printf(<span class="st">"%d "</span>, i); }
+<span class="cm">// Output: 0 1 2 3 4</span>
+
+<span class="cm">// do-while: runs at least ONCE even if condition false</span>
+<span class="ty">int</span> i = 10;
+<span class="kw">do</span> { printf(<span class="st">"%d"</span>, i); i++; } <span class="kw">while</span>(i &lt; 5);
+<span class="cm">// Output: 10 (runs once)</span></pre>
+
+          <div class="topic-title">break and continue</div>
+          <ul>
+            <li><code>break</code> – exits the innermost loop/switch immediately</li>
+            <li><code>continue</code> – skips rest of current iteration, goes to next iteration</li>
+          </ul>
+          <pre><span class="kw">for</span>(<span class="ty">int</span> i=1; i&lt;=5; i++) {
+  <span class="kw">if</span>(i==3) <span class="kw">continue</span>; <span class="cm">// skips 3</span>
+  <span class="kw">if</span>(i==5) <span class="kw">break</span>;    <span class="cm">// stops at 5</span>
+  printf(<span class="st">"%d "</span>, i);
+}
+<span class="cm">// Output: 1 2 4</span></pre>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q11. Which loop is guaranteed to execute at least ONCE?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q11')"><span class="opt-label">A</span>for loop</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q11')"><span class="opt-label">B</span>while loop</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q11')"><span class="opt-label">C</span>do-while loop</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q11')"><span class="opt-label">D</span>None of these</div>
+            </div>
+            <div class="mcq-exp" id="q11">do-while checks condition AFTER execution, so it always runs at least once.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q12. Output of: <code>for(int i=0; i&lt;5; i++) { if(i%2==0) continue; printf("%d ",i); }</code></div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q12')"><span class="opt-label">A</span>0 2 4</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q12')"><span class="opt-label">B</span>1 3</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q12')"><span class="opt-label">C</span>0 1 2 3 4</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q12')"><span class="opt-label">D</span>1 2 3 4</div>
+            </div>
+            <div class="mcq-exp" id="q12">continue skips even numbers (0,2,4). Only odd numbers 1 and 3 are printed.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q13. In a switch statement, what happens if <code>break</code> is missing?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q13')"><span class="opt-label">A</span>Compilation error</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q13')"><span class="opt-label">B</span>Fall-through to next case</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q13')"><span class="opt-label">C</span>Loop terminates</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q13')"><span class="opt-label">D</span>Only default runs</div>
+            </div>
+            <div class="mcq-exp" id="q13">Without break, execution falls through to the next case and continues until a break or end of switch.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 6 ===== -->
+    <div class="section-card" id="sec5">
+      <div class="section-header" onclick="toggle(5)">
+        <span class="section-num">06</span>
+        <span class="section-title">Arrays (1D &amp; 2D) and Strings</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+
+        <div class="topic-block">
+          <div class="topic-title">1D Arrays</div>
+          <pre><span class="ty">int</span> arr[5] = {10, 20, 30, 40, 50};
+<span class="cm">// Index:       0   1   2   3   4</span>
+printf(<span class="st">"%d"</span>, arr[2]);  <span class="cm">// Output: 30</span>
+<span class="cm">// Size = N * sizeof(datatype)</span>
+<span class="cm">// Array name = address of first element</span></pre>
+          <div class="info-box tip"><strong>Key Facts</strong>
+            • Array index starts at 0 | • Last element = arr[n-1] | • Array name is a pointer to first element | • sizeof(arr)/sizeof(arr[0]) gives number of elements
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">2D Arrays</div>
+          <pre><span class="ty">int</span> matrix[3][3] = {{1,2,3},{4,5,6},{7,8,9}};
+<span class="cm">// matrix[row][column]</span>
+<span class="cm">// matrix[1][2] = 6</span>
+<span class="cm">// Stored in ROW-MAJOR order in C</span>
+<span class="cm">// Total size = rows * cols * sizeof(type)</span></pre>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Strings</div>
+          <p>A string is a 1D array of <code>char</code> terminated by a <strong>null character '\0'</strong>.</p>
+          <pre><span class="ty">char</span> str[10] = <span class="st">"hello"</span>;
+<span class="cm">// Stored as: h e l l o \0 _ _ _ _</span>
+<span class="cm">// strlen("hello") = 5 (excludes \0)</span>
+<span class="cm">// sizeof(str) = 10 (includes all allocated)</span></pre>
+
+          <div class="topic-title">String Handling Functions (&lt;string.h&gt;)</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Function</th><th>Syntax</th><th>Purpose</th></tr>
+              <tr><td><code>strlen</code></td><td><code>strlen(s)</code></td><td>Returns length (excluding \0)</td></tr>
+              <tr><td><code>strcpy</code></td><td><code>strcpy(dest, src)</code></td><td>Copies src to dest</td></tr>
+              <tr><td><code>strcat</code></td><td><code>strcat(dest, src)</code></td><td>Appends src to dest</td></tr>
+              <tr><td><code>strcmp</code></td><td><code>strcmp(s1, s2)</code></td><td>Compares: 0=equal, &lt;0=s1&lt;s2, &gt;0=s1&gt;s2</td></tr>
+              <tr><td><code>strchr</code></td><td><code>strchr(s, ch)</code></td><td>Finds first occurrence of ch</td></tr>
+              <tr><td><code>strrev</code></td><td><code>strrev(s)</code></td><td>Reverses the string</td></tr>
+              <tr><td><code>strupr</code></td><td><code>strupr(s)</code></td><td>Converts to uppercase</td></tr>
+              <tr><td><code>strlwr</code></td><td><code>strlwr(s)</code></td><td>Converts to lowercase</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q14. What is <code>strlen("computer")</code>?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q14')"><span class="opt-label">A</span>9</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q14')"><span class="opt-label">B</span>8</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q14')"><span class="opt-label">C</span>7</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q14')"><span class="opt-label">D</span>10</div>
+            </div>
+            <div class="mcq-exp" id="q14">strlen counts characters EXCLUDING the null terminator '\0'. "computer" has 8 characters.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q15. For <code>int arr[4]={5,10,15,20}</code>, what is <code>arr[3]</code>?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q15')"><span class="opt-label">A</span>15</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q15')"><span class="opt-label">B</span>20</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q15')"><span class="opt-label">C</span>5</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q15')"><span class="opt-label">D</span>10</div>
+            </div>
+            <div class="mcq-exp" id="q15">Index 3 → 4th element → 20. Remember: arr[0]=5, arr[1]=10, arr[2]=15, arr[3]=20.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q16. Which function compares two strings in C?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q16')"><span class="opt-label">A</span>strcpy</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q16')"><span class="opt-label">B</span>strcat</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q16')"><span class="opt-label">C</span>strcmp</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q16')"><span class="opt-label">D</span>strlen</div>
+            </div>
+            <div class="mcq-exp" id="q16">strcmp(s1,s2) compares strings. Returns 0 if equal, negative if s1 < s2, positive if s1 > s2.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 7 ===== -->
+    <div class="section-card" id="sec6">
+      <div class="section-header" onclick="toggle(6)">
+        <span class="section-num">07</span>
+        <span class="section-title">Functions, Scope, Lifetime &amp; Parameter Passing</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+
+        <div class="topic-block">
+          <div class="topic-title">Functions</div>
+          <pre><span class="cm">// Syntax: return_type function_name(parameters)</span>
+<span class="ty">int</span> <span class="fn">add</span>(<span class="ty">int</span> a, <span class="ty">int</span> b) {
+  <span class="kw">return</span> a + b;
+}
+
+<span class="ty">int</span> <span class="fn">main</span>() {
+  <span class="ty">int</span> result = add(3, 4);  <span class="cm">// result = 7</span>
+}</pre>
+          <p>Parts: <strong>Declaration</strong> (prototype), <strong>Definition</strong> (body), <strong>Call</strong></p>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Parameter Passing</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Method</th><th>How</th><th>Changes reflected?</th><th>Example</th></tr>
+              <tr><td><strong>Call by Value</strong></td><td>Copy of value passed</td><td>NO – original unchanged</td><td><code>void f(int x)</code></td></tr>
+              <tr><td><strong>Call by Reference</strong></td><td>Address (pointer) passed</td><td>YES – original changed</td><td><code>void f(int *x)</code></td></tr>
+            </table>
+          </div>
+          <pre><span class="cm">// Call by Value – original NOT changed</span>
+<span class="ty">void</span> <span class="fn">square</span>(<span class="ty">int</span> x) { x = x * x; } <span class="cm">// x is local copy</span>
+
+<span class="cm">// Call by Reference – original IS changed</span>
+<span class="ty">void</span> <span class="fn">square</span>(<span class="ty">int</span> *x) { *x = (*x) * (*x); }</span>
+<span class="fn">square</span>(&a);  <span class="cm">// pass address of a</span></pre>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Scope and Lifetime of Variables</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Variable Type</th><th>Scope</th><th>Lifetime</th><th>Default Value</th></tr>
+              <tr><td>Local</td><td>Inside function/block only</td><td>Function execution</td><td>Garbage</td></tr>
+              <tr><td>Global</td><td>Entire program</td><td>Entire program</td><td>0</td></tr>
+              <tr><td>Formal (Parameter)</td><td>Inside function</td><td>Function call</td><td>Passed value</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q17. In call by value, what is passed to the function?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'correct','q17')"><span class="opt-label">A</span>Copy of the value</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q17')"><span class="opt-label">B</span>Address of the variable</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q17')"><span class="opt-label">C</span>Reference to the variable</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q17')"><span class="opt-label">D</span>Pointer to variable</div>
+            </div>
+            <div class="mcq-exp" id="q17">Call by value passes a COPY. Changes inside the function do NOT affect the original variable.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q18. What is the default value of an uninitialized global variable in C?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'correct','q18')"><span class="opt-label">A</span>0</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q18')"><span class="opt-label">B</span>Garbage value</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q18')"><span class="opt-label">C</span>-1</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q18')"><span class="opt-label">D</span>NULL</div>
+            </div>
+            <div class="mcq-exp" id="q18">Global and static variables are automatically initialized to 0. Local variables have garbage values.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 8 ===== -->
+    <div class="section-card" id="sec7">
+      <div class="section-header" onclick="toggle(7)">
+        <span class="section-num">08</span>
+        <span class="section-title">Storage Classes &amp; Recursion</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+
+        <div class="topic-block">
+          <div class="topic-title">Storage Classes</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Class</th><th>Keyword</th><th>Default Value</th><th>Scope</th><th>Lifetime</th><th>Storage</th></tr>
+              <tr><td>Automatic</td><td><code>auto</code></td><td>Garbage</td><td>Local (block)</td><td>Block execution</td><td>Stack (RAM)</td></tr>
+              <tr><td>Register</td><td><code>register</code></td><td>Garbage</td><td>Local</td><td>Block execution</td><td>CPU Register</td></tr>
+              <tr><td>Static</td><td><code>static</code></td><td>0</td><td>Local / Global</td><td>Entire program</td><td>Data Segment</td></tr>
+              <tr><td>External</td><td><code>extern</code></td><td>0</td><td>Global</td><td>Entire program</td><td>Data Segment</td></tr>
+            </table>
+          </div>
+          <div class="info-box key"><strong>Static Variable Key Fact</strong>
+            A static local variable retains its value between function calls. It is initialized only ONCE.
+          </div>
+          <pre><span class="ty">void</span> <span class="fn">count</span>() {
+  <span class="kw">static</span> <span class="ty">int</span> n = 0;
+  n++;
+  printf(<span class="st">"%d "</span>, n);
+}
+<span class="fn">count</span>(); <span class="fn">count</span>(); <span class="fn">count</span>();
+<span class="cm">// Output: 1 2 3  (n retains value!)</span></pre>
+          <div class="info-box tip"><strong>register</strong>: Hint to compiler to store in CPU register for faster access. Cannot take address of register variable (&amp; not allowed).</div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Recursion</div>
+          <p>A function calling itself is recursion. Every recursive function must have a <strong>base case</strong> to stop.</p>
+          <pre><span class="cm">// Factorial using recursion</span>
+<span class="ty">int</span> <span class="fn">factorial</span>(<span class="ty">int</span> n) {
+  <span class="kw">if</span>(n == 0 || n == 1) <span class="kw">return</span> 1;   <span class="cm">// base case</span>
+  <span class="kw">return</span> n * <span class="fn">factorial</span>(n - 1);      <span class="cm">// recursive call</span>
+}
+<span class="cm">// factorial(4) = 4*3*2*1 = 24</span>
+
+<span class="cm">// Fibonacci</span>
+<span class="ty">int</span> <span class="fn">fib</span>(<span class="ty">int</span> n) {
+  <span class="kw">if</span>(n&lt;=1) <span class="kw">return</span> n;
+  <span class="kw">return</span> <span class="fn">fib</span>(n-1) + <span class="fn">fib</span>(n-2);
+}</pre>
+          <div class="info-box warn"><strong>Recursion vs Iteration</strong>
+            Recursion uses STACK memory for each call. Without a base case → stack overflow (infinite recursion). Iteration is generally faster and uses less memory.
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q19. Which storage class stores variable in CPU register?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q19')"><span class="opt-label">A</span>auto</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q19')"><span class="opt-label">B</span>register</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q19')"><span class="opt-label">C</span>static</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q19')"><span class="opt-label">D</span>extern</div>
+            </div>
+            <div class="mcq-exp" id="q19">register storage class requests CPU register storage for faster access. Cannot use & (address-of) operator on it.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q20. What is the output of <code>factorial(5)</code> using recursion?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q20')"><span class="opt-label">A</span>25</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q20')"><span class="opt-label">B</span>15</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q20')"><span class="opt-label">C</span>120</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q20')"><span class="opt-label">D</span>5</div>
+            </div>
+            <div class="mcq-exp" id="q20">5! = 5×4×3×2×1 = 120. Recursion: f(5)=5*f(4)=5*4*f(3)=5*4*3*f(2)=5*4*3*2*1=120.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q21. A static local variable is initialized:</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'correct','q21')"><span class="opt-label">A</span>Only once, at program start</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q21')"><span class="opt-label">B</span>Every time the function is called</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q21')"><span class="opt-label">C</span>Never initialized</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q21')"><span class="opt-label">D</span>Only when assigned explicitly</div>
+            </div>
+            <div class="mcq-exp" id="q21">Static variables are initialized ONCE when the program starts and retain value across function calls.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 9 ===== -->
+    <div class="section-card" id="sec8">
+      <div class="section-header" onclick="toggle(8)">
+        <span class="section-num">09</span>
+        <span class="section-title">Structures &amp; Unions</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+
+        <div class="topic-block">
+          <div class="topic-title">Structures</div>
+          <p>A structure groups variables of <strong>different data types</strong> under one name.</p>
+          <pre><span class="kw">struct</span> Student {
+  <span class="ty">int</span> rollno;
+  <span class="ty">char</span> name[20];
+  <span class="ty">float</span> marks;
+};
+
+<span class="kw">struct</span> Student s1;          <span class="cm">// declare</span>
+s1.rollno = 101;            <span class="cm">// access with dot (.)</span>
+strcpy(s1.name, <span class="st">"Ravi"</span>);
+
+<span class="cm">// Pointer to structure → use arrow (->)</span>
+<span class="kw">struct</span> Student *ptr = &s1;
+ptr->rollno = 102;</pre>
+          <div class="info-box tip"><strong>Size of Structure</strong>
+            Size = sum of sizes of all members (may include padding for alignment). Use sizeof() to get actual size.
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">Unions</div>
+          <p>All members of a union <strong>share the same memory location</strong>. Size = size of the LARGEST member.</p>
+          <pre><span class="kw">union</span> Data {
+  <span class="ty">int</span> i;      <span class="cm">// 4 bytes</span>
+  <span class="ty">float</span> f;    <span class="cm">// 4 bytes</span>
+  <span class="ty">char</span> c;     <span class="cm">// 1 byte</span>
+};
+<span class="cm">// sizeof(union Data) = 4 (largest member)</span>
+<span class="cm">// Only ONE member can store valid data at a time!</span></pre>
+
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Feature</th><th>Structure</th><th>Union</th></tr>
+              <tr><td>Memory</td><td>Separate for each member</td><td>Shared by all members</td></tr>
+              <tr><td>Size</td><td>Sum of all member sizes</td><td>Size of largest member</td></tr>
+              <tr><td>Access</td><td>All members simultaneously</td><td>Only one at a time</td></tr>
+              <tr><td>Use</td><td>Record keeping</td><td>Memory saving</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q22. What is the size of a union with members: <code>int (4B), char (1B), double (8B)</code>?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q22')"><span class="opt-label">A</span>13 bytes</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q22')"><span class="opt-label">B</span>8 bytes</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q22')"><span class="opt-label">C</span>4 bytes</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q22')"><span class="opt-label">D</span>1 byte</div>
+            </div>
+            <div class="mcq-exp" id="q22">Union size = size of its LARGEST member. Here double (8 bytes) is largest, so size = 8 bytes.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q23. How do you access a structure member using a pointer?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q23')"><span class="opt-label">A</span>ptr.member</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q23')"><span class="opt-label">B</span>ptr->member</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q23')"><span class="opt-label">C</span>ptr::member</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q23')"><span class="opt-label">D</span>ptr[member]</div>
+            </div>
+            <div class="mcq-exp" id="q23">Arrow operator (->) is used to access members via pointer. Dot (.) is used with direct variable.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 10 ===== -->
+    <div class="section-card" id="sec9">
+      <div class="section-header" onclick="toggle(9)">
+        <span class="section-num">10</span>
+        <span class="section-title">File Handling</span>
+        <span class="section-arrow">▶</span>
+      </div>
+      <div class="section-body">
+
+        <div class="topic-block">
+          <div class="topic-title">File Operations Overview</div>
+          <pre><span class="ty">FILE</span> *fp;                          <span class="cm">// file pointer</span>
+fp = <span class="fn">fopen</span>(<span class="st">"file.txt"</span>, <span class="st">"r"</span>);    <span class="cm">// open</span>
+<span class="kw">if</span>(fp == NULL) { printf(<span class="st">"Error"</span>); }
+<span class="cm">// ... read/write operations ...</span>
+<span class="fn">fclose</span>(fp);                        <span class="cm">// close</span></pre>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">File Opening Modes</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Mode</th><th>Meaning</th><th>File exists?</th><th>File absent?</th></tr>
+              <tr><td><code>"r"</code></td><td>Read only</td><td>Opens for reading</td><td>Returns NULL</td></tr>
+              <tr><td><code>"w"</code></td><td>Write only</td><td>Truncates to zero (overwrites)</td><td>Creates new file</td></tr>
+              <tr><td><code>"a"</code></td><td>Append</td><td>Appends at end</td><td>Creates new file</td></tr>
+              <tr><td><code>"r+"</code></td><td>Read + Write</td><td>Opens for both</td><td>Returns NULL</td></tr>
+              <tr><td><code>"w+"</code></td><td>Write + Read</td><td>Truncates</td><td>Creates new file</td></tr>
+              <tr><td><code>"a+"</code></td><td>Append + Read</td><td>Appends</td><td>Creates new file</td></tr>
+              <tr><td><code>"rb","wb"</code></td><td>Binary mode</td><td>Binary read/write</td><td>-</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="topic-block">
+          <div class="topic-title">File Functions</div>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Function</th><th>Purpose</th></tr>
+              <tr><td><code>fopen(name, mode)</code></td><td>Opens a file, returns FILE pointer (NULL on failure)</td></tr>
+              <tr><td><code>fclose(fp)</code></td><td>Closes the file</td></tr>
+              <tr><td><code>fprintf(fp, ...)</code></td><td>Writes formatted data to file</td></tr>
+              <tr><td><code>fscanf(fp, ...)</code></td><td>Reads formatted data from file</td></tr>
+              <tr><td><code>fgetc(fp)</code></td><td>Reads one character from file</td></tr>
+              <tr><td><code>fputc(ch, fp)</code></td><td>Writes one character to file</td></tr>
+              <tr><td><code>fgets(str, n, fp)</code></td><td>Reads a line from file</td></tr>
+              <tr><td><code>fputs(str, fp)</code></td><td>Writes string to file</td></tr>
+              <tr><td><code>feof(fp)</code></td><td>Returns true at end of file</td></tr>
+              <tr><td><code>rewind(fp)</code></td><td>Moves pointer to beginning of file</td></tr>
+              <tr><td><code>fseek(fp, offset, origin)</code></td><td>Moves file pointer to specific position</td></tr>
+            </table>
+          </div>
+          <div class="info-box warn"><strong>fseek origins</strong>
+            SEEK_SET (0) = beginning | SEEK_CUR (1) = current position | SEEK_END (2) = end of file
+          </div>
+        </div>
+
+        <div class="mcq-section">
+          <div class="mcq-title">Practice MCQs</div>
+          <div class="mcq">
+            <div class="mcq-q">Q24. What does <code>fopen("test.txt","w")</code> do if the file already exists?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q24')"><span class="opt-label">A</span>Returns NULL</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q24')"><span class="opt-label">B</span>Appends to file</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q24')"><span class="opt-label">C</span>Overwrites (truncates to zero)</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q24')"><span class="opt-label">D</span>Opens in read mode</div>
+            </div>
+            <div class="mcq-exp" id="q24">"w" mode TRUNCATES an existing file to zero length (overwrites it). Use "a" to append.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q25. Which function checks if end-of-file is reached?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q25')"><span class="opt-label">A</span>feof(fp)</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q25')"><span class="opt-label">A</span>feof(fp) ✓</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q25')"><span class="opt-label">B</span>fclose(fp)</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q25')"><span class="opt-label">C</span>rewind(fp)</div>
+            </div>
+            <div class="mcq-exp" id="q25">feof(fp) returns non-zero (true) when end-of-file is reached while reading.</div>
+          </div>
+          <div class="mcq">
+            <div class="mcq-q">Q26. What does <code>fopen</code> return if the file cannot be opened?</div>
+            <div class="mcq-options">
+              <div class="mcq-opt" onclick="ans(this,'wrong','q26')"><span class="opt-label">A</span>0</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q26')"><span class="opt-label">B</span>-1</div>
+              <div class="mcq-opt" onclick="ans(this,'correct','q26')"><span class="opt-label">C</span>NULL</div>
+              <div class="mcq-opt" onclick="ans(this,'wrong','q26')"><span class="opt-label">D</span>EOF</div>
+            </div>
+            <div class="mcq-exp" id="q26">fopen returns NULL if the file cannot be opened (e.g., file doesn't exist in read mode, no permissions).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCORE SUMMARY -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:10px;text-align:center;">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;margin-bottom:6px;color:var(--accent)">📊 Your MCQ Score</div>
+      <div id="total-score" style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:bold;color:var(--green)">0 / 26</div>
+      <div style="font-family:'Crimson Pro',serif;font-size:15px;color:var(--text-muted);margin-top:8px">Click on options to attempt MCQs. Correct answers shown in green!</div>
+    </div>
+
+  </div>
+</div>
+
+<button class="scroll-top" id="scrollBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // Clock
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent = now.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
+  }
+  updateClock(); setInterval(updateClock, 1000);
+
+  // Toggle sections
+  const opened = new Set();
+  function toggle(i) {
+    const card = document.getElementById('sec'+i);
+    card.classList.toggle('open');
+    if(card.classList.contains('open')) { opened.add(i); }
+    else { opened.delete(i); }
+    updateProgress();
+  }
+
+  function jumpTo(i) {
+    const card = document.getElementById('sec'+i);
+    if(!card.classList.contains('open')) { card.classList.add('open'); opened.add(i); updateProgress(); }
+    card.scrollIntoView({behavior:'smooth', block:'start'});
+    document.querySelectorAll('.nav-item').forEach((el,idx) => el.classList.toggle('active', idx===i));
+  }
+
+  function updateProgress() {
+    const pct = (opened.size / 10) * 100;
+    document.getElementById('prog').style.width = pct + '%';
+    document.getElementById('prog-text').textContent = opened.size + ' / 10';
+  }
+
+  // MCQ logic
+  let correct = 0, total = 0;
+  const answered = {};
+
+  function ans(el, type, qid) {
+    if(answered[qid]) return;
+    answered[qid] = true;
+    total++;
+    if(type==='correct') { el.classList.add('correct'); correct++; }
+    else {
+      el.classList.add('wrong');
+      el.parentElement.querySelectorAll('.mcq-opt').forEach(opt => {
+        if(opt.onclick.toString().includes("'correct'")) opt.classList.add('correct');
+      });
+    }
+    const exp = document.getElementById(qid);
+    if(exp) exp.classList.add('show');
+    document.getElementById('total-score').textContent = correct + ' / ' + total;
+  }
+
+  // Scroll to top button
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('scrollBtn');
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+</script>
+</body>
+</html>
