@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solutions & Colloids – TS ECET Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --card: #161e2e;
+    --border: #1f2d44;
+    --accent: #00d4aa;
+    --accent2: #f59e0b;
+    --accent3: #818cf8;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --danger: #f87171;
+    --success: #34d399;
+    --glow: rgba(0,212,170,0.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lora', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  /* BACKGROUND GRID */
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events:none; z-index:0;
+  }
+  .wrap { position:relative; z-index:1; max-width:960px; margin:0 auto; padding:0 20px 60px; }
+
+  /* HEADER */
+  header {
+    text-align:center;
+    padding: 48px 20px 32px;
+    position:relative;
+  }
+  .tag {
+    display:inline-block;
+    font-family:'DM Mono', monospace;
+    font-size:11px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color: var(--accent);
+    background: rgba(0,212,170,0.08);
+    border: 1px solid rgba(0,212,170,0.25);
+    padding: 4px 14px;
+    border-radius:3px;
+    margin-bottom:16px;
+  }
+  header h1 {
+    font-family:'Syne', sans-serif;
+    font-size: clamp(28px,5vw,52px);
+    font-weight:800;
+    line-height:1.1;
+    background: linear-gradient(135deg, #e2e8f0 30%, #00d4aa);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  header p {
+    margin-top:12px;
+    color:var(--muted);
+    font-size:15px;
+    font-style:italic;
+  }
+
+  /* NAV TABS */
+  .nav {
+    display:flex; flex-wrap:wrap; gap:8px;
+    margin: 28px 0 36px;
+    justify-content:center;
+  }
+  .nav-btn {
+    font-family:'Syne', sans-serif;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding: 8px 16px;
+    border-radius:4px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--muted);
+    cursor:pointer;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+
+  /* SECTIONS */
+  .section { display:none; animation: fadeIn 0.4s ease; }
+  .section.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+  /* TOPIC CARDS */
+  .topic-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius:10px;
+    margin-bottom:20px;
+    overflow:hidden;
+    transition: border-color 0.2s;
+  }
+  .topic-card:hover { border-color: var(--accent); }
+  .topic-header {
+    display:flex; align-items:center; gap:14px;
+    padding:18px 22px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .topic-icon {
+    width:38px; height:38px;
+    border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px;
+    flex-shrink:0;
+  }
+  .topic-title {
+    font-family:'Syne', sans-serif;
+    font-size:16px;
+    font-weight:700;
+    flex:1;
+  }
+  .chevron {
+    color:var(--muted);
+    font-size:18px;
+    transition:transform 0.3s;
+  }
+  .topic-card.open .chevron { transform:rotate(180deg); }
+  .topic-body {
+    display:none;
+    padding: 0 22px 22px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-card.open .topic-body { display:block; }
+
+  /* CONTENT STYLES */
+  .content-block { padding:16px 0; }
+  .content-block + .content-block { border-top:1px solid var(--border); }
+  .sub-title {
+    font-family:'Syne',sans-serif;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:10px;
+  }
+  p { line-height:1.8; font-size:14.5px; color:#cbd5e1; margin-bottom:8px; }
+  .highlight {
+    display:inline-block;
+    background:rgba(0,212,170,0.1);
+    border-left:3px solid var(--accent);
+    padding:10px 14px;
+    border-radius:0 6px 6px 0;
+    margin:8px 0;
+    font-family:'DM Mono',monospace;
+    font-size:13.5px;
+    color:var(--accent);
+    width:100%;
+  }
+  .highlight b { color: var(--accent2); }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:10px 0; }
+  .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:10px 0; }
+  @media(max-width:600px){ .grid2,.grid3{ grid-template-columns:1fr; } }
+  .pill {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:10px 14px;
+    font-size:13.5px;
+    line-height:1.6;
+  }
+  .pill b { color:var(--accent2); font-family:'Syne',sans-serif; font-size:12px; display:block; margin-bottom:3px; }
+  .warning-box {
+    background: rgba(245,158,11,0.08);
+    border:1px solid rgba(245,158,11,0.3);
+    border-radius:8px;
+    padding:12px 16px;
+    margin:10px 0;
+    font-size:14px;
+    color:#fcd34d;
+  }
+  .warning-box::before { content:'⚠ '; }
+  .info-box {
+    background:rgba(129,140,248,0.08);
+    border:1px solid rgba(129,140,248,0.3);
+    border-radius:8px;
+    padding:12px 16px;
+    margin:10px 0;
+    font-size:14px;
+    color:#a5b4fc;
+  }
+  .info-box::before { content:'💡 '; }
+  table { width:100%; border-collapse:collapse; margin:12px 0; font-size:13.5px; }
+  th {
+    background:rgba(0,212,170,0.1);
+    color:var(--accent);
+    font-family:'Syne',sans-serif;
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:10px 12px;
+    text-align:left;
+    border:1px solid var(--border);
+  }
+  td {
+    padding:9px 12px;
+    border:1px solid var(--border);
+    color:#cbd5e1;
+    vertical-align:top;
+    line-height:1.6;
+  }
+  tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+  .formula {
+    background:rgba(129,140,248,0.08);
+    border:1px solid rgba(129,140,248,0.2);
+    border-radius:8px;
+    padding:14px 18px;
+    margin:10px 0;
+    font-family:'DM Mono',monospace;
+    font-size:14px;
+    color:#c4b5fd;
+    text-align:center;
+  }
+
+  /* SOLVED PROBLEMS */
+  .problem {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    margin:12px 0;
+    overflow:hidden;
+  }
+  .problem-q {
+    padding:14px 16px;
+    font-size:14px;
+    font-weight:600;
+    border-bottom:1px solid var(--border);
+    color:var(--accent2);
+  }
+  .problem-q::before { content:'Q: '; }
+  .problem-steps { padding:14px 16px; }
+  .step {
+    display:flex; gap:10px; margin-bottom:8px;
+    font-size:13.5px; line-height:1.7;
+    color:#cbd5e1;
+  }
+  .step-num {
+    background:var(--accent);
+    color:var(--bg);
+    width:22px; height:22px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'DM Mono',monospace;
+    font-size:11px;
+    font-weight:700;
+    flex-shrink:0;
+    margin-top:2px;
+  }
+  .answer {
+    background:rgba(52,211,153,0.08);
+    border:1px solid rgba(52,211,153,0.3);
+    border-radius:6px;
+    padding:10px 14px;
+    margin-top:10px;
+    color:var(--success);
+    font-family:'DM Mono',monospace;
+    font-size:13.5px;
+  }
+
+  /* QUIZ */
+  .quiz-container { }
+  .quiz-progress {
+    display:flex; align-items:center; gap:12px; margin-bottom:24px;
+  }
+  .progress-bar-wrap { flex:1; background:var(--border); border-radius:3px; height:6px; }
+  .progress-bar { height:6px; background:var(--accent); border-radius:3px; transition:width 0.4s; }
+  .q-count { font-family:'DM Mono',monospace; font-size:12px; color:var(--muted); }
+  .score-badge {
+    font-family:'DM Mono',monospace;
+    font-size:12px;
+    color:var(--accent2);
+    background:rgba(245,158,11,0.1);
+    border:1px solid rgba(245,158,11,0.3);
+    padding:3px 10px;
+    border-radius:20px;
+  }
+  .quiz-card {
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:24px;
+    margin-bottom:16px;
+  }
+  .quiz-q {
+    font-family:'Syne',sans-serif;
+    font-size:15px;
+    font-weight:600;
+    line-height:1.6;
+    margin-bottom:20px;
+    color:var(--text);
+  }
+  .quiz-q span {
+    display:inline-block;
+    background:rgba(0,212,170,0.1);
+    color:var(--accent);
+    border-radius:4px;
+    padding:1px 8px;
+    font-size:12px;
+    margin-bottom:8px;
+    font-weight:400;
+    letter-spacing:1px;
+    text-transform:uppercase;
+  }
+  .options { display:flex; flex-direction:column; gap:10px; }
+  .option-btn {
+    display:flex; align-items:center; gap:12px;
+    padding:12px 16px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    color:var(--text);
+    font-size:14px;
+    cursor:pointer;
+    text-align:left;
+    transition: all 0.2s;
+    font-family:'Lora',serif;
+  }
+  .option-btn:hover:not(:disabled) { border-color:var(--accent); background:rgba(0,212,170,0.05); }
+  .option-btn .letter {
+    width:26px; height:26px;
+    border-radius:50%;
+    background:var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'DM Mono',monospace;
+    font-size:12px;
+    font-weight:700;
+    flex-shrink:0;
+    transition:all 0.2s;
+  }
+  .option-btn.correct { border-color:var(--success); background:rgba(52,211,153,0.08); }
+  .option-btn.correct .letter { background:var(--success); color:var(--bg); }
+  .option-btn.wrong { border-color:var(--danger); background:rgba(248,113,113,0.08); }
+  .option-btn.wrong .letter { background:var(--danger); color:var(--bg); }
+  .explanation {
+    margin-top:14px;
+    padding:12px 16px;
+    background:rgba(0,212,170,0.06);
+    border-left:3px solid var(--accent);
+    border-radius:0 6px 6px 0;
+    font-size:13.5px;
+    color:#a5b4fc;
+    display:none;
+  }
+  .explanation.show { display:block; animation:fadeIn 0.3s ease; }
+  .explanation b { color:var(--success); }
+  .next-btn {
+    display:none;
+    margin-top:14px;
+    width:100%;
+    padding:12px;
+    background:var(--accent);
+    border:none;
+    border-radius:8px;
+    color:var(--bg);
+    font-family:'Syne',sans-serif;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:opacity 0.2s;
+    letter-spacing:1px;
+  }
+  .next-btn:hover { opacity:0.85; }
+  .next-btn.show { display:block; }
+  .quiz-result {
+    display:none;
+    text-align:center;
+    padding:40px 20px;
+  }
+  .quiz-result.show { display:block; animation:fadeIn 0.5s ease; }
+  .result-score {
+    font-family:'Syne',sans-serif;
+    font-size:64px;
+    font-weight:800;
+    background:linear-gradient(135deg,var(--accent),var(--accent3));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .result-msg { font-size:18px; color:var(--muted); margin:8px 0 24px; font-style:italic; }
+  .restart-btn {
+    padding:12px 32px;
+    background:var(--accent);
+    border:none;
+    border-radius:8px;
+    color:var(--bg);
+    font-family:'Syne',sans-serif;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    letter-spacing:1px;
+  }
+  .restart-btn:hover { opacity:0.85; }
+
+  /* QUICK REF */
+  .ref-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:10px 0; }
+  @media(max-width:600px){ .ref-grid{grid-template-columns:1fr;} }
+  .ref-card {
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+  }
+  .ref-card h4 {
+    font-family:'Syne',sans-serif;
+    font-size:13px;
+    font-weight:700;
+    color:var(--accent2);
+    margin-bottom:8px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+  .ref-card p { font-size:13px; margin-bottom:4px; }
+  .key-term { color:var(--accent); font-weight:600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="tag">TS ECET Exam Prep</div>
+    <h1>Solutions &amp; Colloids</h1>
+    <p>Complete chapter coverage · MCQ-focused · Numerical problems solved</p>
+  </header>
+
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showSection('theory')">📖 Theory</button>
+    <button class="nav-btn" onclick="showSection('numericals')">🧮 Numericals</button>
+    <button class="nav-btn" onclick="showSection('colloids')">🔬 Colloids</button>
+    <button class="nav-btn" onclick="showSection('quickref')">⚡ Quick Reference</button>
+    <button class="nav-btn" onclick="showSection('quiz')">🎯 MCQ Quiz</button>
+  </nav>
+
+  <!-- ===== THEORY SECTION ===== -->
+  <div id="theory" class="section active">
+
+    <!-- 1. Introduction & Solution -->
+    <div class="topic-card open">
+      <div class="topic-header" onclick="toggleCard(this)">
+        <div class="topic-icon" style="background:rgba(0,212,170,0.1)">🧪</div>
+        <div class="topic-title">Introduction to Solutions &amp; Solubility</div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="topic-body">
+        <div class="content-block">
+          <div class="sub-title">What is a Solution?</div>
+          <p>A <span class="key-term">solution</span> is a <b>homogeneous mixture</b> of two or more substances. It has uniform composition throughout.</p>
+          <div class="grid2">
+            <div class="pill"><b>Solute</b>The substance that dissolves (present in smaller amount)</div>
+            <div class="pill"><b>Solvent</b>The substance that dissolves the solute (present in larger amount)</div>
+          </div>
+          <div class="info-box">In salt water: Salt = Solute, Water = Solvent. Water is called the "universal solvent".</div>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">Solubility</div>
+          <p><span class="key-term">Solubility</span> = Maximum amount of solute that dissolves in 100g of solvent at a given temperature to form a saturated solution.</p>
+          <div class="grid3">
+            <div class="pill"><b>Unsaturated</b>Can dissolve more solute</div>
+            <div class="pill"><b>Saturated</b>Maximum solute dissolved</div>
+            <div class="pill"><b>Supersaturated</b>Contains more solute than saturated (unstable)</div>
+          </div>
+          <div class="warning-box">For SOLIDS in liquids: Solubility INCREASES with temperature. For GASES in liquids: Solubility DECREASES with temperature (Henry's law).</div>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">Classification of Solutions by Physical State</div>
+          <table>
+            <tr><th>Solute State</th><th>Solvent State</th><th>Example</th></tr>
+            <tr><td>Gas</td><td>Gas</td><td>Air (O₂ + N₂)</td></tr>
+            <tr><td>Gas</td><td>Liquid</td><td>CO₂ in water (soda)</td></tr>
+            <tr><td>Liquid</td><td>Liquid</td><td>Ethanol in water</td></tr>
+            <tr><td>Solid</td><td>Liquid</td><td>Salt in water</td></tr>
+            <tr><td>Gas</td><td>Solid</td><td>H₂ in palladium</td></tr>
+            <tr><td>Solid</td><td>Solid</td><td>Alloys (brass = Cu+Zn)</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Atomic, Molecular, Equivalent Weight -->
+    <div class="topic-card">
+      <div class="topic-header" onclick="toggleCard(this)">
+        <div class="topic-icon" style="background:rgba(245,158,11,0.1)">⚖️</div>
+        <div class="topic-title">Atomic Weight, Molecular Weight &amp; Equivalent Weight</div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="topic-body">
+        <div class="content-block">
+          <div class="sub-title">Atomic Weight</div>
+          <p><span class="key-term">Atomic Weight</span> = Average mass of one atom of an element compared to 1/12 mass of Carbon-12 atom.</p>
+          <div class="highlight">Atomic weight is a <b>relative number</b> (dimensionless). Example: H=1, C=12, O=16, N=14, Na=23, Cl=35.5</div>
+          <div class="info-box">Atomic weight is also called Relative Atomic Mass (RAM). It is measured in Atomic Mass Units (amu).</div>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">Molecular Weight</div>
+          <p><span class="key-term">Molecular Weight</span> = Sum of atomic weights of all atoms in one molecule.</p>
+          <div class="grid2">
+            <div class="pill"><b>H₂O</b>= 2(1) + 16 = <b>18 g/mol</b></div>
+            <div class="pill"><b>H₂SO₄</b>= 2(1) + 32 + 4(16) = <b>98 g/mol</b></div>
+            <div class="pill"><b>NaCl</b>= 23 + 35.5 = <b>58.5 g/mol</b></div>
+            <div class="pill"><b>NaOH</b>= 23 + 16 + 1 = <b>40 g/mol</b></div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">Equivalent Weight</div>
+          <p><span class="key-term">Equivalent Weight (E)</span> = Molecular Weight ÷ n-factor (valence factor)</p>
+          <div class="formula">E = Molecular Weight / n-factor</div>
+          <table>
+            <tr><th>Substance</th><th>n-factor</th><th>Equiv. Weight</th></tr>
+            <tr><td>HCl (acid)</td><td>1 (1 replaceable H⁺)</td><td>36.5/1 = 36.5</td></tr>
+            <tr><td>H₂SO₄</td><td>2 (2 replaceable H⁺)</td><td>98/2 = 49</td></tr>
+            <tr><td>H₃PO₄</td><td>3</td><td>98/3 = 32.67</td></tr>
+            <tr><td>NaOH (base)</td><td>1 (1 OH⁻)</td><td>40/1 = 40</td></tr>
+            <tr><td>Ca(OH)₂</td><td>2</td><td>74/2 = 37</td></tr>
+            <tr><td>NaCl (salt)</td><td>1</td><td>58.5/1 = 58.5</td></tr>
+          </table>
+          <div class="warning-box">n-factor for acids = No. of replaceable H⁺ ions. For bases = No. of OH⁻ ions. For salts = total valence of cation × number of cations.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Mole Concept -->
+    <div class="topic-card">
+      <div class="topic-header" onclick="toggleCard(this)">
+        <div class="topic-icon" style="background:rgba(129,140,248,0.1)">🔢</div>
+        <div class="topic-title">Mole Concept</div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="topic-body">
+        <div class="content-block">
+          <div class="sub-title">What is a Mole?</div>
+          <p>One <span class="key-term">mole</span> = 6.022 × 10²³ particles (atoms, molecules, ions). This number is called <b>Avogadro's Number (Nₐ)</b>.</p>
+          <div class="highlight">1 mole of any substance = <b>Molecular weight in grams</b> = Gram Molecular Mass</div>
+          <div class="grid3">
+            <div class="pill"><b>1 mole H₂O</b>= 18 g = 6.022×10²³ molecules</div>
+            <div class="pill"><b>1 mole NaCl</b>= 58.5 g = 6.022×10²³ formula units</div>
+            <div class="pill"><b>1 mole O₂</b>= 32 g = 22.4 L at STP</div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">Key Mole Formulas</div>
+          <div class="formula">Number of Moles (n) = Given Mass (g) / Molar Mass (g/mol)</div>
+          <div class="formula">Number of Molecules = n × Nₐ = n × 6.022 × 10²³</div>
+          <div class="formula">Volume at STP (for gases) = n × 22.4 L</div>
+          <div class="info-box">STP = Standard Temperature and Pressure (0°C and 1 atm). At STP, 1 mole of any gas = 22.4 L.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Molarity -->
+    <div class="topic-card">
+      <div class="topic-header" onclick="toggleCard(this)">
+        <div class="topic-icon" style="background:rgba(0,212,170,0.1)">📐</div>
+        <div class="topic-title">Molarity (M)</div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="topic-body">
+        <div class="content-block">
+          <div class="sub-title">Definition &amp; Formula</div>
+          <p><span class="key-term">Molarity</span> = Number of moles of solute dissolved per litre of solution. Unit: mol/L or M.</p>
+          <div class="formula">M = n / V(L) = (W × 1000) / (M.W × V<sub>mL</sub>)</div>
+          <p>Where: W = weight of solute (g), M.W = Molar mass, V = Volume of solution in mL</p>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">Important Relationships</div>
+          <div class="grid2">
+            <div class="pill"><b>Dilution Formula</b>M₁V₁ = M₂V₂<br>(moles before = moles after)</div>
+            <div class="pill"><b>Mixing Formula</b>M₁V₁ + M₂V₂ = M_mix × (V₁+V₂)</div>
+          </div>
+          <div class="warning-box">Molarity CHANGES with temperature (volume changes). Molality does NOT change with temperature.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Normality -->
+    <div class="topic-card">
+      <div class="topic-header" onclick="toggleCard(this)">
+        <div class="topic-icon" style="background:rgba(245,158,11,0.1)">⚗️</div>
+        <div class="topic-title">Normality (N)</div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="topic-body">
+        <div class="content-block">
+          <div class="sub-title">Definition &amp; Formula</div>
+          <p><span class="key-term">Normality</span> = Number of gram equivalents of solute per litre of solution. Unit: N or eq/L.</p>
+          <div class="formula">N = (W × 1000) / (E × V<sub>mL</sub>)</div>
+          <p>Where: E = Equivalent weight, V = Volume in mL</p>
+          <div class="formula">Normality = Molarity × n-factor</div>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">Normality in Reactions</div>
+          <div class="highlight">At the equivalence point: <b>N₁V₁ = N₂V₂</b> (Acid-Base titrations)</div>
+          <div class="grid3">
+            <div class="pill"><b>1N HCl</b>= 1M (n=1)</div>
+            <div class="pill"><b>1N H₂SO₄</b>= 0.5M (n=2)</div>
+            <div class="pill"><b>1N H₃PO₄</b>= 0.333M (n=3)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== NUMERICALS SECTION ===== -->
+  <div id="numericals" class="section">
+    <div class="topic-card open">
+      <div class="topic-header" onclick="toggleCard(this)">
+        <div class="topic-icon" style="background:rgba(0,212,170,0.1)">🔢</div>
+        <div class="topic-title">Mole Concept Problems</div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="topic-body">
+        <div class="problem">
+          <div class="problem-q">How many moles are present in 36g of water (H₂O)?</div>
+          <div class="problem-steps">
+            <div class="step"><div class="step-num">1</div><div>Molar mass of H₂O = 2(1) + 16 = <b>18 g/mol</b></div></div>
+            <div class="step"><div class="step-num">2</div><div>Moles = Mass / Molar mass = 36 / 18</div></div>
+            <div class="answer">✓ Moles = 2 mol</div>
+          </div>
+        </div>
+        <div class="problem">
+          <div class="problem-q">Calculate the number of molecules in 44g of CO₂.</div>
+          <div class="problem-steps">
+            <div class="step"><div class="step-num">1</div><div>Molar mass of CO₂ = 12 + 2(16) = <b>44 g/mol</b></div></div>
+            <div class="step"><div class="step-num">2</div><div>Moles = 44/44 = <b>1 mol</b></div></div>
+            <div class="step"><div class="step-num">3</div><div>Molecules = 1 × 6.022×10²³</div></div>
+            <div class="answer">✓ 6.022 × 10²³ molecules</div>
+          </div>
+        </div>
+        <div class="problem">
+          <div class="problem-q">Find the volume occupied by 3.2g of oxygen gas (O₂) at STP.</div>
+          <div class="problem-steps">
+            <div class="step"><div class="step-num">1</div><div>Molar mass of O₂ = 32 g/mol</div></div>
+            <div class="step"><div class="step-num">2</div><div>Moles = 3.2/32 = <b>0.1 mol</b></div></div>
+            <div class="step"><div class="step-num">3</div><div>Volume = 0.1 × 22.4 = 2.24 L</div></div>
+            <div class="answer">✓ Volume = 2.24 L at STP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="topic-card">
+      <div class="topic-header" onclick="toggleCard(this)">
+        <div class="topic-icon" style="background:rgba(129,140,248,0.1)">📐</div>
+        <div class="topic-title">Molarity Problems</div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="topic-body">
+        <div class="problem">
+          <div class="problem-q">Calculate molarity of a solution containing 4g NaOH in 200 mL solution.</div>
+          <div class="problem-steps">
+            <div class="step"><div class="step-num">1</div><div>Molar mass of NaOH = 23+16+1 = <b>40 g/mol</b></div></div>
+            <div class="step"><div class="step-num">2</div><div>M = (W × 1000) / (M.W × V<sub>mL</sub>) = (4 × 1000) / (40 × 200)</div></div>
+            <div class="step"><div class="step-num">3</div><div>M = 4000 / 8000 = 0.5</div></div>
+            <div class="answer">✓ Molarity = 0.5 M</div>
+          </div>
+        </div>
+        <div class="problem">
+          <div class="problem-q">What volume of 2M HCl is needed to prepare 500 mL of 0.4M HCl?</div>
+          <div class="problem-steps">
+            <div class="step"><div class="step-num">1</div><div>Use: M₁V₁ = M₂V₂</div></div>
+            <div class="step"><div class="step-num">2</div><div>2 × V₁ = 0.4 × 500</div></div>
+            <div class="step"><div class="step-num">3</div><div>V₁ = 200/2 = 100 mL</div></div>
+            <div class="answer">✓ 100 mL of 2M HCl needed</div>
+          </div>
+        </div>
+        <div class="problem">
+          <div class="problem-q">Calculate molarity of 9.8g H₂SO₄ dissolved in 250 mL solution.</div>
+          <div class="problem-steps">
+            <div class="step"><div class="step-num">1</div><div>M.W of H₂SO₄ = 2+32+64 = <b>98 g/mol</b></div></div>
+            <div class="step"><div class="step-num">2</div><div>M = (9.8 × 1000) / (98 × 250) = 9800/24500</div></div>
+            <div class="answer">✓ Molarity = 0.4 M</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="topic-card">
+      <div class="topic-header" onclick="toggleCard(this)">
+        <div class="topic-icon" style="background:rgba(245,158,11,0.1)">⚗️</div>
+        <div class="topic-title">Normality Problems</div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="topic-body">
+        <div class="problem">
+          <div class="problem-q">Calculate the normality of 4.9g H₂SO₄ in 500 mL solution.</div>
+          <div class="problem-steps">
+            <div class="step"><div class="step-num">1</div><div>Equivalent weight of H₂SO₄ = 98/2 = <b>49 g/eq</b></div></div>
+            <div class="step"><div class="step-num">2</div><div>N = (W × 1000) / (E × V) = (4.9 × 1000) / (49 × 500)</div></div>
+            <div class="step"><div class="step-num">3</div><div>N = 4900/24500 = 0.2</div></div>
+            <div class="answer">✓ Normality = 0.2 N</div>
+          </div>
+        </div>
+        <div class="problem">
+          <div class="problem-q">20 mL of 0.5N HCl neutralises how many mL of 0.25N NaOH?</div>
+          <div class="problem-steps">
+            <div class="step"><div class="step-num">1</div><div>Use: N₁V₁ = N₂V₂</div></div>
+            <div class="step"><div class="step-num">2</div><div>0.5 × 20 = 0.25 × V₂</div></div>
+            <div class="step"><div class="step-num">3</div><div>V₂ = 10/0.25 = 40 mL</div></div>
+            <div class="answer">✓ 40 mL of NaOH required</div>
+          </div>
+        </div>
+        <div class="problem">
+          <div class="problem-q">A solution of HCl has molarity 2M. Find its normality.</div>
+          <div class="problem-steps">
+            <div class="step"><div class="step-num">1</div><div>HCl has n-factor = 1 (one replaceable H⁺)</div></div>
+            <div class="step"><div class="step-num">2</div><div>Normality = Molarity × n-factor = 2 × 1</div></div>
+            <div class="answer">✓ Normality = 2 N</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== COLLOIDS SECTION ===== -->
+  <div id="colloids" class="section">
+
+    <div class="topic-card open">
+      <div class="topic-header" onclick="toggleCard(this)">
+        <div class="topic-icon" style="background:rgba(129,140,248,0.1)">🔬</div>
+        <div class="topic-title">Introduction to Colloids &amp; Types</div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="topic-body">
+        <div class="content-block">
+          <div class="sub-title">What is a Colloid?</div>
+          <p>A <span class="key-term">colloid</span> (colloidal system) is a heterogeneous mixture where particles are dispersed in a medium but are too small to be seen and do NOT settle on their own.</p>
+          <table>
+            <tr><th>Type</th><th>Particle Size</th><th>Example</th></tr>
+            <tr><td>True Solution</td><td>&lt; 1 nm</td><td>Salt in water</td></tr>
+            <tr><td><b>Colloid</b></td><td><b>1 – 1000 nm</b></td><td>Milk, Blood, Smoke</td></tr>
+            <tr><td>Suspension</td><td>&gt; 1000 nm</td><td>Muddy water, chalk in water</td></tr>
+          </table>
+          <p>The dispersed substance = <b>Dispersed Phase</b>. The medium = <b>Dispersion Medium</b>.</p>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">8 Types of Colloids</div>
+          <table>
+            <tr><th>Dispersed Phase</th><th>Dispersion Medium</th><th>Name</th><th>Example</th></tr>
+            <tr><td>Gas</td><td>Liquid</td><td>Foam</td><td>Whipped cream, soap lather</td></tr>
+            <tr><td>Gas</td><td>Solid</td><td>Solid Foam</td><td>Pumice stone, bread</td></tr>
+            <tr><td>Liquid</td><td>Gas</td><td>Aerosol</td><td>Clouds, fog, mist</td></tr>
+            <tr><td>Liquid</td><td>Liquid</td><td>Emulsion</td><td>Milk, mayonnaise</td></tr>
+            <tr><td>Liquid</td><td>Solid</td><td>Solid Emulsion (Gel)</td><td>Butter, cheese</td></tr>
+            <tr><td>Solid</td><td>Gas</td><td>Solid Aerosol</td><td>Smoke, dust in air</td></tr>
+            <tr><td>Solid</td><td>Liquid</td><td>Sol</td><td>Gold sol, starch in water</td></tr>
+            <tr><td>Solid</td><td>Solid</td><td>Solid Sol</td><td>Ruby glass, alloys</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-header" onclick="toggleCard(this)">
+        <div class="topic-icon" style="background:rgba(0,212,170,0.1)">💧</div>
+        <div class="topic-title">Lyophilic vs Lyophobic Colloids</div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="topic-body">
+        <div class="content-block">
+          <table>
+            <tr><th>Property</th><th>Lyophilic ("solvent-loving")</th><th>Lyophobic ("solvent-fearing")</th></tr>
+            <tr><td>Affinity for medium</td><td>High affinity</td><td>Low affinity</td></tr>
+            <tr><td>Stability</td><td>Stable (self-stabilizing)</td><td>Unstable (needs stabilizer)</td></tr>
+            <tr><td>Viscosity</td><td>Higher than medium</td><td>Same as medium</td></tr>
+            <tr><td>Reversibility</td><td>Reversible (can re-form)</td><td>Irreversible</td></tr>
+            <tr><td>Preparation</td><td>Easy – direct mixing</td><td>Special methods required</td></tr>
+            <tr><td>Coagulation</td><td>Not easily coagulated</td><td>Easily coagulated</td></tr>
+            <tr><td>Examples</td><td>Starch, gelatin, gum, rubber</td><td>Gold sol, Fe(OH)₃ sol, As₂S₃ sol</td></tr>
+            <tr><td>Tyndall Effect</td><td>Less distinct</td><td>More distinct</td></tr>
+          </table>
+          <div class="warning-box">Lyophilic + water = Hydrophilic. Lyophobic + water = Hydrophobic. These are the most important terms for MCQs!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-header" onclick="toggleCard(this)">
+        <div class="topic-icon" style="background:rgba(245,158,11,0.1)">🛡️</div>
+        <div class="topic-title">Protective Colloids &amp; Gold Number</div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="topic-body">
+        <div class="content-block">
+          <div class="sub-title">Protective Colloids</div>
+          <p>When a <span class="key-term">lyophilic colloid</span> is added to a lyophobic colloid, it protects it from coagulation. The lyophilic colloid forms a protective layer around lyophobic particles.</p>
+          <div class="info-box">Gelatin added to gold sol protects gold sol from precipitation by NaCl. Gelatin is the protective colloid here.</div>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">Gold Number</div>
+          <p><span class="key-term">Gold Number</span> = Minimum mass (in mg) of a protective colloid needed to prevent coagulation of 10 mL of standard gold sol when 1 mL of 10% NaCl is added.</p>
+          <div class="highlight">Lower Gold Number → <b>Better protecting power</b> of the colloid</div>
+          <table>
+            <tr><th>Protective Colloid</th><th>Gold Number</th></tr>
+            <tr><td>Gelatin</td><td>0.005 – 0.01 (BEST protector)</td></tr>
+            <tr><td>Haemoglobin</td><td>0.03 – 0.07</td></tr>
+            <tr><td>Albumin</td><td>0.1 – 0.2</td></tr>
+            <tr><td>Potato starch</td><td>25</td></tr>
+          </table>
+          <div class="warning-box">Concept introduced by Zsigmondy. Gold number is a measure of PROTECTING POWER – smaller = better!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-header" onclick="toggleCard(this)">
+        <div class="topic-icon" style="background:rgba(129,140,248,0.1)">✨</div>
+        <div class="topic-title">Properties of Colloids</div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="topic-body">
+        <div class="content-block">
+          <div class="sub-title">1. Tyndall Effect</div>
+          <p>When a beam of light passes through a colloid, the path of light becomes visible due to <b>scattering</b> by colloidal particles. This is the <span class="key-term">Tyndall Effect</span>.</p>
+          <div class="info-box">True solutions do NOT show Tyndall effect. Colloids DO. This is used to distinguish between them. Sunbeams visible in dusty air = Tyndall effect!</div>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">2. Brownian Movement</div>
+          <p>Colloidal particles show continuous <b>random zig-zag motion</b> due to unequal bombardment by solvent molecules. Named after Robert Brown.</p>
+          <div class="info-box">Brownian movement prevents sedimentation of colloidal particles.</div>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">3. Electrophoresis</div>
+          <p>Migration of colloidal particles under the influence of an <b>electric field</b>. Shows colloidal particles are electrically charged.</p>
+          <div class="grid2">
+            <div class="pill"><b>Positively charged sols</b>Fe(OH)₃, Al(OH)₃, TiO₂ → move toward cathode</div>
+            <div class="pill"><b>Negatively charged sols</b>Au, Ag, As₂S₃, starch → move toward anode</div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">4. Coagulation (Flocculation)</div>
+          <p>Settling/precipitation of colloidal particles is called <span class="key-term">coagulation</span>. Can be caused by adding electrolytes, heating, or adding oppositely charged sol.</p>
+          <div class="highlight"><b>Hardy-Schulze Rule:</b> Higher the valence of added ion, greater the coagulating power. Al³⁺ &gt; Ca²⁺ &gt; Na⁺</div>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">5. Adsorption</div>
+          <p>Colloidal particles have large surface area and can <b>adsorb</b> ions, molecules, or dyes on their surface. This is used in decolourization, purification.</p>
+        </div>
+        <div class="content-block">
+          <div class="sub-title">6. Dialysis</div>
+          <p>Purification of colloids by removing dissolved electrolytes using a <b>semipermeable membrane</b>. Colloid particles cannot pass through. Used in kidney dialysis machines.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-header" onclick="toggleCard(this)">
+        <div class="topic-icon" style="background:rgba(0,212,170,0.1)">🏭</div>
+        <div class="topic-title">Industrial Applications of Colloids</div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="topic-body">
+        <div class="content-block">
+          <table>
+            <tr><th>Application</th><th>Colloid Involved</th><th>Principle Used</th></tr>
+            <tr><td>Sewage treatment (Cottrell precipitator)</td><td>Smoke/dust = solid aerosol</td><td>Electrophoresis (charged plates)</td></tr>
+            <tr><td>Water purification by alum</td><td>Clay suspension in water</td><td>Coagulation (Al³⁺ coagulates negative clay)</td></tr>
+            <tr><td>Medicines (colloidal silver/gold)</td><td>Metal sols</td><td>Germicidal/antibiotic</td></tr>
+            <tr><td>Rubber making (latex)</td><td>Rubber = lyophilic emulsion</td><td>Coagulation of latex</td></tr>
+            <tr><td>Photography</td><td>AgBr in gelatin = colloidal</td><td>Light-sensitive colloid</td></tr>
+            <tr><td>Tanning of leather</td><td>Protein (hide) + tannin</td><td>Coagulation (opposite charges)</td></tr>
+            <tr><td>Food industry</td><td>Butter, cheese, ice cream</td><td>Emulsions</td></tr>
+            <tr><td>Delta formation</td><td>Clay particles in river</td><td>Coagulation by sea salt</td></tr>
+          </table>
+          <div class="info-box">Cottrell precipitator is used in factories to remove smoke particles from flue gases using electrophoresis — very common MCQ topic!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== QUICK REFERENCE ===== -->
+  <div id="quickref" class="section">
+    <div style="margin-bottom:24px">
+      <div class="sub-title" style="margin-bottom:16px">🔑 All Formulas at a Glance</div>
+      <div class="ref-grid">
+        <div class="ref-card">
+          <h4>Mole Concept</h4>
+          <p>n = W / M.W</p>
+          <p>Molecules = n × 6.022×10²³</p>
+          <p>Vol at STP = n × 22.4 L</p>
+        </div>
+        <div class="ref-card">
+          <h4>Molarity</h4>
+          <p>M = (W × 1000) / (M.W × V<sub>mL</sub>)</p>
+          <p>Dilution: M₁V₁ = M₂V₂</p>
+          <p>N = M × n-factor</p>
+        </div>
+        <div class="ref-card">
+          <h4>Normality</h4>
+          <p>N = (W × 1000) / (E × V<sub>mL</sub>)</p>
+          <p>Titration: N₁V₁ = N₂V₂</p>
+          <p>E = M.W / n-factor</p>
+        </div>
+        <div class="ref-card">
+          <h4>Equivalent Weights</h4>
+          <p>HCl → 36.5, H₂SO₄ → 49</p>
+          <p>NaOH → 40, Ca(OH)₂ → 37</p>
+          <p>Na₂CO₃ → 53</p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-bottom:24px">
+      <div class="sub-title" style="margin-bottom:16px">🎯 MCQ Exam Tips</div>
+      <div class="ref-grid">
+        <div class="ref-card">
+          <h4>Colloidal Particle Size</h4>
+          <p>1–1000 nm (or 10⁻⁹ to 10⁻⁶ m)</p>
+          <p>NOT visible to naked eye</p>
+          <p>DO show Tyndall effect</p>
+        </div>
+        <div class="ref-card">
+          <h4>Gold Number Rule</h4>
+          <p>Lower gold number = BETTER protector</p>
+          <p>Gelatin has lowest gold number</p>
+          <p>Concept: Zsigmondy</p>
+        </div>
+        <div class="ref-card">
+          <h4>Hardy-Schulze Rule</h4>
+          <p>Higher valence = More coagulation</p>
+          <p>Al³⁺ &gt; Ba²⁺ &gt; Na⁺</p>
+          <p>For negative sol, use positive ions</p>
+        </div>
+        <div class="ref-card">
+          <h4>Important Sols</h4>
+          <p>+ve: Fe(OH)₃, Al(OH)₃</p>
+          <p>-ve: Au, As₂S₃, starch</p>
+          <p>Lyophilic: gelatin, starch</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sub-title" style="margin-bottom:16px">📌 Must-Remember Facts</div>
+      <div class="topic-card">
+        <div class="topic-body" style="display:block; padding:16px 22px;">
+          <div class="warning-box">Avogadro's Number = 6.022 × 10²³ (also written 6.023 × 10²³)</div>
+          <div class="warning-box">Molar volume at STP = 22.4 L/mol (for ANY ideal gas)</div>
+          <div class="info-box">Brownian motion is caused by unequal bombardment by solvent molecules — it prevents settling.</div>
+          <div class="info-box">Dialysis removes small ions/molecules from colloid using semipermeable membrane.</div>
+          <div class="info-box">Electrophoresis = movement of colloid particles in electric field. Electroosmosis = movement of dispersion medium.</div>
+          <div class="warning-box">Milk is an emulsion (liquid in liquid). Butter is a gel (liquid in solid). Fog is a liquid aerosol.</div>
+          <div class="info-box">Delta formation at river mouths occurs because sea salt (electrolyte) coagulates negatively charged clay particles.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== QUIZ SECTION ===== -->
+  <div id="quiz" class="section">
+    <div class="quiz-container">
+      <div class="quiz-progress">
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+        <div class="q-count" id="qCount">0 / 20</div>
+        <div class="score-badge" id="scoreBadge">Score: 0</div>
+      </div>
+      <div id="quizArea"></div>
+      <div class="quiz-result" id="quizResult">
+        <div class="result-score" id="resultScore">0/20</div>
+        <div class="result-msg" id="resultMsg"></div>
+        <button class="restart-btn" onclick="restartQuiz()">🔄 Try Again</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===================== NAVIGATION =====================
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  if(id === 'quiz') initQuiz();
+}
+
+// ===================== ACCORDION =====================
+function toggleCard(header) {
+  const card = header.parentElement;
+  card.classList.toggle('open');
+}
+
+// ===================== QUIZ DATA =====================
+const questions = [
+  {
+    topic:"Mole Concept",
+    q:"How many moles are present in 18g of water (H₂O)?",
+    opts:["0.5 mol","1 mol","2 mol","18 mol"],
+    ans:1,
+    exp:"Molar mass of H₂O = 18 g/mol. Moles = 18/18 = 1 mol."
+  },
+  {
+    topic:"Mole Concept",
+    q:"The number of molecules in 44g of CO₂ is:",
+    opts:["3.011 × 10²³","6.022 × 10²³","12.044 × 10²³","1.5 × 10²³"],
+    ans:1,
+    exp:"M.W of CO₂ = 44. Moles = 44/44 = 1. Molecules = 1 × 6.022×10²³."
+  },
+  {
+    topic:"Molarity",
+    q:"Molarity of a solution containing 4g NaOH in 200 mL is:",
+    opts:["0.25 M","0.5 M","1 M","2 M"],
+    ans:1,
+    exp:"M = (4 × 1000)/(40 × 200) = 4000/8000 = 0.5 M."
+  },
+  {
+    topic:"Molarity",
+    q:"If 500 mL of 2M NaCl is diluted to 1000 mL, the new molarity is:",
+    opts:["4 M","2 M","1 M","0.5 M"],
+    ans:2,
+    exp:"M₁V₁ = M₂V₂ → 2 × 500 = M₂ × 1000 → M₂ = 1 M."
+  },
+  {
+    topic:"Normality",
+    q:"The equivalent weight of H₂SO₄ is:",
+    opts:["98","49","32.67","19.6"],
+    ans:1,
+    exp:"H₂SO₄ has n-factor = 2 (two replaceable H⁺). E = 98/2 = 49."
+  },
+  {
+    topic:"Normality",
+    q:"Normality = Molarity × ?",
+    opts:["Equivalent weight","Molar mass","n-factor","Avogadro's number"],
+    ans:2,
+    exp:"N = M × n-factor. This is a fundamental relationship."
+  },
+  {
+    topic:"Normality",
+    q:"In a titration, 20 mL of 0.5N HCl neutralises NaOH solution. Volume of 0.25N NaOH required is:",
+    opts:["10 mL","20 mL","40 mL","80 mL"],
+    ans:2,
+    exp:"N₁V₁ = N₂V₂ → 0.5 × 20 = 0.25 × V₂ → V₂ = 40 mL."
+  },
+  {
+    topic:"Colloids",
+    q:"The size range of colloidal particles is:",
+    opts:["< 1 nm","1–1000 nm","> 1000 nm","1–10 nm"],
+    ans:1,
+    exp:"Colloidal particles range from 1 to 1000 nm (1 to 100 nm in some texts). True solutions < 1 nm, suspensions > 1000 nm."
+  },
+  {
+    topic:"Colloids",
+    q:"Milk is an example of:",
+    opts:["Foam","Gel","Emulsion","Sol"],
+    ans:2,
+    exp:"Milk = liquid (fat) dispersed in liquid (water) = Emulsion."
+  },
+  {
+    topic:"Colloids",
+    q:"Tyndall effect is shown by:",
+    opts:["True solution only","Colloid only","Both colloid and true solution","Suspension only"],
+    ans:1,
+    exp:"Tyndall effect (scattering of light) is shown by colloids, not true solutions. It is used to distinguish them."
+  },
+  {
+    topic:"Colloids",
+    q:"Brownian motion of colloidal particles is due to:",
+    opts:["Gravity","Unequal bombardment by solvent molecules","Electric field","Temperature gradient"],
+    ans:1,
+    exp:"Colloidal particles undergo random zig-zag Brownian motion due to unequal bombardment by solvent/medium molecules."
+  },
+  {
+    topic:"Colloids",
+    q:"Which colloid has the BEST protective power (lowest gold number)?",
+    opts:["Starch","Albumin","Haemoglobin","Gelatin"],
+    ans:3,
+    exp:"Gelatin has the lowest gold number (0.005–0.01), so it has the BEST protecting power. Lower gold number = better protector."
+  },
+  {
+    topic:"Colloids",
+    q:"Gold number is defined as:",
+    opts:["Mass of gold in a colloid","Min. mass (mg) of protective colloid to prevent coagulation of 10mL gold sol","Max mass of colloid to start coagulation","Weight of gold sol in grams"],
+    ans:1,
+    exp:"Gold number = minimum mg of protective colloid to prevent coagulation of 10 mL standard gold sol by 1 mL of 10% NaCl."
+  },
+  {
+    topic:"Colloids",
+    q:"Lyophilic colloids are:",
+    opts:["Irreversible and unstable","Reversible and stable","Irreversible and stable","Reversible and unstable"],
+    ans:1,
+    exp:"Lyophilic colloids (e.g. gelatin, starch) are reversible and stable because they have high affinity for the solvent."
+  },
+  {
+    topic:"Colloids",
+    q:"Hardy-Schulze rule states that coagulating power of an ion depends on:",
+    opts:["Its size","Its valence (charge)","Its concentration","Its colour"],
+    ans:1,
+    exp:"Hardy-Schulze: Higher the valence of the ion, greater its coagulating power. Al³⁺ > Ca²⁺ > Na⁺ for a negative sol."
+  },
+  {
+    topic:"Colloids",
+    q:"Electrophoresis demonstrates that colloidal particles:",
+    opts:["Are neutral","Carry electric charge","Have large mass","Are insoluble"],
+    ans:1,
+    exp:"In electrophoresis, colloidal particles migrate toward oppositely charged electrode, proving they carry electric charge."
+  },
+  {
+    topic:"Applications",
+    q:"Cottrell precipitator is used in factories to remove smoke using the principle of:",
+    opts:["Dialysis","Brownian motion","Electrophoresis","Tyndall effect"],
+    ans:2,
+    exp:"Cottrell precipitator uses electrophoresis — charged plates coagulate smoke particles (solid aerosol) and remove them."
+  },
+  {
+    topic:"Atomic Weight",
+    q:"Equivalent weight = ?",
+    opts:["Molecular weight × n-factor","Molecular weight / n-factor","Molecular weight + n-factor","Molecular weight − n-factor"],
+    ans:1,
+    exp:"Equivalent weight = Molecular weight ÷ n-factor (valence factor)."
+  },
+  {
+    topic:"Solutions",
+    q:"Solubility of gases in liquid:",
+    opts:["Increases with temperature","Decreases with temperature","Is unaffected by temperature","First increases then decreases"],
+    ans:1,
+    exp:"According to Henry's law, solubility of gases in liquids DECREASES with increase in temperature (opposite of solids)."
+  },
+  {
+    topic:"Mole Concept",
+    q:"Volume occupied by 2 moles of O₂ at STP is:",
+    opts:["11.2 L","22.4 L","44.8 L","32 L"],
+    ans:2,
+    exp:"At STP, 1 mole of gas = 22.4 L. So 2 moles = 2 × 22.4 = 44.8 L."
+  }
+];
+
+// ===================== QUIZ LOGIC =====================
+let currentQ = 0, score = 0, answered = false;
+
+function initQuiz() {
+  currentQ = 0; score = 0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizArea').style.display = 'block';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  if(currentQ >= questions.length) {
+    showResult(); return;
+  }
+  answered = false;
+  const q = questions[currentQ];
+  updateProgress();
+  const letters = ['A','B','C','D'];
+  let html = `<div class="quiz-card">
+    <div class="quiz-q"><span>${q.topic}</span><br>${q.q}</div>
+    <div class="options">
+      ${q.opts.map((o,i) => `<button class="option-btn" onclick="selectAnswer(${i})" id="opt${i}">
+        <span class="letter">${letters[i]}</span>${o}
+      </button>`).join('')}
+    </div>
+    <div class="explanation" id="explanation">
+      <b>✓ Correct!</b> ${q.exp}
+    </div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+      ${currentQ < questions.length-1 ? 'Next Question →' : 'See Results →'}
+    </button>
+  </div>`;
+  document.getElementById('quizArea').innerHTML = html;
+}
+
+function selectAnswer(idx) {
+  if(answered) return;
+  answered = true;
+  const q = questions[currentQ];
+  const opts = document.querySelectorAll('.option-btn');
+  opts.forEach(b => b.disabled = true);
+  if(idx === q.ans) {
+    opts[idx].classList.add('correct');
+    score++;
+  } else {
+    opts[idx].classList.add('wrong');
+    opts[q.ans].classList.add('correct');
+  }
+  document.getElementById('explanation').classList.add('show');
+  document.getElementById('nextBtn').classList.add('show');
+  updateProgress();
+}
+
+function nextQuestion() {
+  currentQ++;
+  renderQuestion();
+}
+
+function updateProgress() {
+  const pct = (currentQ / questions.length) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('qCount').textContent = currentQ + ' / ' + questions.length;
+  document.getElementById('scoreBadge').textContent = 'Score: ' + score;
+}
+
+function showResult() {
+  document.getElementById('quizArea').style.display = 'none';
+  const result = document.getElementById('quizResult');
+  result.classList.add('show');
+  document.getElementById('resultScore').textContent = score + '/' + questions.length;
+  const pct = (score/questions.length)*100;
+  let msg = '';
+  if(pct === 100) msg = 'Perfect score! You are fully ready! 🏆';
+  else if(pct >= 80) msg = 'Excellent! Minor revision needed. 🌟';
+  else if(pct >= 60) msg = 'Good effort! Review the weak topics. 📚';
+  else msg = 'Keep studying — you will get there! 💪';
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('qCount').textContent = questions.length + ' / ' + questions.length;
+  document.getElementById('progressBar').style.width = '100%';
+}
+
+function restartQuiz() {
+  initQuiz();
+}
+
+// Init first open card states
+document.querySelectorAll('.topic-card.open .topic-body').forEach(b => b.style.display = 'block');
+</script>
+</body>
+</html>
