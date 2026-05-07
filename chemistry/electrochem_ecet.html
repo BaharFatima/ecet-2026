@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electrochemistry – TS ECET Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --panel: #0f1628;
+    --border: #1e2d50;
+    --accent: #00d4ff;
+    --accent2: #ff6b35;
+    --accent3: #7cfc00;
+    --accent4: #ffd700;
+    --text: #d0e4ff;
+    --muted: #5a7aa8;
+    --correct: #00ff88;
+    --wrong: #ff4466;
+    --heading: 'Bebas Neue', cursive;
+    --mono: 'IBM Plex Mono', monospace;
+    --body: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* GRID BG */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 40px 0 30px;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 30px;
+  }
+  .header .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-family: var(--heading);
+    font-size: clamp(42px, 8vw, 80px);
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .header .sub {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+    letter-spacing: 2px;
+  }
+
+  /* NAV TABS */
+  .nav {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .nav-btn {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .nav-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
+
+  /* SECTIONS */
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* CONTENT CARDS */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    border-radius: 2px;
+  }
+  .card.orange { border-left-color: var(--accent2); }
+  .card.green { border-left-color: var(--accent3); }
+  .card.gold { border-left-color: var(--accent4); }
+
+  .card h2 {
+    font-family: var(--heading);
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .card.orange h2 { color: var(--accent2); }
+  .card.green h2 { color: var(--accent3); }
+  .card.gold h2 { color: var(--accent4); }
+
+  .card h3 {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 18px 0 8px;
+  }
+  .card.orange h3 { color: var(--accent2); }
+  .card.green h3 { color: var(--accent3); }
+  .card.gold h3 { color: var(--accent4); }
+
+  .card p { font-size: 14px; line-height: 1.8; color: var(--text); margin-bottom: 10px; }
+
+  /* KEY POINT BOX */
+  .keybox {
+    background: rgba(0,212,255,0.07);
+    border: 1px dashed var(--accent);
+    padding: 12px 16px;
+    border-radius: 2px;
+    margin: 12px 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    line-height: 1.7;
+  }
+  .keybox.orange { background: rgba(255,107,53,0.07); border-color: var(--accent2); color: var(--accent2); }
+  .keybox.green { background: rgba(124,252,0,0.07); border-color: var(--accent3); color: var(--accent3); }
+  .keybox.gold { background: rgba(255,215,0,0.07); border-color: var(--accent4); color: var(--accent4); }
+
+  /* COMPARISON TABLE */
+  .tbl { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; }
+  .tbl th {
+    background: rgba(0,212,255,0.15);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 10px 12px;
+    text-align: left;
+    border: 1px solid var(--border);
+  }
+  .tbl td { padding: 9px 12px; border: 1px solid var(--border); color: var(--text); vertical-align: top; }
+  .tbl tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  /* FORMULA BOX */
+  .formula {
+    background: #0a0e1a;
+    border: 1px solid var(--accent4);
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent4);
+    border-radius: 2px;
+    text-align: center;
+  }
+
+  /* TAG BADGES */
+  .badge {
+    display: inline-block;
+    background: rgba(0,212,255,0.15);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin: 2px;
+  }
+  .badge.imp { background: rgba(255,107,53,0.15); border-color: var(--accent2); color: var(--accent2); }
+
+  ul.custom { padding-left: 0; list-style: none; margin: 10px 0; }
+  ul.custom li { padding: 5px 0 5px 18px; font-size: 14px; line-height: 1.7; position: relative; border-bottom: 1px solid rgba(30,45,80,0.5); }
+  ul.custom li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); }
+
+  /* QUIZ */
+  .quiz-container { }
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .quiz-title { font-family: var(--heading); font-size: 28px; letter-spacing: 2px; color: var(--accent2); }
+  .score-box {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent4);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+  }
+
+  .q-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 20px;
+    margin-bottom: 16px;
+    border-radius: 2px;
+    transition: border-color 0.3s;
+  }
+  .q-card.answered { border-color: var(--muted); }
+
+  .q-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .q-text { font-size: 14px; font-weight: 600; line-height: 1.7; margin-bottom: 14px; color: var(--text); }
+
+  .options { display: grid; gap: 8px; }
+  .opt-btn {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 14px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: var(--body);
+    transition: all 0.2s;
+    border-radius: 2px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--accent); background: rgba(0,212,255,0.07); }
+  .opt-btn:disabled { cursor: default; }
+  .opt-btn.correct { background: rgba(0,255,136,0.12); border-color: var(--correct); color: var(--correct); }
+  .opt-btn.wrong { background: rgba(255,68,102,0.12); border-color: var(--wrong); color: var(--wrong); }
+
+  .opt-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    min-width: 20px;
+    font-weight: 600;
+    margin-top: 1px;
+  }
+
+  .explanation {
+    margin-top: 12px;
+    padding: 12px;
+    background: rgba(0,212,255,0.05);
+    border-left: 3px solid var(--accent);
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--accent);
+    display: none;
+    font-style: italic;
+  }
+  .explanation.show { display: block; animation: fadeIn 0.3s; }
+
+  .quiz-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 12px 24px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,212,255,0.3); }
+  .btn.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .btn.orange { background: var(--accent2); }
+  .btn.orange:hover { box-shadow: 0 6px 20px rgba(255,107,53,0.3); }
+
+  /* NUMERICAL SECTION */
+  .num-problem {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent4);
+    padding: 20px 22px;
+    margin-bottom: 16px;
+  }
+  .num-problem .prob-title {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--accent4);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .num-problem .given {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    font-family: var(--mono);
+  }
+  .num-problem .question { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+
+  .steps { counter-reset: step; }
+  .step {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .step::before {
+    counter-increment: step;
+    content: counter(step);
+    background: var(--accent4);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 11px;
+    min-width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .toggle-sol {
+    background: transparent;
+    border: 1px solid var(--accent4);
+    color: var(--accent4);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 6px 14px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    margin-top: 10px;
+  }
+  .toggle-sol:hover { background: var(--accent4); color: var(--bg); }
+  .solution { display: none; margin-top: 14px; }
+  .solution.show { display: block; animation: fadeIn 0.3s; }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--border);
+    margin: 16px 0;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+
+  /* SUMMARY */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .stat-box {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-box .val { font-family: var(--heading); font-size: 40px; color: var(--accent); }
+  .stat-box .lbl { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 2px; margin-top: 4px; }
+
+  em { color: var(--accent2); font-style: normal; font-weight: 600; }
+  strong { color: var(--accent4); }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <div class="label">TS ECET · Chemistry · Module 04</div>
+    <h1>ELECTROCHEMISTRY</h1>
+    <div class="sub">Complete Study Guide + MCQ Practice · All Subtopics Covered</div>
+  </div>
+
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showSection('conductors')">01 · Conductors & Electrolytes</button>
+    <button class="nav-btn" onclick="showSection('arrhenius')">02 · Arrhenius Theory</button>
+    <button class="nav-btn" onclick="showSection('electrolysis')">03 · Electrolysis</button>
+    <button class="nav-btn" onclick="showSection('nacl')">04 · NaCl Electrolysis</button>
+    <button class="nav-btn" onclick="showSection('faraday')">05 · Faraday's Laws</button>
+    <button class="nav-btn" onclick="showSection('numericals')">06 · Numericals</button>
+    <button class="nav-btn" onclick="showSection('quiz')">07 · MCQ Practice</button>
+  </nav>
+
+  <!-- SECTION 1: CONDUCTORS & ELECTROLYTES -->
+  <div id="conductors" class="section active">
+    <div class="card">
+      <h2>Conductors, Insulators & Electrolytes</h2>
+
+      <h3>Types of Substances Based on Conductivity</h3>
+      <table class="tbl">
+        <tr>
+          <th>Type</th><th>Conductivity</th><th>Charge Carrier</th><th>Examples</th>
+        </tr>
+        <tr>
+          <td><em>Conductors</em></td>
+          <td>High</td>
+          <td>Free electrons</td>
+          <td>Cu, Fe, Al, Graphite</td>
+        </tr>
+        <tr>
+          <td><em>Insulators</em></td>
+          <td>Nil / Very low</td>
+          <td>None</td>
+          <td>Glass, Rubber, Plastic, Wood</td>
+        </tr>
+        <tr>
+          <td><em>Electrolytes</em></td>
+          <td>Moderate (in solution/melt)</td>
+          <td>Ions</td>
+          <td>NaCl, HCl, H₂SO₄, NaOH</td>
+        </tr>
+      </table>
+
+      <div class="keybox">
+        ★ KEY EXAM POINT: Conductors carry electricity by ELECTRONS. Electrolytes carry electricity by IONS. This is the most frequently tested distinction.
+      </div>
+
+      <h3>Types of Electrolytes</h3>
+      <table class="tbl">
+        <tr>
+          <th>Type</th><th>Degree of Ionization</th><th>Examples</th>
+        </tr>
+        <tr>
+          <td><em>Strong Electrolytes</em></td>
+          <td>Nearly 100% ionized</td>
+          <td>HCl, HNO₃, H₂SO₄, NaOH, KOH, NaCl, KCl, NaNO₃</td>
+        </tr>
+        <tr>
+          <td><em>Weak Electrolytes</em></td>
+          <td>Partially ionized (&lt;5%)</td>
+          <td>CH₃COOH (Acetic acid), NH₄OH, H₂CO₃, HCN</td>
+        </tr>
+        <tr>
+          <td><em>Non-Electrolytes</em></td>
+          <td>0% — do not ionize</td>
+          <td>Sugar (C₁₂H₂₂O₁₁), Urea, Glucose, Alcohol</td>
+        </tr>
+      </table>
+
+      <div class="keybox">
+        ★ Non-electrolytes do NOT conduct electricity even in solution. Sugar solution = non-conductor.
+      </div>
+
+      <h3>More Definitions You Must Know</h3>
+      <ul class="custom">
+        <li><strong>Ionization / Dissociation:</strong> Breaking of electrolyte into ions when dissolved in water</li>
+        <li><strong>Degree of Ionization (α):</strong> Fraction of total electrolyte molecules that are ionized. Strong = α≈1, Weak = α≪1</li>
+        <li><strong>Electrolytic Solution:</strong> Solution containing free ions that can conduct electricity</li>
+        <li><strong>Electrodes:</strong> Conductors through which current enters/exits the electrolyte</li>
+        <li><strong>Anode (+):</strong> Electrode connected to positive terminal — <em>oxidation occurs</em></li>
+        <li><strong>Cathode (−):</strong> Electrode connected to negative terminal — <em>reduction occurs</em></li>
+      </ul>
+
+      <div class="keybox">
+        ★ MEMORY TRICK: "An OX and a RED CAT" → ANode = OXidation | CAThode = REDuction
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: ARRHENIUS THEORY -->
+  <div id="arrhenius" class="section">
+    <div class="card orange">
+      <h2>Arrhenius Theory of Electrolytic Dissociation</h2>
+
+      <h3>Postulates of Arrhenius Theory (1884)</h3>
+      <ul class="custom">
+        <li>When an electrolyte is dissolved in water, it <em>spontaneously dissociates</em> (splits) into positively and negatively charged ions</li>
+        <li>The ions are in a state of <em>random motion</em> in solution</li>
+        <li>The process is <em>reversible</em> — ions can recombine (re-association)</li>
+        <li>Solutions of electrolytes are <em>electrically neutral</em> overall (equal positive and negative charges)</li>
+        <li>The extent of dissociation depends on: <strong>nature of electrolyte</strong>, <strong>concentration</strong>, and <strong>temperature</strong></li>
+        <li>On passing electric current, <em>cations migrate to cathode</em> and <em>anions migrate to anode</em></li>
+      </ul>
+
+      <div class="keybox orange">
+        ★ KEY: Dissociation occurs on DISSOLVING in water — NOT when current is passed. Current only separates them.
+      </div>
+
+      <h3>Dissociation Examples</h3>
+      <div class="formula">NaCl → Na⁺ + Cl⁻</div>
+      <div class="formula">HCl → H⁺ + Cl⁻</div>
+      <div class="formula">H₂SO₄ → 2H⁺ + SO₄²⁻</div>
+      <div class="formula">NaOH → Na⁺ + OH⁻</div>
+      <div class="formula">CH₃COOH ⇌ CH₃COO⁻ + H⁺  (partial — weak electrolyte)</div>
+
+      <h3>Effect of Dilution on Conductivity</h3>
+      <ul class="custom">
+        <li><strong>Dilution increases degree of ionization</strong> for weak electrolytes</li>
+        <li>For strong electrolytes — already fully ionized, dilution barely affects degree of ionization</li>
+        <li><strong>Specific conductance (κ)</strong> decreases on dilution (fewer ions per unit volume)</li>
+        <li><strong>Equivalent / Molar conductance (Λ)</strong> increases on dilution</li>
+      </ul>
+
+      <div class="keybox orange">
+        ★ MCQ TRAP: Specific conductance DECREASES with dilution but molar conductance INCREASES. These are commonly confused!
+      </div>
+
+      <h3>Limitations of Arrhenius Theory</h3>
+      <ul class="custom">
+        <li>Does not explain behaviour of strong electrolytes accurately</li>
+        <li>Does not account for ionic interactions in concentrated solutions</li>
+        <li>Fails to explain behaviour in non-aqueous solvents</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 3: ELECTROLYSIS -->
+  <div id="electrolysis" class="section">
+    <div class="card green">
+      <h2>Electrolysis</h2>
+
+      <h3>What is Electrolysis?</h3>
+      <p>Electrolysis is the process of <em>decomposing a chemical compound</em> using electrical energy. When electric current is passed through an electrolyte (in molten or aqueous state), chemical reactions occur at the electrodes.</p>
+
+      <h3>Key Components of an Electrolytic Cell</h3>
+      <table class="tbl">
+        <tr><th>Component</th><th>Function</th></tr>
+        <tr><td><em>Electrolytic Cell</em></td><td>Container holding the electrolyte solution/melt</td></tr>
+        <tr><td><em>External Battery/DC Source</em></td><td>Provides electrical energy; forces non-spontaneous reaction</td></tr>
+        <tr><td><em>Anode (+ve)</em></td><td>Oxidation occurs — anions lose electrons here</td></tr>
+        <tr><td><em>Cathode (−ve)</em></td><td>Reduction occurs — cations gain electrons here</td></tr>
+        <tr><td><em>Electrolyte</em></td><td>Conducts current via ions; undergoes decomposition</td></tr>
+      </table>
+
+      <div class="keybox green">
+        ★ Electrolysis = Electrical energy → Chemical energy (opposite of galvanic/voltaic cell)
+      </div>
+
+      <h3>What Happens at Each Electrode?</h3>
+      <ul class="custom">
+        <li><strong>At Cathode (−):</strong> Positive ions (cations like Na⁺, Cu²⁺, H⁺) migrate → gain electrons → <em>reduced → deposited or liberated as gas</em></li>
+        <li><strong>At Anode (+):</strong> Negative ions (anions like Cl⁻, OH⁻, SO₄²⁻) migrate → lose electrons → <em>oxidized → gas liberated or electrode dissolves</em></li>
+      </ul>
+
+      <h3>Selective Discharge — Preferential Discharge</h3>
+      <p>When multiple ions are present, the ion that is <em>discharged preferentially</em> depends on:</p>
+      <ul class="custom">
+        <li><strong>Position in electrochemical series</strong> — ions lower down (more noble) are discharged first at cathode</li>
+        <li><strong>Concentration of ions</strong> — higher concentration ion is preferred</li>
+        <li><strong>Nature of electrode</strong> — inert (Pt, C) vs. active (Cu, Ag)</li>
+      </ul>
+
+      <div class="keybox green">
+        ★ At cathode: Cu²⁺ is preferentially discharged over H⁺ (Cu is below H in activity series)<br>
+        ★ At anode: Cl⁻ is preferentially discharged over OH⁻ when conc. of Cl⁻ is high
+      </div>
+
+      <h3>Applications of Electrolysis</h3>
+      <table class="tbl">
+        <tr><th>Application</th><th>Details</th></tr>
+        <tr><td><em>Electroplating</em></td><td>Depositing thin layer of one metal on another (e.g., silver on copper). Object = cathode, plating metal = anode</td></tr>
+        <tr><td><em>Electrorefining</em></td><td>Purifying metals like copper. Impure Cu = anode, pure Cu = cathode, CuSO₄ solution = electrolyte</td></tr>
+        <tr><td><em>Extraction of metals</em></td><td>Al from bauxite (Hall-Heroult process), Na from molten NaCl</td></tr>
+        <tr><td><em>Manufacture of chemicals</em></td><td>NaOH, Cl₂, H₂ from NaCl (Chlor-alkali process)</td></tr>
+        <tr><td><em>Anodizing</em></td><td>Forming oxide coating on Al for corrosion resistance</td></tr>
+        <tr><td><em>Electroforming</em></td><td>Making metal objects by electrolytic deposition in a mold</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 4: NaCl ELECTROLYSIS -->
+  <div id="nacl" class="section">
+    <div class="card">
+      <h2>Electrolysis of NaCl — Fused vs Aqueous</h2>
+
+      <h3>① Electrolysis of Fused (Molten) NaCl</h3>
+      <p>NaCl is melted at ~800°C. In fused state, ions are free to move.</p>
+      <div class="formula">NaCl(l) → Na⁺ + Cl⁻</div>
+
+      <table class="tbl">
+        <tr><th>Electrode</th><th>Ion</th><th>Reaction</th><th>Product</th></tr>
+        <tr>
+          <td>Cathode (−)</td>
+          <td>Na⁺</td>
+          <td>Na⁺ + e⁻ → Na (Reduction)</td>
+          <td><em>Sodium metal</em></td>
+        </tr>
+        <tr>
+          <td>Anode (+)</td>
+          <td>Cl⁻</td>
+          <td>2Cl⁻ → Cl₂ + 2e⁻ (Oxidation)</td>
+          <td><em>Chlorine gas</em></td>
+        </tr>
+      </table>
+
+      <div class="keybox">
+        ★ Fused NaCl → Na metal at cathode + Cl₂ gas at anode. Used industrially to manufacture sodium metal (Down's cell).
+      </div>
+
+      <h3>② Electrolysis of Aqueous NaCl (Brine)</h3>
+      <p>In aqueous solution, both Na⁺/Cl⁻ ions AND water molecules (H⁺/OH⁻) are present. Selective discharge determines products:</p>
+
+      <table class="tbl">
+        <tr><th>Electrode</th><th>Ions Present</th><th>Discharged Ion</th><th>Reaction</th><th>Product</th></tr>
+        <tr>
+          <td>Cathode (−)</td>
+          <td>Na⁺, H⁺</td>
+          <td>H⁺ (easier to reduce)</td>
+          <td>2H⁺ + 2e⁻ → H₂</td>
+          <td><em>Hydrogen gas</em></td>
+        </tr>
+        <tr>
+          <td>Anode (+)</td>
+          <td>Cl⁻, OH⁻</td>
+          <td>Cl⁻ (high conc.)</td>
+          <td>2Cl⁻ → Cl₂ + 2e⁻</td>
+          <td><em>Chlorine gas</em></td>
+        </tr>
+      </table>
+
+      <div class="keybox orange">
+        ★ Remaining solution → NaOH (sodium hydroxide). This is the CHLOR-ALKALI PROCESS — most important industrial electrolysis.
+      </div>
+
+      <h3>Comparison: Fused NaCl vs Aqueous NaCl</h3>
+      <table class="tbl">
+        <tr><th>Feature</th><th>Fused NaCl</th><th>Aqueous NaCl</th></tr>
+        <tr><td>State</td><td>Molten (~800°C)</td><td>Solution in water</td></tr>
+        <tr><td>Cathode Product</td><td><em>Na metal</em></td><td><em>H₂ gas</em></td></tr>
+        <tr><td>Anode Product</td><td><em>Cl₂ gas</em></td><td><em>Cl₂ gas</em></td></tr>
+        <tr><td>Remaining Solution</td><td>—</td><td><em>NaOH solution</em></td></tr>
+        <tr><td>Industrial Use</td><td>Down's Cell (Na metal production)</td><td>Chlor-alkali process</td></tr>
+      </table>
+
+      <div class="keybox">
+        ★ MOST IMPORTANT MCQ: Aqueous NaCl gives H₂ at cathode (NOT sodium), because H⁺ from water is more easily reduced than Na⁺.
+      </div>
+
+      <h3>Chlor-Alkali Products and Uses</h3>
+      <ul class="custom">
+        <li><strong>Cl₂ (Chlorine):</strong> Used in PVC, disinfection, bleaching powder, pesticides</li>
+        <li><strong>H₂ (Hydrogen):</strong> Used in hydrogenation of oils, fuel, ammonia synthesis</li>
+        <li><strong>NaOH (Caustic soda):</strong> Used in soap making, paper industry, textiles, drain cleaners</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 5: FARADAY'S LAWS -->
+  <div id="faraday" class="section">
+    <div class="card gold">
+      <h2>Faraday's Laws of Electrolysis</h2>
+
+      <h3>First Law of Electrolysis</h3>
+      <p>The mass of substance deposited or liberated at an electrode is <em>directly proportional to the quantity of electricity</em> (charge) passed through the electrolyte.</p>
+
+      <div class="formula">m ∝ Q &nbsp;&nbsp;→&nbsp;&nbsp; m = Z × Q &nbsp;&nbsp;→&nbsp;&nbsp; m = Z × I × t</div>
+
+      <table class="tbl">
+        <tr><th>Symbol</th><th>Quantity</th><th>Unit</th></tr>
+        <tr><td><em>m</em></td><td>Mass deposited/liberated</td><td>grams (g)</td></tr>
+        <tr><td><em>Q</em></td><td>Quantity of electricity (charge)</td><td>Coulombs (C)</td></tr>
+        <tr><td><em>I</em></td><td>Current</td><td>Amperes (A)</td></tr>
+        <tr><td><em>t</em></td><td>Time</td><td>Seconds (s)</td></tr>
+        <tr><td><em>Z</em></td><td>Electrochemical equivalent</td><td>g/C or g/A·s</td></tr>
+      </table>
+
+      <h3>Electrochemical Equivalent (Z)</h3>
+      <p>Mass deposited per unit charge (per coulomb). Z is characteristic of the element.</p>
+      <div class="formula">Z = E / 96500 &nbsp;&nbsp;where E = Equivalent weight</div>
+
+      <h3>Second Law of Electrolysis</h3>
+      <p>When the same quantity of electricity passes through different electrolytes, the masses of substances deposited are <em>proportional to their equivalent weights</em>.</p>
+
+      <div class="formula">m₁/m₂ = E₁/E₂</div>
+      <div class="formula">Equivalent Weight (E) = Atomic Weight / Valency</div>
+
+      <div class="keybox gold">
+        ★ 1 Faraday = 96500 Coulombs = charge of 1 mole of electrons = 6.022 × 10²³ electrons<br>
+        ★ 1 Faraday deposits 1 gram equivalent of any substance
+      </div>
+
+      <h3>Combined Formula — Most Used in Numericals</h3>
+      <div class="formula">m = (E × I × t) / 96500</div>
+      <p>Where E = Equivalent weight = At. wt / Valency</p>
+
+      <h3>Faraday's Law Summary Table</h3>
+      <table class="tbl">
+        <tr><th>Law</th><th>States</th><th>Formula</th></tr>
+        <tr>
+          <td><em>First Law</em></td>
+          <td>m ∝ Q (electricity passed)</td>
+          <td>m = ZIt</td>
+        </tr>
+        <tr>
+          <td><em>Second Law</em></td>
+          <td>m ∝ E (equivalent weight)</td>
+          <td>m₁/m₂ = E₁/E₂</td>
+        </tr>
+      </table>
+
+      <h3>Important Equivalent Weights</h3>
+      <table class="tbl">
+        <tr><th>Element / Ion</th><th>At. Wt</th><th>Valency</th><th>Eq. Wt</th></tr>
+        <tr><td>Cu (copper)</td><td>64</td><td>2</td><td><em>32</em></td></tr>
+        <tr><td>Ag (silver)</td><td>108</td><td>1</td><td><em>108</em></td></tr>
+        <tr><td>Zn (zinc)</td><td>65</td><td>2</td><td><em>32.5</em></td></tr>
+        <tr><td>Al (aluminium)</td><td>27</td><td>3</td><td><em>9</em></td></tr>
+        <tr><td>Na (sodium)</td><td>23</td><td>1</td><td><em>23</em></td></tr>
+        <tr><td>H (hydrogen)</td><td>1</td><td>1</td><td><em>1</em></td></tr>
+        <tr><td>O (oxygen)</td><td>16</td><td>2</td><td><em>8</em></td></tr>
+        <tr><td>Cl (chlorine)</td><td>35.5</td><td>1</td><td><em>35.5</em></td></tr>
+        <tr><td>Fe (iron, ferrous)</td><td>56</td><td>2</td><td><em>28</em></td></tr>
+        <tr><td>Fe (iron, ferric)</td><td>56</td><td>3</td><td><em>18.67</em></td></tr>
+      </table>
+
+      <div class="keybox gold">
+        ★ EXAM TRICK: When 96500 C is passed, 1 gram-equivalent is deposited. For 2 × 96500 C → 2 gram-equivalents deposited.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: NUMERICALS -->
+  <div id="numericals" class="section">
+    <div class="card gold">
+      <h2>Numerical Problems — Step by Step</h2>
+      <p style="margin-bottom:16px">Click "Show Solution" to reveal the step-by-step working.</p>
+    </div>
+
+    <!-- Problem 1 -->
+    <div class="num-problem">
+      <div class="prob-title">Problem 01 — First Law</div>
+      <div class="given">Given: I = 2A, t = 30 min, Cu electrode (E = 32)</div>
+      <div class="question">Find the mass of copper deposited during electrolysis of CuSO₄ solution.</div>
+      <button class="toggle-sol" onclick="toggleSol(this)">▶ Show Solution</button>
+      <div class="solution">
+        <div class="steps">
+          <div class="step">Convert time: t = 30 × 60 = 1800 seconds</div>
+          <div class="step">Use formula: m = (E × I × t) / 96500</div>
+          <div class="step">m = (32 × 2 × 1800) / 96500</div>
+          <div class="step">m = 115200 / 96500</div>
+          <div class="step"><strong>m ≈ 1.194 g</strong> of copper is deposited</div>
+        </div>
+        <div class="keybox gold" style="margin-top:12px">Equivalent weight of Cu = 64/2 = 32 (valency of Cu in CuSO₄ = 2)</div>
+      </div>
+    </div>
+
+    <!-- Problem 2 -->
+    <div class="num-problem">
+      <div class="prob-title">Problem 02 — Second Law</div>
+      <div class="given">Same charge passed through CuSO₄ and AgNO₃ solutions. 5.4 g of Ag is deposited.</div>
+      <div class="question">Find the mass of Cu deposited. (E of Ag = 108, E of Cu = 32)</div>
+      <button class="toggle-sol" onclick="toggleSol(this)">▶ Show Solution</button>
+      <div class="solution">
+        <div class="steps">
+          <div class="step">By Faraday's Second Law: m₁/m₂ = E₁/E₂</div>
+          <div class="step">m(Cu) / m(Ag) = E(Cu) / E(Ag)</div>
+          <div class="step">m(Cu) / 5.4 = 32 / 108</div>
+          <div class="step">m(Cu) = 5.4 × (32/108) = 5.4 × 0.2963</div>
+          <div class="step"><strong>m(Cu) = 1.6 g</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 3 -->
+    <div class="num-problem">
+      <div class="prob-title">Problem 03 — Finding Time</div>
+      <div class="given">E(Cu) = 32, I = 5A, m = 3.2 g of Cu to be deposited</div>
+      <div class="question">How long should the current be passed?</div>
+      <button class="toggle-sol" onclick="toggleSol(this)">▶ Show Solution</button>
+      <div class="solution">
+        <div class="steps">
+          <div class="step">Formula: m = (E × I × t) / 96500</div>
+          <div class="step">Rearrange: t = (m × 96500) / (E × I)</div>
+          <div class="step">t = (3.2 × 96500) / (32 × 5)</div>
+          <div class="step">t = 308800 / 160 = 1930 seconds</div>
+          <div class="step"><strong>t = 1930 s ≈ 32.2 minutes</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 4 -->
+    <div class="num-problem">
+      <div class="prob-title">Problem 04 — Faraday Units</div>
+      <div class="given">2 Faradays of charge passed through molten AlCl₃</div>
+      <div class="question">Find the mass of Al deposited. (At. wt of Al = 27, valency = 3, E = 9)</div>
+      <button class="toggle-sol" onclick="toggleSol(this)">▶ Show Solution</button>
+      <div class="solution">
+        <div class="steps">
+          <div class="step">1 Faraday deposits 1 gram-equivalent of substance</div>
+          <div class="step">2 Faradays deposits 2 gram-equivalents of Al</div>
+          <div class="step">Equivalent weight of Al = 27/3 = 9 g/equiv</div>
+          <div class="step">Mass = 2 × 9 = <strong>18 g of Al</strong></div>
+        </div>
+        <div class="keybox gold" style="margin-top:12px">Shortcut: n Faradays × Equivalent weight = mass deposited</div>
+      </div>
+    </div>
+
+    <!-- Problem 5 -->
+    <div class="num-problem">
+      <div class="prob-title">Problem 05 — Finding Electrochemical Equivalent (Z)</div>
+      <div class="given">2g of a metal deposited when 2A current is passed for 1000 seconds</div>
+      <div class="question">Calculate the electrochemical equivalent Z of the metal.</div>
+      <button class="toggle-sol" onclick="toggleSol(this)">▶ Show Solution</button>
+      <div class="solution">
+        <div class="steps">
+          <div class="step">From First Law: m = Z × I × t</div>
+          <div class="step">Z = m / (I × t)</div>
+          <div class="step">Z = 2 / (2 × 1000)</div>
+          <div class="step"><strong>Z = 0.001 g/C = 1 × 10⁻³ g/C</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 6 -->
+    <div class="num-problem">
+      <div class="prob-title">Problem 06 — Volume of Gas</div>
+      <div class="given">Current = 1A passed through H₂SO₄ solution for 2 hours. E(H) = 1, E(O) = 8</div>
+      <div class="question">Calculate the mass of H₂ liberated at cathode.</div>
+      <button class="toggle-sol" onclick="toggleSol(this)">▶ Show Solution</button>
+      <div class="solution">
+        <div class="steps">
+          <div class="step">t = 2 × 3600 = 7200 s</div>
+          <div class="step">m(H₂) = (E × I × t) / 96500</div>
+          <div class="step">Note: For H₂, use E = 1 (for H atom, not H₂ molecule)</div>
+          <div class="step">m = (1 × 1 × 7200) / 96500</div>
+          <div class="step"><strong>m ≈ 0.0746 g of H₂</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: MCQ QUIZ -->
+  <div id="quiz" class="section">
+    <div class="quiz-container">
+      <div class="quiz-header">
+        <div class="quiz-title">MCQ PRACTICE</div>
+        <div class="score-box" id="scoreBox">Score: 0 / 0</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+      <div id="quizArea"></div>
+
+      <div class="quiz-controls">
+        <button class="btn orange" onclick="resetQuiz()">↺ RESET QUIZ</button>
+        <button class="btn secondary" onclick="showResults()">VIEW RESULTS</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── NAV ──
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── SOLUTIONS ──
+  function toggleSol(btn) {
+    const sol = btn.nextElementSibling;
+    sol.classList.toggle('show');
+    btn.textContent = sol.classList.contains('show') ? '▼ Hide Solution' : '▶ Show Solution';
+  }
+
+  // ── QUIZ DATA ──
+  const questions = [
+    {
+      q: "Which of the following is a strong electrolyte?",
+      opts: ["Acetic acid (CH₃COOH)", "Ammonia solution (NH₄OH)", "Hydrochloric acid (HCl)", "Glucose solution"],
+      ans: 2, exp: "HCl is almost completely ionized in water (α ≈ 1), making it a strong electrolyte. Acetic acid and ammonia are weak electrolytes. Glucose is a non-electrolyte."
+    },
+    {
+      q: "In electrolysis, oxidation occurs at the:",
+      opts: ["Cathode", "Anode", "Both electrodes", "Neither electrode"],
+      ans: 1, exp: "Oxidation always occurs at the ANODE (loss of electrons). Reduction occurs at the cathode (gain of electrons). Remember: AN OX, RED CAT."
+    },
+    {
+      q: "When fused NaCl is electrolyzed, which product is obtained at the cathode?",
+      opts: ["Chlorine gas", "Sodium metal", "Hydrogen gas", "Oxygen gas"],
+      ans: 1, exp: "In molten NaCl, Na⁺ ions migrate to the cathode where they gain electrons: Na⁺ + e⁻ → Na. Sodium metal is deposited. Cl₂ gas is formed at the anode."
+    },
+    {
+      q: "During electrolysis of aqueous NaCl, the product at cathode is:",
+      opts: ["Sodium metal", "Chlorine gas", "Hydrogen gas", "Oxygen gas"],
+      ans: 2, exp: "In aqueous NaCl, both Na⁺ and H⁺ (from water) are present at cathode. H⁺ is preferentially discharged (lower overpotential than Na⁺): 2H⁺ + 2e⁻ → H₂. Hence H₂ gas is produced."
+    },
+    {
+      q: "According to Arrhenius theory, when does an electrolyte dissociate into ions?",
+      opts: ["When electric current is passed", "When it is dissolved in water", "When it is heated", "When it is compressed"],
+      ans: 1, exp: "Arrhenius theory states dissociation occurs SPONTANEOUSLY when the electrolyte is dissolved in water — NOT when current is passed. Current only directs the existing ions."
+    },
+    {
+      q: "1 Faraday of electricity is equal to:",
+      opts: ["9650 C", "96500 C", "965000 C", "6.022 × 10²³ C"],
+      ans: 1, exp: "1 Faraday = 96500 Coulombs = charge carried by 1 mole of electrons (6.022 × 10²³ electrons). This is a fundamental constant in electrochemistry."
+    },
+    {
+      q: "Faraday's first law of electrolysis states that the mass deposited is proportional to:",
+      opts: ["Concentration of electrolyte", "Temperature of solution", "Quantity of electricity passed", "Size of electrode"],
+      ans: 2, exp: "First Law: m ∝ Q (quantity of electricity). Q = I × t (current × time). The formula is m = ZIt, where Z is the electrochemical equivalent."
+    },
+    {
+      q: "The equivalent weight of copper (atomic weight 64, valency 2) is:",
+      opts: ["64", "32", "128", "16"],
+      ans: 1, exp: "Equivalent weight = Atomic weight / Valency = 64 / 2 = 32. This is used in Faraday's law calculations: m = (E × I × t) / 96500."
+    },
+    {
+      q: "According to Faraday's second law, when the same charge is passed through different electrolytes, masses deposited are proportional to their:",
+      opts: ["Atomic weights", "Molecular weights", "Equivalent weights", "Density"],
+      ans: 2, exp: "Second Law: m₁/m₂ = E₁/E₂. The ratio of masses deposited equals the ratio of their equivalent weights."
+    },
+    {
+      q: "In electroplating, the object to be plated is made the:",
+      opts: ["Anode", "Cathode", "Electrolyte", "Battery"],
+      ans: 1, exp: "The object to be plated is the CATHODE (negative electrode). Metal ions from the solution are reduced and deposited on it. The plating metal (e.g., silver, gold) is the anode."
+    },
+    {
+      q: "Which of these is a non-electrolyte?",
+      opts: ["KCl", "H₂SO₄", "C₁₂H₂₂O₁₁ (Sugar)", "NaOH"],
+      ans: 2, exp: "Sugar (sucrose) does not ionize in water — it is a non-electrolyte. It dissolves but does not produce ions, so its solution cannot conduct electricity."
+    },
+    {
+      q: "The charge carrier in metallic conductors is:",
+      opts: ["Positive ions", "Negative ions", "Free electrons", "Both ions and electrons"],
+      ans: 2, exp: "Metallic conductors (Cu, Fe, Al) carry electricity by FREE ELECTRONS. Electrolytes carry electricity by ions. This is a key difference."
+    },
+    {
+      q: "In the chlor-alkali process (electrolysis of aqueous NaCl), NaOH is formed because:",
+      opts: ["Na⁺ reacts with Cl₂", "Na⁺ ions remain with OH⁻ ions in solution", "NaCl decomposes to form NaOH", "Cl₂ dissolves in water"],
+      ans: 1, exp: "At cathode: H⁺ from water is discharged as H₂. At anode: Cl⁻ is discharged as Cl₂. The remaining Na⁺ and OH⁻ ions in solution combine to form NaOH."
+    },
+    {
+      q: "Calculate the mass of Ag (E=108) deposited when 2A current flows for 965 seconds.",
+      opts: ["2.16 g", "1.08 g", "4.32 g", "0.54 g"],
+      ans: 0, exp: "m = (E × I × t) / 96500 = (108 × 2 × 965) / 96500 = 208440 / 96500 ≈ 2.16 g"
+    },
+    {
+      q: "Which process is used for purification of copper?",
+      opts: ["Electrolysis with active anode (impure Cu)", "Electrolysis with Pt inert anode", "Fused electrolysis", "Anodizing"],
+      ans: 0, exp: "Electrorefining of copper: Impure copper = anode, Pure copper = cathode, CuSO₄ solution = electrolyte. Cu from impure anode dissolves and deposits as pure Cu on cathode."
+    },
+    {
+      q: "What is the electrochemical equivalent Z of a substance if its equivalent weight is 32?",
+      opts: ["32 × 96500", "96500 / 32", "32 / 96500", "96500 × 32"],
+      ans: 2, exp: "Z = E / 96500 = 32 / 96500 ≈ 3.31 × 10⁻⁴ g/C. Z is mass deposited per coulomb."
+    },
+    {
+      q: "On dilution of a weak electrolyte, its degree of ionization:",
+      opts: ["Decreases", "Increases", "Remains same", "First increases then decreases"],
+      ans: 1, exp: "Dilution shifts the ionization equilibrium to the right (Le Chatelier's principle), so more molecules ionize and degree of ionization INCREASES for weak electrolytes."
+    },
+    {
+      q: "The product obtained at the anode in both fused and aqueous NaCl electrolysis is:",
+      opts: ["H₂", "O₂", "Cl₂", "Na"],
+      ans: 2, exp: "In both cases, Cl⁻ ions are oxidized at the anode: 2Cl⁻ → Cl₂ + 2e⁻. Chlorine gas is produced in both fused and aqueous NaCl electrolysis."
+    },
+    {
+      q: "3 Faradays of charge is passed through molten AlCl₃. How many grams of Al are deposited? (At.wt Al=27, valency=3)",
+      opts: ["27 g", "9 g", "81 g", "54 g"],
+      ans: 0, exp: "E(Al) = 27/3 = 9. 1 Faraday deposits 1 gram-equivalent = 9 g. So 3 Faradays deposits 3 × 9 = 27 g of Al."
+    },
+    {
+      q: "Which of the following best defines electrolysis?",
+      opts: ["Spontaneous chemical reaction producing electricity", "Decomposition of electrolyte using electrical energy", "Transfer of electrons between metals", "Production of heat by chemical reaction"],
+      ans: 1, exp: "Electrolysis = decomposition/chemical change in an electrolyte caused by passing electrical energy through it. This is the opposite of a galvanic cell."
+    }
+  ];
+
+  let answers = new Array(questions.length).fill(null);
+  let correct = 0, attempted = 0;
+
+  function buildQuiz() {
+    const area = document.getElementById('quizArea');
+    area.innerHTML = '';
+    questions.forEach((q, i) => {
+      const card = document.createElement('div');
+      card.className = 'q-card';
+      card.id = 'qcard-' + i;
+      card.innerHTML = `
+        <div class="q-num">QUESTION ${String(i+1).padStart(2,'0')} / ${questions.length}</div>
+        <div class="q-text">${q.q}</div>
+        <div class="options" id="opts-${i}">
+          ${q.opts.map((o, j) => `
+            <button class="opt-btn" onclick="selectAnswer(${i}, ${j})">
+              <span class="opt-label">${String.fromCharCode(65+j)}</span>
+              <span>${o}</span>
+            </button>
+          `).join('')}
+        </div>
+        <div class="explanation" id="exp-${i}">💡 ${q.exp}</div>
+      `;
+      area.appendChild(card);
+    });
+    updateScore();
+  }
+
+  function selectAnswer(qIdx, optIdx) {
+    if (answers[qIdx] !== null) return;
+    answers[qIdx] = optIdx;
+
+    const btns = document.querySelectorAll(`#opts-${qIdx} .opt-btn`);
+    btns.forEach((btn, j) => {
+      btn.disabled = true;
+      if (j === questions[qIdx].ans) btn.classList.add('correct');
+      else if (j === optIdx) btn.classList.add('wrong');
+    });
+
+    document.getElementById('exp-' + qIdx).classList.add('show');
+    document.getElementById('qcard-' + qIdx).classList.add('answered');
+
+    if (optIdx === questions[qIdx].ans) correct++;
+    attempted++;
+    updateScore();
+    updateProgress();
+  }
+
+  function updateScore() {
+    document.getElementById('scoreBox').textContent = `Score: ${correct} / ${attempted}`;
+  }
+
+  function updateProgress() {
+    const pct = (attempted / questions.length) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function resetQuiz() {
+    answers = new Array(questions.length).fill(null);
+    correct = 0; attempted = 0;
+    buildQuiz();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showResults() {
+    const pct = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+    const msg = pct >= 80 ? '🎯 Excellent! You are well prepared.' : pct >= 60 ? '👍 Good — revise the topics you missed.' : '📚 Keep practicing — review the theory sections.';
+    alert(`RESULTS\n\nAttempted: ${attempted} / ${questions.length}\nCorrect: ${correct}\nScore: ${pct}%\n\n${msg}`);
+  }
+
+  buildQuiz();
+</script>
+</body>
+</html>
