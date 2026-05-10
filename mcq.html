@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>200-Mark MCQ Paper — TG ECET 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+body{background:var(--bg)}
+.mcq-wrap{max-width:860px;margin:0 auto;padding:0 20px 80px}
+.start-screen{text-align:center;padding:60px 20px;min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.start-screen h1{font-family:'Syne',sans-serif;font-size:clamp(36px,6vw,64px);font-weight:800;letter-spacing:-2px;margin-bottom:16px}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:32px 0;width:100%;max-width:600px}
+.info-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 10px;text-align:center}
+.info-card .n{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;display:block}
+.info-card .l{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.start-btn{display:inline-flex;align-items:center;gap:10px;padding:16px 40px;border-radius:12px;border:none;background:linear-gradient(135deg,#f72585,#7209b7);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;cursor:pointer;transition:all .25s;margin-top:8px}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(247,37,133,.4)}
+
+/* top progress bar */
+.sticky-bar{position:sticky;top:0;z-index:100;background:rgba(10,12,16,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 0}
+.prog-bar-outer{height:4px;background:var(--bg3);border-radius:100px;overflow:hidden;margin-bottom:8px}
+.prog-bar-inner{height:100%;border-radius:100px;background:linear-gradient(90deg,#f72585,#7209b7);transition:width .3s}
+.prog-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted)}
+.timer{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--medium);font-weight:600}
+.timer.urgent{color:var(--high);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* section header */
+.sec-hdr{display:flex;align-items:center;gap:12px;margin:28px 0 18px}
+.sec-hdr-line{flex:1;height:1px;background:var(--border)}
+.sec-hdr-lbl{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;border:1px solid}
+
+/* question card */
+.q-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:14px;padding:22px;margin-bottom:14px;transition:border-color .2s}
+.q-card.correct{border-color:rgba(6,214,160,.4);background:rgba(6,214,160,.04)}
+.q-card.wrong{border-color:rgba(255,107,107,.4);background:rgba(255,107,107,.04)}
+.q-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
+.q-badge{font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 8px;background:var(--bg3);border-radius:6px;color:var(--text-muted);flex-shrink:0;margin-top:2px;white-space:nowrap}
+.q-subj{font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;flex-shrink:0;margin-top:2px}
+.q-text{font-size:15px;font-weight:500;line-height:1.6;flex:1}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+@media(max-width:500px){.opts{grid-template-columns:1fr}}
+.opt{padding:11px 14px;border-radius:9px;border:1.5px solid var(--border);background:var(--bg3);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13.5px;text-align:left;cursor:pointer;transition:all .17s;display:flex;align-items:flex-start;gap:10px;line-height:1.45}
+.opt:hover:not(:disabled){border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.05)}
+.opt-ltr{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;width:20px;height:20px;min-width:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);flex-shrink:0;margin-top:1px}
+.opt.correct-ans{border-color:var(--low);background:rgba(6,214,160,.12)}
+.opt.correct-ans .opt-ltr{background:var(--low);color:#000}
+.opt.wrong-ans{border-color:var(--high);background:rgba(255,107,107,.12)}
+.opt.wrong-ans .opt-ltr{background:var(--high);color:#fff}
+.opt:disabled{cursor:default}
+.expl{margin-top:12px;padding:12px 15px;background:rgba(255,255,255,.04);border-left:3px solid var(--low);border-radius:8px;font-size:13px;color:var(--text-muted);line-height:1.65;display:none}
+.expl.show{display:block;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+/* result */
+.result-wrap{text-align:center;padding:50px 20px;min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.result-wrap h2{font-family:'Syne',sans-serif;font-size:clamp(32px,6vw,56px);font-weight:800;letter-spacing:-2px;margin-bottom:8px}
+.score-ring{width:160px;height:160px;border-radius:50%;border:4px solid;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:28px auto}
+.score-ring .big{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;line-height:1}
+.score-ring .sm{font-size:13px;color:var(--text-muted)}
+.breakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0;width:100%}
+@media(max-width:500px){.breakdown{grid-template-columns:1fr 1fr}}
+.bd-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center}
+.bd-card .bs{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;display:block}
+.bd-card .bl{font-size:11px;color:var(--text-muted);margin-top:3px}
+.retry-btn{padding:13px 30px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:transparent;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;margin-top:6px}
+.retry-btn:hover{background:rgba(255,255,255,.06)}
+.correct-count{color:var(--low)}.wrong-count{color:var(--high)}
+</style>
+</head>
+<body>
+<nav class="top-bar">
+  <a href="index.html" class="back-btn">← Home</a>
+  <div class="top-bar-title">TG ECET 2026 — Full Mock Test</div>
+  <span class="marks-badge" style="background:rgba(247,37,133,.15);color:#f72585;border:1px solid rgba(247,37,133,.25)">200 Marks</span>
+</nav>
+
+<div class="mcq-wrap">
+<!-- START SCREEN -->
+<div class="start-screen" id="startScreen">
+  <div style="font-size:48px;margin-bottom:16px">📝</div>
+  <h1>Full <span style="background:linear-gradient(135deg,#f72585,#7209b7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Mock Test</span></h1>
+  <p style="color:var(--text-muted);font-size:16px;max-width:480px;line-height:1.6;margin-bottom:8px">200 questions covering all subjects exactly as per TG ECET 2026 pattern. Instant feedback with explanations after each answer.</p>
+  <div class="info-grid">
+    <div class="info-card"><span class="n" style="color:#f4a261">50</span><div class="l">Maths</div></div>
+    <div class="info-card"><span class="n" style="color:#48cae4">25</span><div class="l">Physics</div></div>
+    <div class="info-card"><span class="n" style="color:#52b788">25</span><div class="l">Chemistry</div></div>
+    <div class="info-card"><span class="n" style="color:#c77dff">100</span><div class="l">CSE Core</div></div>
+  </div>
+  <p style="color:var(--text-muted);font-size:13px;margin-bottom:20px">⏱ Timer: 3 hours &nbsp;|&nbsp; +1 mark per correct answer &nbsp;|&nbsp; No negative marking</p>
+  <button class="start-btn" onclick="startExam()">🚀 Start Full Mock Test</button>
+</div>
+
+<!-- EXAM AREA -->
+<div id="examArea" style="display:none">
+  <div class="sticky-bar">
+    <div class="prog-bar-outer"><div class="prog-bar-inner" id="progBar" style="width:0%"></div></div>
+    <div class="prog-row">
+      <span id="progTxt">0 / 200 answered</span>
+      <span class="timer" id="timerEl">3:00:00</span>
+    </div>
+  </div>
+  <div id="questionsContainer"></div>
+  <div style="text-align:center;margin-top:32px">
+    <button class="start-btn" onclick="submitExam()" id="submitBtn">Submit & See Results</button>
+  </div>
+</div>
+
+<!-- RESULT AREA -->
+<div id="resultArea" style="display:none">
+  <div class="result-wrap">
+    <div id="resultEmoji" style="font-size:52px;margin-bottom:8px"></div>
+    <h2 id="resultTitle"></h2>
+    <p id="resultSub" style="color:var(--text-muted);font-size:15px;margin-bottom:4px"></p>
+    <div class="score-ring" id="scoreRing">
+      <div class="big" id="scoreNum"></div>
+      <div class="sm">out of 200</div>
+    </div>
+    <div class="breakdown">
+      <div class="bd-card"><span class="bs" id="mathScore" style="color:#f4a261"></span><div class="bl">Maths /50</div></div>
+      <div class="bd-card"><span class="bs" id="phyScore" style="color:#48cae4"></span><div class="bl">Physics /25</div></div>
+      <div class="bd-card"><span class="bs" id="chemScore" style="color:#52b788"></span><div class="bl">Chemistry /25</div></div>
+      <div class="bd-card"><span class="bs" id="cseScore" style="color:#c77dff"></span><div class="bl">CSE /100</div></div>
+    </div>
+    <p><span class="correct-count" id="corrCount"></span> correct &nbsp;·&nbsp; <span class="wrong-count" id="wrongCount"></span> wrong &nbsp;·&nbsp; <span id="skipCount" style="color:var(--text-muted)"></span> skipped</p>
+    <button class="retry-btn" onclick="retryExam()">🔁 Retry Test</button>
+  </div>
+</div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// ALL 200 QUESTIONS
+// ─────────────────────────────────────────────
+const QUESTIONS = [
+// ══════════════ MATHEMATICS (50 Qs) ══════════════
+{s:"maths",q:"If A is a 3×3 matrix with |A| = 5, then |2A| equals:",o:["10","25","40","80"],a:2,e:"|kA| = kⁿ·|A| for n×n matrix. Here k=2, n=3, so |2A| = 2³×5 = 8×5 = 40."},
+{s:"maths",q:"The adjoint of A = [[1,2],[3,4]] is:",o:["[[4,-2],[-3,1]]","[[4,3],[-2,1]]","[[-4,2],[3,-1]]","[[1,3],[2,4]]"],a:0,e:"Swap main diagonal elements, negate off-diagonal elements. adj(A) = [[d,-b],[-c,a]] = [[4,-2],[-3,1]]."},
+{s:"maths",q:"A system AX=B has a unique solution when:",o:["|A| = 0","A is singular","|A| ≠ 0","A is symmetric"],a:2,e:"Unique solution exists iff the coefficient matrix A is non-singular, i.e., |A| ≠ 0."},
+{s:"maths",q:"In Cramer's Rule for 3 variables, x =",o:["Δ/Δx","Δx/Δ","Δ/Δy","Δy/Δ"],a:1,e:"Cramer's Rule: x = Δx/Δ, y = Δy/Δ, z = Δz/Δ where Δ = |A| and Δx, Δy, Δz are determinants with respective columns replaced by constants."},
+{s:"maths",q:"For a symmetric matrix A, which is true?",o:["Aᵀ = −A","Aᵀ = A","A⁻¹ = A","A² = I"],a:1,e:"By definition, a matrix is symmetric if Aᵀ = A (the transpose equals the original matrix)."},
+{s:"maths",q:"The partial fraction form of 1/[(x−1)(x+2)] is:",o:["A/(x−1) + B/(x+2)","A/x + B/(x+2)","(Ax+B)/(x−1) + C/(x+2)","A/(x−1)² + B/(x+2)"],a:0,e:"For distinct linear factors in the denominator, each factor gets its own constant numerator: A/(x−1) + B/(x+2)."},
+{s:"maths",q:"log₁₀(0.001) equals:",o:["3","−3","0.001","1/3"],a:1,e:"0.001 = 10⁻³, so log₁₀(10⁻³) = −3. Using power rule: log(mⁿ) = n·log m."},
+{s:"maths",q:"If logₐ(mn) = logₐm + logₐn, what is logₐ(m/n)?",o:["logₐm × logₐn","logₐm − logₐn","logₐm / logₐn","logₐ(m+n)"],a:1,e:"Quotient rule of logarithms: logₐ(m/n) = logₐm − logₐn."},
+{s:"maths",q:"sin(A+B) equals:",o:["sinA·sinB + cosA·cosB","sinA·cosB + cosA·sinB","sinA·cosB − cosA·sinB","cosA·cosB − sinA·sinB"],a:1,e:"Compound angle: sin(A+B) = sinA·cosB + cosA·sinB. (Same-Cross mnemonic)"},
+{s:"maths",q:"cos(2A) in terms of sinA is:",o:["2sin²A−1","1−2sin²A","2sinA−1","sin²A−1"],a:1,e:"cos2A = 1 − 2sin²A (derived from cos2A = cos²A − sin²A = (1−sin²A) − sin²A = 1−2sin²A)."},
+{s:"maths",q:"The value of sin(30°) + cos(60°) is:",o:["0","1","√3/2","1/2"],a:1,e:"sin30° = 1/2 and cos60° = 1/2. So sin30° + cos60° = 1/2 + 1/2 = 1."},
+{s:"maths",q:"In a triangle, the Sine Rule states:",o:["a² = b²+c²−2bc·cosA","a/sinA = b/sinB = c/sinC","a+b > c","tan((A−B)/2) = ((a−b)/(a+b))cot(C/2)"],a:1,e:"The Sine Rule: a/sinA = b/sinB = c/sinC = 2R where R is the circumradius."},
+{s:"maths",q:"The modulus of complex number z = 3 + 4i is:",o:["7","5","25","1"],a:1,e:"|z| = √(a²+b²) = √(9+16) = √25 = 5."},
+{s:"maths",q:"In Euler form, z = r(cosθ + i sinθ) is written as:",o:["r·eⁱθ","r·e⁻ⁱθ","eⁱθ/r","reθ"],a:0,e:"Euler's formula: e^(iθ) = cosθ + i sinθ, so z = r·e^(iθ)."},
+{s:"maths",q:"(cosθ + i sinθ)ⁿ equals: (De Moivre's Theorem)",o:["cosnθ − i sinnθ","cosnθ + i sinnθ","n(cosθ + i sinθ)","cosθⁿ + i sinθⁿ"],a:1,e:"De Moivre's Theorem: (cosθ + i sinθ)ⁿ = cos(nθ) + i sin(nθ)."},
+{s:"maths",q:"The equation of a circle with centre (2,3) and radius 5 is:",o:["(x+2)²+(y+3)²=25","(x−2)²+(y−3)²=25","(x−2)²+(y−3)²=5","x²+y²=25"],a:1,e:"Standard circle: (x−h)²+(y−k)²=r². Here h=2, k=3, r=5, so (x−2)²+(y−3)²=25."},
+{s:"maths",q:"The centre of the circle x²+y²+4x−6y+4=0 is:",o:["(4,−6)","(−2,3)","(2,−3)","(−4,6)"],a:1,e:"General form: x²+y²+2gx+2fy+c=0. Centre=(−g,−f). Here 2g=4→g=2, 2f=−6→f=−3. Centre=(−2,3)."},
+{s:"maths",q:"The focus of the parabola y²=8x is at:",o:["(2,0)","(0,2)","(8,0)","(0,8)"],a:0,e:"y²=4ax gives focus at (a,0). Here 4a=8→a=2. Focus=(2,0)."},
+{s:"maths",q:"For the ellipse x²/25 + y²/16 = 1, the eccentricity is:",o:["3/5","4/5","5/4","3/4"],a:0,e:"a²=25, b²=16. c²=a²−b²=9→c=3. e=c/a=3/5."},
+{s:"maths",q:"d/dx(sin⁻¹x) equals:",o:["1/√(1+x²)","1/√(1−x²)","−1/√(1−x²)","1/(1+x²)"],a:1,e:"Standard result: d/dx(sin⁻¹x) = 1/√(1−x²), valid for −1<x<1."},
+{s:"maths",q:"By the Product Rule, d/dx(uv) =",o:["u'v'","u'v + uv'","u'v − uv'","(u'v' )/(u+v)"],a:1,e:"Product Rule: d/dx(uv) = u'v + uv' (derivative of first × second + first × derivative of second)."},
+{s:"maths",q:"d/dx(tan x) equals:",o:["sec x","sec²x","cot x","−sec²x"],a:1,e:"d/dx(tan x) = sec²x. This is a fundamental standard derivative."},
+{s:"maths",q:"If f'(x)=0 and f''(x)>0 at x=c, then x=c is a point of:",o:["Local maximum","Point of inflection","Local minimum","Neither max nor min"],a:2,e:"Second derivative test: f'(c)=0 and f''(c)>0 means concave up → local minimum at x=c."},
+{s:"maths",q:"For a homogeneous function f(x,y) of degree n, Euler's theorem states:",o:["x·∂f/∂y + y·∂f/∂x = nf","x·∂f/∂x + y·∂f/∂y = nf","∂f/∂x + ∂f/∂y = nf","x²·∂f/∂x + y²·∂f/∂y = nf"],a:1,e:"Euler's theorem: if f(tx,ty)=tⁿf(x,y), then x·∂f/∂x + y·∂f/∂y = n·f."},
+{s:"maths",q:"d/dx[ln(x²+1)] equals:",o:["1/(x²+1)","2x/(x²+1)","x/(x²+1)","2/(x²+1)"],a:1,e:"By chain rule: d/dx[ln(u)] = (1/u)·u'. Here u=x²+1, u'=2x. Result: 2x/(x²+1)."},
+{s:"maths",q:"∫sin x dx equals:",o:["cos x + C","−cos x + C","sin x + C","−sin x + C"],a:1,e:"∫sin x dx = −cos x + C. Check: d/dx(−cos x) = sin x ✓"},
+{s:"maths",q:"∫eˣ dx equals:",o:["eˣ + C","eˣ⁺¹/(x+1) + C","xeˣ + C","e⁻ˣ + C"],a:0,e:"∫eˣ dx = eˣ + C. The exponential function is its own antiderivative."},
+{s:"maths",q:"The ILATE rule in Integration by Parts stands for:",o:["Inverse, Log, Algebra, Trig, Exponential","Inverse, Linear, Algebraic, Trigonometric, Even","Integration, Limits, Algebra, Trig, Equation","None of these"],a:0,e:"ILATE: Inverse trig → Logarithmic → Algebraic → Trigonometric → Exponential. Choose 'u' from whichever comes first."},
+{s:"maths",q:"∫₀^π sin x dx equals:",o:["0","1","2","π"],a:2,e:"∫₀^π sin x dx = [−cos x]₀^π = −cos π − (−cos 0) = −(−1) + 1 = 1+1 = 2."},
+{s:"maths",q:"Simpson's 1/3 Rule requires n to be:",o:["Odd","Even","A prime","Any integer"],a:1,e:"Simpson's 1/3 Rule requires n (number of subintervals) to be even. The coefficient pattern is 1,4,2,4,2,...,4,1."},
+{s:"maths",q:"The volume of solid of revolution about x-axis from x=a to x=b is:",o:["∫ₐᵇ y dx","π∫ₐᵇ y² dx","2π∫ₐᵇ y dx","π∫ₐᵇ y dx"],a:1,e:"Volume about x-axis using disk method: V = π∫ₐᵇ [f(x)]² dx."},
+{s:"maths",q:"The order of the DE: d²y/dx² + 3(dy/dx)² + y = 0 is:",o:["1","2","3","4"],a:1,e:"Order = highest derivative present = d²y/dx² → order 2."},
+{s:"maths",q:"For the linear DE dy/dx + Py = Q, the Integrating Factor is:",o:["e^(∫Q dx)","e^(∫P dx)","∫P dx","∫Q dx"],a:1,e:"For dy/dx + Py = Q, the Integrating Factor (IF) = e^(∫P dx). Multiplying by IF makes LHS an exact derivative."},
+{s:"maths",q:"For variable separable DE dy/dx = f(x)g(y), we rearrange to:",o:["f(x)dx = g(y)dy","dy/g(y) = f(x)dx","g(y)dy = f(x)dx","All of these are equivalent"],a:3,e:"All forms separate variables. dy/g(y) = f(x)dx, then integrate both sides. Options A, B, and C are all equivalent rearrangements."},
+{s:"maths",q:"The complementary function when AE has equal roots m₁=m₂=m is:",o:["C₁eᵐˣ + C₂e⁻ᵐˣ","(C₁+C₂x)eᵐˣ","C₁cos(mx)+C₂sin(mx)","eᵐˣ"],a:1,e:"For repeated roots m₁=m₂=m, CF = (C₁ + C₂x)eᵐˣ. The x factor prevents linear dependence."},
+{s:"maths",q:"L{eᵃᵗ} in Laplace Transform is:",o:["1/s","1/(s+a)","1/(s−a)","a/(s²+a²)"],a:2,e:"L{eᵃᵗ} = 1/(s−a) for s>a. This is a fundamental LT pair."},
+{s:"maths",q:"L{sin(at)} equals:",o:["s/(s²+a²)","a/(s²+a²)","a/(s²−a²)","s/(s²−a²)"],a:1,e:"L{sin(at)} = a/(s²+a²). Compare: L{cos(at)} = s/(s²+a²) (s in numerator for cosine)."},
+{s:"maths",q:"The First Shifting Theorem states L{eᵃᵗf(t)} =",o:["F(s+a)","F(s−a)","F(as)","F(s)/a"],a:1,e:"First Shifting Theorem: L{eᵃᵗf(t)} = F(s−a). Replace s by (s−a) in F(s)."},
+{s:"maths",q:"L{f'(t)} in terms of F(s) = L{f(t)} is:",o:["sF(s)","sF(s) − f(0)","s²F(s) − sf(0) − f'(0)","F(s)/s"],a:1,e:"L{f'(t)} = sF(s) − f(0). This is why Laplace is useful for IVPs — initial conditions appear naturally."},
+{s:"maths",q:"In the Fourier series, a₀/2 represents:",o:["Amplitude of cosine terms","Average value of f(x) over one period","Amplitude of sine terms","Frequency"],a:1,e:"a₀ = (1/π)∫₋ππf(x)dx, so a₀/2 = average value of f(x) over the period [−π,π]."},
+{s:"maths",q:"For an odd function in (−π,π), the Fourier series contains:",o:["Only cosine terms","Only sine terms","Both sine and cosine","Only constant term"],a:1,e:"Odd function: f(−x)=−f(x). Then a₀=0, all aₙ=0. Only bₙ≠0, so only sine terms remain."},
+{s:"maths",q:"∫1/(x²+a²) dx equals:",o:["(1/a)sin⁻¹(x/a)+C","(1/a)tan⁻¹(x/a)+C","(1/a)cos⁻¹(x/a)+C","ln|x+√(x²+a²)|+C"],a:1,e:"Standard integral: ∫1/(x²+a²)dx = (1/a)tan⁻¹(x/a) + C."},
+{s:"maths",q:"The Cosine Rule in a triangle gives:",o:["a/sinA = b/sinB","a² = b²+c²−2bc·cosA","tan((A−B)/2)=((a−b)/(a+b))cot(C/2)","a = bcosC + ccosB"],a:1,e:"Cosine Rule: a² = b²+c²−2bc·cosA. Used when two sides and included angle (SAS) or all three sides (SSS) are given."},
+{s:"maths",q:"d/dx(tan⁻¹x) equals:",o:["1/(1+x²)","1/√(1−x²)","−1/(1+x²)","sec²x"],a:0,e:"d/dx(tan⁻¹x) = 1/(1+x²). This is a key standard derivative."},
+{s:"maths",q:"The RMS value of f(x) over [a,b] is:",o:["(1/(b−a))∫ₐᵇf(x)dx","√[(1/(b−a))∫ₐᵇ{f(x)}²dx]","∫ₐᵇ{f(x)}²dx","(1/(b−a))∫ₐᵇ{f(x)}²dx"],a:1,e:"RMS = √[mean of square] = √[(1/(b−a))∫ₐᵇ{f(x)}²dx]."},
+{s:"maths",q:"The Bernoulli equation dy/dx + Py = Qyⁿ is solved by substituting:",o:["v = yⁿ","v = y¹⁻ⁿ","v = y/x","v = x/y"],a:1,e:"Divide by yⁿ, then let v = y^(1−n). This transforms Bernoulli's equation into a linear DE in v."},
+{s:"maths",q:"For 2sinA·cosB, the product-to-sum formula gives:",o:["sin(A+B)+sin(A−B)","cos(A−B)−cos(A+B)","sin(A+B)−sin(A−B)","cos(A−B)+cos(A+B)"],a:0,e:"Product to sum: 2sinA·cosB = sin(A+B) + sin(A−B)."},
+{s:"maths",q:"If the discriminant of the auxiliary equation b²−4ac<0, the roots are:",o:["Real and distinct","Real and equal","Complex conjugate pair","Zero"],a:2,e:"b²−4ac<0 means negative discriminant → roots are complex conjugate pair α±iβ. CF = e^(αx)[C₁cosβx+C₂sinβx]."},
+{s:"maths",q:"The Trapezoidal Rule formula is:",o:["h/3[y₀+4y₁+2y₂+...+yₙ]","h/2[y₀+2(y₁+...+yₙ₋₁)+yₙ]","h[y₀+y₁+...+yₙ]","2h[y₀+yₙ+2(middle terms)]"],a:1,e:"Trapezoidal Rule: (h/2)[y₀ + 2(y₁+y₂+...+yₙ₋₁) + yₙ]. First and last coefficient is 1; all middle terms coefficient is 2."},
+
+// ══════════════ PHYSICS (25 Qs) ══════════════
+{s:"physics",q:"The dimensional formula for Force is:",o:["[MLT⁻¹]","[MLT⁻²]","[ML²T⁻²]","[M²LT⁻²]"],a:1,e:"F=ma. [F]=[M][LT⁻²]=[MLT⁻²]. Units: Newton (kg·m/s²)."},
+{s:"physics",q:"The principle of homogeneity states that:",o:["All physical quantities have same dimensions","Every term in a physical equation must have same dimensions","Dimensions can be added","Mass is always conserved"],a:1,e:"Principle of homogeneity: every term on both sides of a physically valid equation must have identical dimensions."},
+{s:"physics",q:"The resultant of two vectors A and B at angle θ is:",o:["A+B","√(A²+B²)","√(A²+B²+2AB cosθ)","AB sinθ"],a:2,e:"By Parallelogram Law: R = √(A²+B²+2AB cosθ). Special case θ=0: R=A+B; θ=90°: R=√(A²+B²)."},
+{s:"physics",q:"The scalar product A·B equals:",o:["AB sinθ","AB cosθ","AB tanθ","A+B cosθ"],a:1,e:"Dot product: A·B = |A||B|cosθ. It is a scalar. If A⊥B, cosθ=0, A·B=0."},
+{s:"physics",q:"The maximum horizontal range of a projectile is achieved at angle:",o:["30°","45°","60°","90°"],a:1,e:"R = u²sin2θ/g. sin2θ is maximum when 2θ=90° → θ=45°. R_max = u²/g."},
+{s:"physics",q:"Time of flight for oblique projectile at angle θ with initial speed u is:",o:["usinθ/g","2usinθ/g","u²sin2θ/g","u sinθ/2g"],a:1,e:"Time of flight T = 2usinθ/g (twice the time to reach maximum height)."},
+{s:"physics",q:"The angle of friction φ is related to coefficient of friction μ by:",o:["μ = sinφ","μ = cosφ","μ = tanφ","μ = cotφ"],a:2,e:"μ = tanφ where φ is the angle the resultant reaction makes with the normal. This is derived from F_friction/N = μ."},
+{s:"physics",q:"Centripetal acceleration is given by:",o:["rω","v²/r","rω²","Both B and C"],a:3,e:"Centripetal acceleration = v²/r = rω² (both are correct since v=rω). It is directed toward the center."},
+{s:"physics",q:"Young's modulus is defined as:",o:["Shear stress/Shear strain","Volumetric stress/Volumetric strain","Longitudinal stress/Longitudinal strain","None of these"],a:2,e:"Young's modulus Y = Longitudinal stress / Longitudinal strain = (F/A)/(ΔL/L). Unit: Pa (N/m²)."},
+{s:"physics",q:"Height of capillary rise h is given by:",o:["h=2T sinθ/rρg","h=2T cosθ/rρg","h=Trρg/2cosθ","h=T/rρg"],a:1,e:"Capillary rise: h = 2T cosθ/(rρg), where T=surface tension, θ=contact angle, r=radius, ρ=density."},
+{s:"physics",q:"The ideal gas equation is:",o:["PV=RT","PV=nRT","P=nRT/V","Both B and C"],a:3,e:"PV=nRT where n=moles, R=8.314 J/mol·K. Both B and C are equivalent (PV=nRT and P=nRT/V)."},
+{s:"physics",q:"Work-Energy Theorem states:",o:["Work = Force × Distance","Net work done = Change in KE","Total energy is conserved","Work done = Change in PE"],a:1,e:"Work-Energy Theorem: W_net = ΔKE = (1/2)mv² − (1/2)mu². Derived from Newton's 2nd law."},
+{s:"physics",q:"The time period of a simple pendulum is:",o:["2π√(g/L)","2π√(L/g)","√(L/g)","2π√(m/g)"],a:1,e:"T = 2π√(L/g). Independent of mass and amplitude (for small oscillations)."},
+{s:"physics",q:"In SHM, at the mean position:",o:["Velocity is zero","Acceleration is maximum","Velocity is maximum","Both A and B"],a:2,e:"At mean position (x=0): v = Aω (maximum), a = 0 (minimum). At extreme positions: v=0, a=Aω² (maximum)."},
+{s:"physics",q:"Viscosity of liquids with increase in temperature:",o:["Increases","Decreases","Remains same","First increases then decreases"],a:1,e:"Viscosity of liquids DECREASES with temperature (intermolecular bonds weaken). Gases: opposite (increases)."},
+{s:"physics",q:"Kirchhoff's Current Law (KCL) is based on:",o:["Conservation of energy","Conservation of charge","Conservation of mass","Ohm's law"],a:1,e:"KCL: ΣI=0 at any node. Based on conservation of electric charge — charge cannot accumulate at a junction."},
+{s:"physics",q:"In a step-up transformer, the secondary voltage compared to primary voltage is:",o:["Less","More","Equal","Zero"],a:1,e:"Step-up: Nₛ>Nₚ → Vₛ/Vₚ=Nₛ/Nₚ>1 → Vₛ>Vₚ. Voltage increases, current decreases."},
+{s:"physics",q:"Einstein's photoelectric equation is:",o:["hf = W₀ − KE","hf = W₀ + KE_max","KE = hf₀","W₀ = hf_max"],a:1,e:"Einstein: hf = W₀ + (1/2)mv²_max = W₀ + KE_max. Incident photon energy = work function + kinetic energy of emitted electron."},
+{s:"physics",q:"In an N-type semiconductor, majority carriers are:",o:["Holes","Electrons","Protons","Neutrons"],a:1,e:"N-type: doped with pentavalent donor (P, As, Sb). Extra electrons → electrons are majority carriers; holes are minority."},
+{s:"physics",q:"The knee voltage for Silicon diode is approximately:",o:["0.3 V","0.7 V","1.1 V","5 V"],a:1,e:"Silicon diode knee voltage ≈ 0.7V. Germanium ≈ 0.3V. Below knee, very little current flows."},
+{s:"physics",q:"LASER stands for:",o:["Light Amplification by Spontaneous Emission of Radiation","Light Amplification by Stimulated Emission of Radiation","Light Absorption by Stimulated Emission of Radiation","None of these"],a:1,e:"LASER = Light Amplification by Stimulated Emission of Radiation. Key: STIMULATED emission, not spontaneous."},
+{s:"physics",q:"Optical fiber works on the principle of:",o:["Refraction","Reflection","Total Internal Reflection","Diffraction"],a:2,e:"Optical fiber uses Total Internal Reflection (TIR). Light traveling in core (higher n) hits cladding (lower n) at angle > critical angle → trapped and propagates."},
+{s:"physics",q:"Faraday's second law of electromagnetic induction states:",o:["EMF = −dΦ/dt","Induced EMF opposes the cause","Same charge through different electrolytes deposits masses proportional to equivalent weights","Induced current depends on rate of change of flux"],a:3,e:"Faraday's 2nd law of EMI: magnitude of induced EMF is proportional to rate of change of magnetic flux. e = −dΦ/dt."},
+{s:"physics",q:"The Doppler effect in sound is observed when:",o:["Sound reflects off a wall","There is relative motion between source and observer","Sound travels through vacuum","Frequency of sound changes independently"],a:1,e:"Doppler effect: apparent change in frequency due to relative motion between source and observer. f' = f(v±vₒ)/(v∓vₛ)."},
+{s:"physics",q:"Which energy band determines electrical conductivity?",o:["Valence band","Forbidden band","Conduction band","All bands equally"],a:2,e:"Conduction band — electrons in this band are free to move and carry current. Number of electrons in conduction band determines conductivity."},
+
+// ══════════════ CHEMISTRY (25 Qs) ══════════════
+{s:"chem",q:"Isotopes are atoms of the same element with:",o:["Same mass number, different atomic number","Same atomic number, different mass number","Same number of neutrons","Different atomic number and mass number"],a:1,e:"Isotopes: same Z (protons), different A (mass number) → different number of neutrons. e.g., ¹²C and ¹⁴C."},
+{s:"chem",q:"According to Hund's rule, electrons in degenerate orbitals:",o:["Pair up first before filling other orbitals","Fill with parallel spins one by one before pairing","Fill in random order","Fill highest energy first"],a:1,e:"Hund's rule: electrons occupy separate orbitals of same energy with parallel spins before pairing. Maximizes spin multiplicity."},
+{s:"chem",q:"The ionic bond is formed by:",o:["Sharing of electron pairs","Transfer of electrons from metal to non-metal","Donation of both electrons from one atom","None of these"],a:1,e:"Ionic bond: metal loses electrons (cation) and non-metal gains them (anion). Electrostatic attraction between oppositely charged ions."},
+{s:"chem",q:"According to De Morgan's theorem (Lewis), an acid is:",o:["Proton donor","Proton acceptor","Electron pair acceptor","Electron pair donor"],a:2,e:"Lewis definition: acid = electron pair ACCEPTOR; base = electron pair DONOR. More general than Bronsted-Lowry."},
+{s:"chem",q:"pH of a solution with [H⁺] = 10⁻⁴ mol/L is:",o:["4","−4","10⁻⁴","0.0001"],a:0,e:"pH = −log[H⁺] = −log(10⁻⁴) = 4."},
+{s:"chem",q:"Molarity is defined as:",o:["Moles of solute per kg of solvent","Moles of solute per litre of solution","Gram equivalents per litre","Moles of solute per mole of solution"],a:1,e:"Molarity (M) = moles of solute / volume of solution in litres. Unit: mol/L or M."},
+{s:"chem",q:"The Tyndall effect is a characteristic property of:",o:["True solutions","Colloids","Suspensions","Pure solvents"],a:1,e:"Tyndall effect: scattering of light by colloidal particles, making the beam visible from the side. Not observed in true solutions."},
+{s:"chem",q:"Hardness of water is primarily caused by:",o:["NaCl and KCl","Ca²⁺ and Mg²⁺ ions","CO₂ dissolved in water","Fe²⁺ ions"],a:1,e:"Hardness caused by Ca²⁺ and Mg²⁺ ions (from chlorides, sulfates, bicarbonates). They react with soap to form insoluble scum."},
+{s:"chem",q:"In the permutit/zeolite process for water softening:",o:["Ca²⁺ ions are oxidized","Na⁺ ions in zeolite exchange with Ca²⁺ and Mg²⁺","Boiling removes hardness","Lime is added to precipitate calcium"],a:1,e:"Zeolite (Na₂Ze) exchanges its Na⁺ for Ca²⁺/Mg²⁺ from hard water. Regenerated using brine (NaCl solution)."},
+{s:"chem",q:"Faraday's First Law of electrolysis states:",o:["Mass deposited is proportional to atomic weight","Mass deposited is proportional to quantity of electricity","Mass deposited is inversely proportional to current","Mass deposited depends on electrode material"],a:1,e:"Faraday's 1st law: m = ZQ = ZIt. Mass deposited is directly proportional to quantity of electricity passed."},
+{s:"chem",q:"Rusting of iron is an example of:",o:["Dry corrosion","Wet/electrochemical corrosion","Erosion","Chemical corrosion without electrolyte"],a:1,e:"Rusting is wet/electrochemical corrosion. Requires both water (electrolyte) and oxygen. Iron acts as anode (oxidation: Fe→Fe²⁺+2e⁻)."},
+{s:"chem",q:"Vulcanization of rubber involves heating rubber with:",o:["Carbon black","Sulfur","Oxygen","Nitrogen"],a:1,e:"Vulcanization: rubber + sulfur (2–8%) heated → sulfur cross-links polymer chains → rubber becomes stronger, elastic, non-sticky."},
+{s:"chem",q:"Nylon 6,6 is formed by condensation of:",o:["Only adipic acid","Hexamethylenediamine and adipic acid","Caprolactam","Glycine and aminocaproic acid"],a:1,e:"Nylon 6,6: hexamethylenediamine (6 carbons) + adipic acid (6 carbons) → polyamide via condensation (lose H₂O, form −CO−NH− amide bond)."},
+{s:"chem",q:"The calorific value of LPG is approximately:",o:["5.5 MJ/m³","21 MJ/m³","50 MJ/kg","11 MJ/m³"],a:2,e:"LPG (propane+butane) has calorific value ≈ 50 MJ/kg (very high), making it excellent as domestic fuel."},
+{s:"chem",q:"In electrochemistry, the anode is the electrode where:",o:["Reduction occurs","Oxidation occurs","Current enters","Electrons are supplied"],a:1,e:"Anode: oxidation occurs (AN OX). In galvanic cell: anode is negative terminal. In electrolytic cell: anode is positive terminal."},
+{s:"chem",q:"The oxidation number of Cr in K₂Cr₂O₇ is:",o:["+3","+6","+7","+2"],a:1,e:"K₂Cr₂O₇: 2(+1)+2Cr+7(−2)=0 → 2+2Cr−14=0 → 2Cr=12 → Cr=+6."},
+{s:"chem",q:"Buffer solutions resist change in:",o:["Temperature","pH","Volume","Concentration"],a:1,e:"Buffer solution: resists change in pH when small amounts of acid or base are added. Composed of weak acid + its salt (or weak base + its salt)."},
+{s:"chem",q:"Which alloy is used in aircraft bodies due to its light weight and strength?",o:["Stainless steel","Nichrome","Duralumin","German silver"],a:2,e:"Duralumin: Al+Cu(4%)+Mg+Mn. Light (low density like Al) yet strong. Ideal for aircraft and spacecraft."},
+{s:"chem",q:"Eutrophication in water bodies is caused by:",o:["Oil spills","Excess nutrients (nitrates, phosphates)","Heavy metal pollution","Thermal pollution"],a:1,e:"Eutrophication: excess nutrients (from fertilizer runoff) → massive algal growth → algae die → bacterial decomposition consumes O₂ → fish kill."},
+{s:"chem",q:"PVC is obtained by polymerization of:",o:["Vinyl chloride (CH₂=CHCl)","Styrene","Ethylene","Tetrafluoroethylene"],a:0,e:"PVC (Polyvinyl Chloride): addition polymerization of vinyl chloride (CH₂=CHCl). Used in pipes, insulation, flooring."},
+{s:"chem",q:"The standard hydrogen electrode has electrode potential of:",o:["1 V","−1 V","0 V","0.5 V"],a:2,e:"SHE (Standard Hydrogen Electrode) is the reference electrode with E° = 0 V by definition. All other electrode potentials are measured relative to it."},
+{s:"chem",q:"Deforestation leads to all EXCEPT:",o:["Soil erosion","Increased rainfall","Biodiversity loss","Climate change"],a:1,e:"Deforestation → less water cycle → DECREASED rainfall (not increased). It causes soil erosion, biodiversity loss, increased CO₂, climate change."},
+{s:"chem",q:"In the Blast Furnace, coke serves as:",o:["A flux","A reducing agent AND fuel","An ore","A slag former"],a:1,e:"Coke in blast furnace: (1) burns to provide heat (fuel), (2) forms CO which reduces iron ore (reducing agent). C+O₂→CO₂; CO₂+C→2CO; Fe₂O₃+3CO→2Fe+3CO₂."},
+{s:"chem",q:"Reverse osmosis removes dissolved salts by:",o:["Boiling the water","Applying pressure greater than osmotic pressure across semi-permeable membrane","Adding zeolite","Electrolysis"],a:1,e:"RO: external pressure > osmotic pressure forces pure water through semi-permeable membrane, leaving dissolved salts behind."},
+{s:"chem",q:"Bakelite is a thermosetting plastic made from:",o:["Phenol + formaldehyde","Urea + formaldehyde","Styrene + butadiene","Ethylene + propylene"],a:0,e:"Bakelite: condensation polymerization of phenol and formaldehyde. First synthetic plastic. Thermosetting (cannot be re-moulded). Used in electrical fittings."},
+
+// ══════════════ CSE CORE (100 Qs) ══════════════
+{s:"cse",q:"The decimal equivalent of binary 1010 is:",o:["8","10","12","14"],a:1,e:"1010₂ = 1×2³+0×2²+1×2¹+0×2⁰ = 8+0+2+0 = 10."},
+{s:"cse",q:"De Morgan's theorem states (A·B)' equals:",o:["A'·B'","A'+B'","A·B","A+B"],a:1,e:"De Morgan's: (A·B)' = A'+B'. Break the line, change the sign. NAND gate = OR gate with inverted inputs."},
+{s:"cse",q:"Which gate is called the Universal Gate?",o:["AND","OR","NAND","XOR"],a:2,e:"NAND (and NOR) are universal gates — any logic function can be implemented using only NAND gates. AND=NAND+NOT; OR=NAND with inverted inputs; NOT=1-input NAND."},
+{s:"cse",q:"XOR gate output is 1 when:",o:["All inputs are 1","All inputs are 0","Inputs are different","Inputs are same"],a:2,e:"XOR (Exclusive OR): output=1 when inputs are DIFFERENT (one 0, one 1). Output=0 when inputs are same. Also acts as a comparator."},
+{s:"cse",q:"In a K-Map, groups must always be powers of:",o:["3","2","10","Any number"],a:1,e:"K-map groups must be powers of 2: 1, 2, 4, 8, 16. Larger groups give simpler (fewer literals) SOP expressions."},
+{s:"cse",q:"A Full Adder has how many inputs?",o:["2","3","4","1"],a:1,e:"Full Adder: 3 inputs (A, B, Carry-in). Half Adder: 2 inputs (A, B, no carry-in). Full adder outputs Sum and Carry-out."},
+{s:"cse",q:"The JK flip-flop when J=K=1 acts as a:",o:["SR flip-flop","D flip-flop","Toggle flip-flop","Null operation"],a:2,e:"JK flip-flop with J=K=1: on each clock edge, output toggles (Q→Q'). This eliminates the invalid state of SR flip-flop."},
+{s:"cse",q:"RAM is:",o:["Read Only Memory","Random Access non-volatile Memory","Volatile Read/Write Memory","Read Access Memory"],a:2,e:"RAM (Random Access Memory): volatile (data lost on power off), read/write. SRAM (flip-flops, fast, cache) and DRAM (capacitors, needs refresh, main memory)."},
+{s:"cse",q:"In Gray code, how many bits change between consecutive values?",o:["All bits","2 bits","1 bit","Depends on value"],a:2,e:"Gray code: only ONE bit changes between consecutive values. Prevents glitches in digital systems during transitions (e.g., shaft encoders)."},
+{s:"cse",q:"The 2's complement of 1010 is:",o:["0110","0101","0111","1100"],a:0,e:"1's complement of 1010 = 0101. Add 1: 0101+1 = 0110. 2's complement = 0110."},
+{s:"cse",q:"Which addressing mode uses a constant as the operand?",o:["Direct","Indirect","Immediate","Register"],a:2,e:"Immediate addressing: the operand is a constant (literal) embedded in the instruction itself. e.g., ADD R1, #10 — the 10 is immediate data."},
+{s:"cse",q:"Cache memory is placed between:",o:["CPU and RAM","RAM and Hard disk","CPU and Input device","Hard disk and Output"],a:0,e:"Cache sits between CPU and RAM. It stores frequently accessed data/instructions so CPU doesn't have to wait for slower RAM."},
+{s:"cse",q:"DMA stands for:",o:["Direct Memory Access","Dynamic Memory Allocation","Direct Memory Address","Data Memory Access"],a:0,e:"DMA: Direct Memory Access. DMA controller transfers data between I/O device and memory without involving CPU, freeing it for other tasks."},
+{s:"cse",q:"Flynn's SIMD classification means:",o:["Single Instruction Multiple Data","Single Instance Multiple Devices","Several Instructions Many Data","Single Integrated Multiple Devices"],a:0,e:"SIMD: Single Instruction, Multiple Data. Same operation applied to multiple data simultaneously. Used in GPUs, vector processors, multimedia processors."},
+{s:"cse",q:"RISC processors have:",o:["Many complex instructions","Few simple fixed-length instructions","Variable-length instructions","Memory-to-memory operations"],a:1,e:"RISC: few simple instructions, fixed-length, load-store architecture (only load/store access memory), many registers, pipeline-friendly."},
+{s:"cse",q:"The correct output of printf(\"%d\", 5%2) in C is:",o:["2","1","0","2.5"],a:1,e:"5%2 = 5 mod 2 = 1 (remainder when 5 divided by 2). %d formats as integer."},
+{s:"cse",q:"In C, which storage class retains its value between function calls?",o:["auto","extern","static","register"],a:2,e:"static local variable: initialized once, retains value between function calls (stored in BSS/data segment, not stack)."},
+{s:"cse",q:"The output of: int a=5; printf(\"%d\", a++) is:",o:["6","5","4","Undefined"],a:1,e:"a++ is post-increment. printf sees value BEFORE increment (5), then a becomes 6. Pre-increment (++a) would print 6."},
+{s:"cse",q:"strcmp(\"abc\", \"abc\") returns:",o:["1","−1","0","Undefined"],a:2,e:"strcmp returns 0 if strings are identical, negative if first<second, positive if first>second."},
+{s:"cse",q:"A pointer variable stores:",o:["Value of a variable","Address of a variable","Name of a variable","Size of a variable"],a:1,e:"A pointer variable stores the memory address (location) of another variable. Use & to get address, * to dereference (get value at address)."},
+{s:"cse",q:"malloc() in C returns:",o:["int*","void*","char*","NULL always"],a:1,e:"malloc() returns void* (generic pointer). You must cast it to the appropriate type: int *p = (int*)malloc(n*sizeof(int))."},
+{s:"cse",q:"Big-O notation represents:",o:["Best case","Worst case (upper bound)","Average case","Exact running time"],a:1,e:"Big-O O(f(n)): upper bound on running time (worst case). Omega Ω: lower bound (best case). Theta Θ: tight bound."},
+{s:"cse",q:"In a Stack, the last element inserted is:",o:["First to be deleted","Last to be deleted","Cannot be deleted","Deleted randomly"],a:0,e:"Stack: LIFO (Last In, First Out). The last element pushed is the first to be popped. Used in function calls, undo operations, expression evaluation."},
+{s:"cse",q:"Binary Search works only on:",o:["Linked lists","Sorted arrays","Unsorted arrays","Stacks"],a:1,e:"Binary search requires a SORTED array. It halves the search space each step, achieving O(log n) time complexity."},
+{s:"cse",q:"Which sorting algorithm has O(n log n) time in all cases?",o:["Bubble Sort","Quick Sort","Merge Sort","Selection Sort"],a:2,e:"Merge Sort: always O(n log n) — best, average, and worst case. Quick Sort is O(n²) worst case (sorted array with bad pivot)."},
+{s:"cse",q:"In a BST, inorder traversal gives:",o:["Random order","Reverse sorted order","Sorted order","Level-order"],a:2,e:"BST inorder traversal (Left-Root-Right) always gives elements in sorted (ascending) order. This property makes BSTs useful for sorted data."},
+{s:"cse",q:"Which tree traversal visits the root first?",o:["Inorder","Postorder","Preorder","Level-order"],a:2,e:"Preorder: Root-Left-Right. Inorder: Left-Root-Right. Postorder: Left-Right-Root. Preorder useful for copying trees."},
+{s:"cse",q:"In C++, the operator used to access members of a class through a pointer is:",o:[".",":","->","::"],a:2,e:"Arrow operator (->) is used to access members via pointer: ptr->member. Dot (.) is used with objects directly: obj.member."},
+{s:"cse",q:"Which OOP concept allows the same function name with different parameters?",o:["Inheritance","Encapsulation","Function Overloading","Function Overriding"],a:2,e:"Function Overloading: same function name, different parameter lists (different types, number, or order). Resolved at compile time."},
+{s:"cse",q:"A virtual function in C++ enables:",o:["Compile-time polymorphism","Runtime polymorphism","Data hiding","Encapsulation"],a:1,e:"Virtual functions enable runtime polymorphism (dynamic dispatch). The correct function is selected at runtime based on the actual object type, not the pointer type."},
+{s:"cse",q:"A pure virtual function makes the class:",o:["Concrete","Abstract","Final","Template"],a:1,e:"A class with at least one pure virtual function (declared as virtual f()=0) is Abstract. You cannot create objects of an abstract class; it must be overridden."},
+{s:"cse",q:"In C++, template enables:",o:["Runtime polymorphism","Generic programming","Dynamic binding","Encapsulation"],a:1,e:"Templates enable generic programming — write code once that works with any data type. Resolved at compile time (compile-time polymorphism)."},
+{s:"cse",q:"Which is NOT a valid inheritance type in C++?",o:["Multiple","Multilevel","Circular","Hierarchical"],a:2,e:"Circular inheritance doesn't exist. Valid types: single, multiple, multilevel, hierarchical, hybrid, multipath. Circular would cause infinite dependency."},
+{s:"cse",q:"In DBMS, a Primary Key must be:",o:["Null and duplicate allowed","Unique and Not Null","Only Unique","Only Not Null"],a:1,e:"Primary Key: must be UNIQUE (no two rows same) and NOT NULL. Only one primary key per table. Can be composite (multiple columns)."},
+{s:"cse",q:"Second Normal Form (2NF) eliminates:",o:["Transitive dependencies","Partial dependencies","Redundancy completely","None of these"],a:1,e:"2NF: must be in 1NF AND have no partial dependencies (every non-prime attribute must depend on the WHOLE primary key, not part of it)."},
+{s:"cse",q:"SQL command to retrieve all columns from a table 'Students':",o:["GET * FROM Students","SELECT * FROM Students","FETCH * FROM Students","RETRIEVE * FROM Students"],a:1,e:"SELECT * FROM Students; — SELECT is the DQL command. * means all columns. FROM specifies the table."},
+{s:"cse",q:"Which SQL clause is used with GROUP BY to filter groups?",o:["WHERE","ORDER BY","HAVING","DISTINCT"],a:2,e:"HAVING filters groups (used after GROUP BY). WHERE filters individual rows (before grouping). Example: GROUP BY dept HAVING COUNT(*)>5."},
+{s:"cse",q:"ACID in database transactions stands for:",o:["Atomicity, Consistency, Isolation, Durability","Accuracy, Consistency, Integration, Data","Atomicity, Concurrency, Isolation, Durability","All Correct Integrated Data"],a:0,e:"ACID: Atomicity (all-or-nothing), Consistency (valid state), Isolation (concurrent transactions don't interfere), Durability (committed data persists)."},
+{s:"cse",q:"A trigger in SQL fires:",o:["Only manually","Automatically on INSERT, UPDATE, or DELETE","Only on SELECT","When user calls it"],a:1,e:"Trigger: automatically executes in response to specific events (INSERT, UPDATE, DELETE) on a table. Cannot be called directly."},
+{s:"cse",q:"JOIN that returns only matching rows from both tables is:",o:["LEFT JOIN","RIGHT JOIN","INNER JOIN","FULL OUTER JOIN"],a:2,e:"INNER JOIN: returns only rows where condition matches in BOTH tables. LEFT JOIN: all left rows + matching right (NULL if no match)."},
+{s:"cse",q:"Which topology has all devices connected to a central switch?",o:["Bus","Ring","Star","Mesh"],a:2,e:"Star topology: all devices connect to a central hub/switch. Most common in LANs. Central device failure takes down all; individual device failure isolated."},
+{s:"cse",q:"The OSI layer responsible for routing packets is:",o:["Physical Layer","Data Link Layer","Network Layer","Transport Layer"],a:2,e:"Network Layer (Layer 3): routing of packets between networks using logical (IP) addresses. Devices: routers. Protocols: IP, ICMP, OSPF, BGP."},
+{s:"cse",q:"HTTP uses port number:",o:["21","22","80","443"],a:2,e:"HTTP: port 80. HTTPS: port 443. FTP: ports 20(data), 21(control). SSH: 22. SMTP: 25. DNS: 53."},
+{s:"cse",q:"IP address class C can have how many hosts per network?",o:["65534","254","16777214","2"],a:1,e:"Class C: /24, 24 bits for network, 8 bits for host → 2⁸−2 = 254 usable hosts (subtract network address and broadcast address)."},
+{s:"cse",q:"Which protocol automatically assigns IP addresses to devices?",o:["DNS","DHCP","FTP","SMTP"],a:1,e:"DHCP (Dynamic Host Configuration Protocol): automatically assigns IP address, subnet mask, gateway, DNS to network devices. Port 67/68."},
+{s:"cse",q:"A process in the 'waiting' state is waiting for:",o:["CPU time","An I/O event or signal","Memory allocation","Another process to terminate"],a:1,e:"Waiting state: process is waiting for an I/O operation to complete or an event/signal. When I/O completes, it moves back to ready state."},
+{s:"cse",q:"Round Robin scheduling uses:",o:["Priority numbers","Shortest job first","Fixed time quantum","Random selection"],a:2,e:"Round Robin: each process gets a fixed time quantum (q). If not done, it goes to end of ready queue. Fair, prevents starvation. Good for time-sharing systems."},
+{s:"cse",q:"Which scheduling algorithm can cause starvation of low-priority processes?",o:["Round Robin","FCFS","Priority Scheduling","SJF"],a:2,e:"Priority Scheduling: high priority runs first. Low priority processes may never get CPU if high priority processes keep arriving. Solution: Aging (gradually increase priority)."},
+{s:"cse",q:"Deadlock occurs when ALL four conditions hold. Which is NOT one of them?",o:["Mutual Exclusion","Hold and Wait","Preemption","Circular Wait"],a:2,e:"The four necessary conditions for deadlock: Mutual Exclusion, Hold and Wait, NO Preemption, Circular Wait. Preemption being PRESENT actually PREVENTS deadlock."},
+{s:"cse",q:"Thrashing in operating systems occurs when:",o:["Too many processes use CPU","Process spends more time paging than executing","Hard disk is full","RAM is upgraded"],a:1,e:"Thrashing: OS spends most time swapping pages in/out rather than executing processes. Caused by excessive multiprogramming. Fix: reduce number of processes."},
+{s:"cse",q:"Which page replacement algorithm gives optimal performance?",o:["FIFO","LRU","Optimal (OPT)","Clock"],a:2,e:"Optimal algorithm: replace the page that won't be used for the longest time in future. Gives minimum page faults but requires future knowledge (not practical)."},
+{s:"cse",q:"In Java, the 'extends' keyword is used for:",o:["Implementing an interface","Inheritance from a class","Declaring abstract class","Creating objects"],a:1,e:"'extends': class inheritance (class Dog extends Animal). 'implements': interface implementation (class Dog implements Drawable)."},
+{s:"cse",q:"Which Java feature allows 'Write Once, Run Anywhere'?",o:["JDK","JVM","JRE","Garbage Collector"],a:1,e:"JVM (Java Virtual Machine) interprets bytecode. Since JVM is platform-specific but bytecode is platform-independent, Java programs run on any platform with a JVM."},
+{s:"cse",q:"In Java, 'super()' is used to:",o:["Call the current class constructor","Call the parent class constructor","Create a new object","Destroy an object"],a:1,e:"super(): calls the parent class constructor. Must be the first statement in derived class constructor. super.method() calls parent class method."},
+{s:"cse",q:"What does the 'finally' block in Java exception handling do?",o:["Runs only when exception occurs","Runs only when no exception","Runs only after catch","Always runs regardless of exception"],a:3,e:"finally block ALWAYS executes regardless of whether exception was thrown or caught. Used for cleanup code (closing files, releasing resources)."},
+{s:"cse",q:"JDBC stands for:",o:["Java Database Connectivity","Java Data Base Commands","Just Database Connection","Java Direct Binary Connection"],a:0,e:"JDBC: Java Database Connectivity. API for connecting Java programs to relational databases (MySQL, Oracle, PostgreSQL etc.)."},
+{s:"cse",q:"In Python, which data structure is immutable?",o:["List","Dictionary","Tuple","Set"],a:2,e:"Tuple is immutable — cannot be modified after creation. List, Dict, and Set are mutable. Immutability makes tuples hashable (can be dict keys)."},
+{s:"cse",q:"Python list comprehension [x**2 for x in range(4)] gives:",o:["[1,4,9,16]","[0,1,4,9]","[0,1,2,3]","[4,4,4,4]"],a:1,e:"range(4) generates 0,1,2,3. Squaring each: 0²=0, 1²=1, 2²=4, 3²=9. Result: [0,1,4,9]."},
+{s:"cse",q:"In Python, a function that yields values one at a time is called:",o:["Lambda","Decorator","Generator","Closure"],a:2,e:"Generator: function with 'yield' keyword. Returns a generator object. Values produced lazily (one at a time). Memory efficient for large sequences."},
+{s:"cse",q:"What is the output of print(type(3.14)) in Python?",o:["<class 'int'>","<class 'float'>","<class 'double'>","<class 'number'>"],a:1,e:"3.14 is a float literal in Python. type() returns the class. Python doesn't have a separate 'double' type — float is 64-bit double precision."},
+{s:"cse",q:"In HTML, which tag creates a hyperlink?",o:["<link>","<href>","<a>","<url>"],a:2,e:"<a href='url'>Link text</a> creates a hyperlink. The href attribute specifies the URL. <link> is for linking CSS stylesheets in <head>."},
+{s:"cse",q:"CSS stands for:",o:["Computer Style Sheets","Cascading Style Sheets","Creative Style Sheets","Colorful Style Sheets"],a:1,e:"CSS: Cascading Style Sheets. Controls the visual presentation of HTML elements (colors, fonts, layout, spacing)."},
+{s:"cse",q:"Which HTML tag is used for the largest heading?",o:["<h6>","<h1>","<head>","<header>"],a:1,e:"<h1> is the largest/most important heading. <h6> is the smallest. Heading tags affect SEO and accessibility (screen readers)."},
+{s:"cse",q:"In JavaScript, 'let' differs from 'var' in that 'let' is:",o:["Function-scoped","Block-scoped","Global-scoped","Not scoped at all"],a:1,e:"'let': block-scoped (only available within the block {}). 'var': function-scoped (available throughout the function). 'const': block-scoped, cannot be reassigned."},
+{s:"cse",q:"PHP variables start with:",o:["@","#","$","&"],a:2,e:"In PHP, all variables must start with $ (dollar sign). e.g., $name = 'Raju'; $age = 20;"},
+{s:"cse",q:"Which PHP superglobal retrieves form data sent via POST method?",o:["$_GET","$_POST","$_REQUEST","$_FORM"],a:1,e:"$_POST: retrieves data from HTML form submitted with method='POST'. $_GET: retrieves URL query string data. $_REQUEST: both GET and POST."},
+{s:"cse",q:"The 'void' return type in C means the function:",o:["Returns 0","Returns no value","Returns any type","Causes error"],a:1,e:"void return type: function returns no value. void can also be used as parameter list (void) to explicitly show no parameters."},
+{s:"cse",q:"Which of the following is NOT an OOP principle?",o:["Encapsulation","Compilation","Inheritance","Polymorphism"],a:1,e:"4 pillars of OOP: Encapsulation, Abstraction, Inheritance, Polymorphism. Compilation is a process, not an OOP principle."},
+{s:"cse",q:"In a Queue, elements are removed from:",o:["Top","Bottom","Front","Rear"],a:2,e:"Queue: FIFO. Elements enqueued at REAR, dequeued from FRONT. Like a real queue/line: first person to join is first to leave."},
+{s:"cse",q:"The time complexity of binary search is:",o:["O(n)","O(n²)","O(log n)","O(n log n)"],a:2,e:"Binary search: O(log n). Each step eliminates half the remaining elements. For n=1024, at most log₂(1024)=10 comparisons needed."},
+{s:"cse",q:"Which SQL statement is used to modify existing records?",o:["INSERT","UPDATE","ALTER","MODIFY"],a:1,e:"UPDATE table SET column=value WHERE condition; — modifies existing rows. INSERT adds new rows. ALTER modifies table structure (DDL)."},
+{s:"cse",q:"In OSI model, which layer handles error detection and MAC addressing?",o:["Physical Layer","Data Link Layer","Network Layer","Transport Layer"],a:1,e:"Data Link Layer (Layer 2): framing, MAC addressing, error detection (CRC). Devices: switches, bridges. Protocols: Ethernet, Wi-Fi (802.11)."},
+{s:"cse",q:"TCP provides which type of data transfer?",o:["Unreliable, connectionless","Reliable, connection-oriented","Fast but unreliable","Best-effort delivery"],a:1,e:"TCP: reliable (guarantees delivery, ordering, error checking), connection-oriented (three-way handshake: SYN, SYN-ACK, ACK). UDP: unreliable, connectionless, faster."},
+{s:"cse",q:"An operating system is software that:",o:["Compiles programs","Manages hardware resources and provides services to programs","Creates applications","Only manages files"],a:1,e:"OS: manages hardware (CPU, memory, I/O), provides abstraction layer, manages processes, files, security, networking. Interface between hardware and applications."},
+{s:"cse",q:"In paging, internal fragmentation occurs when:",o:["Free memory is not contiguous","Allocated page is larger than needed","Too many processes exist","Paging table is full"],a:1,e:"Internal fragmentation: last page of a process may not be fully used. e.g., if page size=4KB and process needs 5KB, two pages allocated but 3KB of 2nd page is wasted."},
+{s:"cse",q:"LRU page replacement means:",o:["Replace the least recently used page","Replace the most recently used page","Replace the largest page","Replace the first loaded page"],a:0,e:"LRU: Least Recently Used — replace the page that hasn't been used for the longest time. Based on temporal locality principle. Very effective in practice."},
+{s:"cse",q:"Which Python package provides mathematical functions?",o:["sys","os","math","re"],a:2,e:"math module: math.sqrt(), math.pi, math.sin(), math.log(), math.factorial(), math.ceil(), math.floor() etc."},
+{s:"cse",q:"In Python, what does len([1,2,3,4]) return?",o:["3","4","5","Error"],a:1,e:"len() returns the number of elements in the sequence. [1,2,3,4] has 4 elements, so len([1,2,3,4]) = 4."},
+{s:"cse",q:"Which HTML tag creates an unordered list?",o:["<ol>","<ul>","<li>","<list>"],a:1,e:"<ul> creates an unordered (bulleted) list. <ol> creates an ordered (numbered) list. <li> defines each list item within <ul> or <ol>."},
+{s:"cse",q:"The 'this' keyword in C++ refers to:",o:["The base class","The derived class","A pointer to the current object","The constructor"],a:2,e:"'this' is a pointer to the current object (the object that invoked the member function). Used to distinguish member variables from parameters with same name."},
+{s:"cse",q:"Which is used to free dynamically allocated memory in C++?",o:["free()","delete","dealloc()","remove()"],a:1,e:"delete: frees memory allocated with 'new'. delete[] for arrays. In C, free() is used with malloc(). Forgetting to delete causes memory leaks."},
+{s:"cse",q:"An interface in Java:",o:["Can have constructors","Can have abstract methods only (before Java 8)","Can be instantiated","Can extend multiple classes"],a:1,e:"Java interface: before Java 8, only abstract methods and constants. Java 8+ allows default and static methods. Cannot have constructors or instance variables. A class can implement multiple interfaces."},
+{s:"cse",q:"Which SQL command removes a table and its data permanently?",o:["DELETE","TRUNCATE","DROP","REMOVE"],a:2,e:"DROP TABLE tablename — removes the table structure AND all data permanently. TRUNCATE removes all rows but keeps structure. DELETE removes rows conditionally."},
+{s:"cse",q:"The process of converting source code to machine code is called:",o:["Interpretation","Linking","Compilation","Debugging"],a:2,e:"Compilation: translating high-level source code to machine code (or intermediate code). Compiler does this. Interpreter translates and executes line by line."},
+{s:"cse",q:"In Quick Sort, the element chosen to partition the array is called:",o:["Root","Pivot","Median","Comparator"],a:1,e:"Pivot: the element chosen to partition the array in Quick Sort. Elements smaller than pivot go left, larger go right. Pivot choice affects performance."},
+{s:"cse",q:"Which of the following is a non-volatile memory?",o:["SRAM","DRAM","Cache","ROM"],a:3,e:"ROM: non-volatile (retains data without power). RAM (SRAM, DRAM) and Cache are volatile. Flash memory, SSD are also non-volatile."},
+{s:"cse",q:"A subnet mask of 255.255.255.0 corresponds to:",o:["/8","/16","/24","/32"],a:2,e:"255.255.255.0 = 11111111.11111111.11111111.00000000 → 24 ones → /24 (CIDR notation). Gives 256 addresses, 254 usable hosts."},
+{s:"cse",q:"Which keyword in Python defines a class?",o:["define","function","class","object"],a:2,e:"'class ClassName:' defines a class in Python. 'def' defines a function. Python uses indentation to define class body."},
+{s:"cse",q:"In C, the format specifier for a float is:",o:["%d","%s","%f","%c"],a:2,e:"%f: float (printf). %lf: double (scanf uses %lf for double). %d: int. %c: char. %s: string. %ld: long int."},
+{s:"cse",q:"Recursion requires a _____ condition to stop infinite calls.",o:["Loop","Base","Return","Main"],a:1,e:"Base case: the condition under which recursion stops and returns a value without further recursive calls. Without base case, infinite recursion → stack overflow."},
+{s:"cse",q:"Which JOIN returns all rows from the left table?",o:["INNER JOIN","RIGHT JOIN","LEFT JOIN","CROSS JOIN"],a:2,e:"LEFT JOIN (LEFT OUTER JOIN): returns ALL rows from left table + matching rows from right table. Non-matching right rows appear as NULL."},
+{s:"cse",q:"Inheritance in OOP promotes:",o:["Data hiding","Code reusability","Operator overloading","Dynamic memory allocation"],a:1,e:"Inheritance: derived class inherits properties of base class, promoting code reusability. Avoids duplication. Also enables polymorphism."},
+{s:"cse",q:"Which layer of TCP/IP model corresponds to the Transport layer of OSI?",o:["Application","Internet","Transport","Network Access"],a:2,e:"TCP/IP Transport layer = OSI Transport layer (Layer 4). Protocols: TCP (reliable) and UDP (unreliable). Handles end-to-end communication."},
+{s:"cse",q:"A class that cannot be instantiated is called:",o:["Final class","Static class","Abstract class","Private class"],a:2,e:"Abstract class: has at least one pure virtual (C++) or abstract (Java) method. Cannot create objects directly. Must be subclassed and abstract methods overridden."},
+{s:"cse",q:"In Merge Sort, the 'merge' step combines:",o:["Unsorted halves","Two sorted halves","Random elements","Pivot elements"],a:1,e:"Merge Sort: divide array in half, recursively sort each half, then MERGE two sorted halves. The merge step is O(n) and overall complexity is O(n log n)."},
+{s:"cse",q:"A foreign key in a table references:",o:["Primary key of same table","Primary key of another table","Any attribute of another table","Unique key of same table"],a:1,e:"Foreign key: attribute(s) in one table that references the PRIMARY KEY of another table. Enforces referential integrity between tables."},
+{s:"cse",q:"In Python, which of the following creates a tuple?",o:["[1,2,3]","{1,2,3}","(1,2,3)","<1,2,3>"],a:2,e:"(1,2,3) creates a tuple. [1,2,3] creates a list. {1,2,3} creates a set. {} creates an empty dict."},
+{s:"cse",q:"The '==' operator in Java compares:",o:["Object content","Object reference (address)","Both content and reference","Method names"],a:1,e:"In Java, == compares references (memory addresses) for objects. Use .equals() to compare object content/values. For primitives, == compares values."},
+{s:"cse",q:"In a network, a router works at which OSI layer?",o:["Layer 1","Layer 2","Layer 3","Layer 4"],a:2,e:"Router: Layer 3 (Network layer). Uses IP addresses for routing. Switch: Layer 2 (Data Link). Hub: Layer 1 (Physical). Gateway: can work at any layer."},
+{s:"cse",q:"CSS property to change text color is:",o:["text-color","font-color","color","foreground"],a:2,e:"CSS 'color' property sets text color. 'background-color' sets background. 'font-size' sets size. 'font-weight' sets boldness."},
+{s:"cse",q:"Which PHP function starts a session?",o:["begin_session()","session_start()","start_session()","new_session()"],a:1,e:"session_start(): must be called at the beginning of each PHP page that uses sessions. After this, $_SESSION superglobal is available."},
+{s:"cse",q:"The Banker's Algorithm is used for:",o:["Memory allocation","Deadlock Avoidance","CPU Scheduling","Disk Scheduling"],a:1,e:"Banker's Algorithm: deadlock avoidance. Checks if granting a resource request will leave the system in a 'safe state'. If yes, grant; otherwise, process waits."},
+{s:"cse",q:"Which is the correct way to declare a 1D array in C?",o:["int arr[];","array int arr[5];","int arr[5];","arr int[5];"],a:2,e:"int arr[5]; — declares an integer array of 5 elements (indices 0 to 4). 'int arr[];' is incomplete (no size). Array size must be specified at declaration in C."},
+];
+
+// subject info
+const SUBJ_INFO = {
+  maths:{label:"Maths",color:"#f4a261",bgColor:"rgba(244,162,97,.12)",border:"rgba(244,162,97,.25)"},
+  physics:{label:"Physics",color:"#48cae4",bgColor:"rgba(72,202,228,.12)",border:"rgba(72,202,228,.25)"},
+  chem:{label:"Chemistry",color:"#52b788",bgColor:"rgba(82,183,136,.12)",border:"rgba(82,183,136,.25)"},
+  cse:{label:"CSE",color:"#c77dff",bgColor:"rgba(199,125,255,.12)",border:"rgba(199,125,255,.25)"},
+};
+
+// Section headers
+const SECTIONS = [
+  {subj:"maths",label:"MATHEMATICS",start:0,end:49},
+  {subj:"physics",label:"PHYSICS",start:50,end:74},
+  {subj:"chem",label:"CHEMISTRY",start:75,end:99},
+  {subj:"cse",label:"CSE CORE",start:100,end:199},
+];
+
+let answered = {};
+let timerInterval;
+let timeLeft = 3*60*60;
+let examStarted = false;
+
+function startExam(){
+  document.getElementById('startScreen').style.display='none';
+  document.getElementById('examArea').style.display='block';
+  renderQuestions();
+  startTimer();
+  examStarted = true;
+}
+
+function startTimer(){
+  timerInterval = setInterval(()=>{
+    timeLeft--;
+    const h=Math.floor(timeLeft/3600);
+    const m=Math.floor((timeLeft%3600)/60);
+    const s=timeLeft%60;
+    const el=document.getElementById('timerEl');
+    el.textContent=`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    if(timeLeft<=300) el.classList.add('urgent');
+    if(timeLeft<=0){clearInterval(timerInterval);submitExam();}
+  },1000);
+}
+
+function renderQuestions(){
+  const container=document.getElementById('questionsContainer');
+  let html='';
+  let currentSubj='';
+  QUESTIONS.forEach((q,i)=>{
+    if(q.s!==currentSubj){
+      const sec=SECTIONS.find(s=>s.subj===q.s);
+      const si=SUBJ_INFO[q.s];
+      html+=`<div class="sec-hdr"><div class="sec-hdr-line"></div>
+        <div class="sec-hdr-lbl" style="color:${si.color};border-color:${si.border};background:${si.bgColor}">${sec.label} — ${sec.end-sec.start+1} Questions</div>
+        <div class="sec-hdr-line"></div></div>`;
+      currentSubj=q.s;
+    }
+    const si=SUBJ_INFO[q.s];
+    const opts=['A','B','C','D'];
+    html+=`<div class="q-card" id="qcard-${i}">
+      <div class="q-top">
+        <span class="q-badge">Q${i+1}</span>
+        <span class="q-subj" style="background:${si.bgColor};color:${si.color};border:1px solid ${si.border}">${si.label}</span>
+        <div class="q-text">${q.q}</div>
+      </div>
+      <div class="opts">
+        ${q.o.map((opt,j)=>`<button class="opt" id="opt-${i}-${j}" onclick="answerQ(${i},${j})">
+          <span class="opt-ltr">${opts[j]}</span>${opt}
+        </button>`).join('')}
+      </div>
+      <div class="expl" id="expl-${i}"><strong>💡 Explanation:</strong> ${q.e}</div>
+    </div>`;
+  });
+  container.innerHTML=html;
+}
+
+function answerQ(qIdx,optIdx){
+  if(answered[qIdx]!==undefined) return;
+  answered[qIdx]=optIdx;
+  const q=QUESTIONS[qIdx];
+  const card=document.getElementById('qcard-'+qIdx);
+  const expl=document.getElementById('expl-'+qIdx);
+  // disable all buttons
+  for(let j=0;j<4;j++){
+    const btn=document.getElementById(`opt-${qIdx}-${j}`);
+    btn.disabled=true;
+    if(j===q.a) btn.classList.add('correct-ans');
+    else if(j===optIdx) btn.classList.add('wrong-ans');
+  }
+  card.classList.add(optIdx===q.a?'correct':'wrong');
+  expl.classList.add('show');
+  updateProgress();
+}
+
+function updateProgress(){
+  const n=Object.keys(answered).length;
+  document.getElementById('progBar').style.width=(n/200*100)+'%';
+  document.getElementById('progTxt').textContent=`${n} / 200 answered`;
+}
+
+function submitExam(){
+  clearInterval(timerInterval);
+  let mathS=0,phyS=0,chemS=0,cseS=0;
+  let correct=0,wrong=0;
+  QUESTIONS.forEach((q,i)=>{
+    if(answered[i]===undefined) return;
+    if(answered[i]===q.a){
+      correct++;
+      if(q.s==='maths') mathS++;
+      else if(q.s==='physics') phyS++;
+      else if(q.s==='chem') chemS++;
+      else cseS++;
+    } else wrong++;
+  });
+  const skip=200-Object.keys(answered).length;
+  const total=correct;
+  document.getElementById('examArea').style.display='none';
+  const res=document.getElementById('resultArea');
+  res.style.display='block';
+  const pct=Math.round(total/200*100);
+  let emoji,title,sub;
+  if(pct>=75){emoji='🏆';title='Excellent!';sub='You are well prepared for TG ECET 2026!';}
+  else if(pct>=50){emoji='👍';title='Good Effort!';sub='Focus on weak areas and you will clear it!';}
+  else{emoji='📚';title='Keep Studying!';sub='Review the deep guides and try again.';}
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultSub').textContent=`${pct}% score — ${sub}`;
+  document.getElementById('scoreNum').textContent=total;
+  const ring=document.getElementById('scoreRing');
+  if(pct>=75) ring.style.borderColor='var(--low)';
+  else if(pct>=50) ring.style.borderColor='var(--medium)';
+  else ring.style.borderColor='var(--high)';
+  document.getElementById('mathScore').textContent=mathS+'/50';
+  document.getElementById('phyScore').textContent=phyS+'/25';
+  document.getElementById('chemScore').textContent=chemS+'/25';
+  document.getElementById('cseScore').textContent=cseS+'/100';
+  document.getElementById('corrCount').textContent=correct+' correct';
+  document.getElementById('wrongCount').textContent=wrong+' wrong';
+  document.getElementById('skipCount').textContent=skip+' skipped';
+}
+
+function retryExam(){
+  answered={};
+  timeLeft=3*60*60;
+  document.getElementById('resultArea').style.display='none';
+  document.getElementById('timerEl').classList.remove('urgent');
+  document.getElementById('timerEl').textContent='3:00:00';
+  startExam();
+}
+</script>
+</body>
+</html>

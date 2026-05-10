@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TG ECET 2026 — CSE Prep Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- SPLASH / HERO -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="badge">TG ECET 2026 · CSE</div>
+    <h1>Crack the<br><span class="accent">Exam.</span></h1>
+    <p class="hero-sub">5 days. 200 marks. Full syllabus coverage — Maths, Physics, Chemistry & CSE Core. Study smart, not hard.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">200</span><span class="stat-label">Total Marks</span></div>
+      <div class="stat"><span class="stat-num">4</span><span class="stat-label">Subjects</span></div>
+      <div class="stat"><span class="stat-num">40+</span><span class="stat-label">Topics</span></div>
+      <div class="stat"><span class="stat-num">200</span><span class="stat-label">MCQs</span></div>
+    </div>
+    <div class="nav-cards">
+      <a href="maths.html" class="nav-card maths-card">
+        <div class="card-icon">∑</div>
+        <div class="card-info"><strong>Mathematics</strong><span>50 Marks · 8 Units</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="physics.html" class="nav-card physics-card">
+        <div class="card-icon">⚛</div>
+        <div class="card-info"><strong>Physics</strong><span>25 Marks · 12 Units</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="chemistry.html" class="nav-card chem-card">
+        <div class="card-icon">⬡</div>
+        <div class="card-info"><strong>Chemistry</strong><span>25 Marks · 12 Units</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="cse.html" class="nav-card cse-card">
+        <div class="card-icon">&lt;/&gt;</div>
+        <div class="card-info"><strong>CSE Core</strong><span>100 Marks · 10 Units</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="mcq.html" class="nav-card mcq-card">
+        <div class="card-icon">✎</div>
+        <div class="card-info"><strong>Practice MCQ</strong><span>Full 200-Mark Paper</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+// animate stats on load
+document.querySelectorAll('.stat-num').forEach(el => {
+  const target = parseInt(el.textContent);
+  let count = 0;
+  const step = Math.ceil(target / 40);
+  const interval = setInterval(() => {
+    count = Math.min(count + step, target);
+    el.textContent = count + (el.textContent.includes('+') ? '+' : '');
+    if (count >= target) clearInterval(interval);
+  }, 30);
+});
+</script>
+</body>
+</html>

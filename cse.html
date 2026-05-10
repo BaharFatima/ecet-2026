@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSE Core — TG ECET 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.deep-section{margin:22px 0}
+.deep-section h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px;color:#fff;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.deep-para{font-size:13.5px;color:var(--text-muted);line-height:1.85;margin-bottom:10px}
+.deep-para strong{color:var(--text)}
+.formula-block{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px 18px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#c9d1d9;line-height:2;white-space:pre-wrap}
+.formula-block .label{font-family:'Space Grotesk',sans-serif;font-size:10px;color:var(--cse);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;font-weight:700}
+.step-box{background:var(--bg3);border-radius:10px;padding:14px 18px;margin:10px 0}
+.step-box .step-title{font-size:12px;font-weight:700;color:var(--cse);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px}
+.steps-list{list-style:none;counter-reset:steps;padding:0}
+.steps-list li{counter-increment:steps;display:flex;gap:12px;padding:7px 0;font-size:13px;color:var(--text-muted);line-height:1.65;border-bottom:1px solid rgba(255,255,255,0.04)}
+.steps-list li:last-child{border-bottom:none}
+.steps-list li::before{content:counter(steps);width:22px;height:22px;min-width:22px;background:rgba(199,125,255,0.2);color:var(--cse);font-size:11px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0}
+.ex-box{background:linear-gradient(135deg,rgba(199,125,255,0.07),rgba(199,125,255,0.01));border:1px solid rgba(199,125,255,0.18);border-radius:10px;padding:14px 18px;margin:10px 0}
+.ex-box .ex-lbl{font-size:10px;font-weight:700;color:var(--cse);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.ex-box p{font-size:13px;color:var(--text-muted);line-height:1.75}
+.code-block{background:rgba(0,0,0,0.5);border:1px solid rgba(199,125,255,0.15);border-radius:10px;padding:14px 18px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#a9b1d6;line-height:1.7;overflow-x:auto;white-space:pre}
+.tip-box{background:rgba(255,209,102,0.05);border:1px solid rgba(255,209,102,0.2);border-radius:10px;padding:12px 16px;margin:10px 0;display:flex;gap:10px;align-items:flex-start}
+.tip-box span{font-size:16px;flex-shrink:0}
+.tip-box p{font-size:13px;color:var(--text-muted);line-height:1.65;margin:0}
+.tip-box strong{color:var(--medium)}
+.table-wrap{overflow-x:auto;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:rgba(255,255,255,0.06);padding:9px 14px;text-align:left;font-weight:600;color:var(--text);border-bottom:1px solid var(--border)}
+td{padding:8px 14px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-muted)}
+tr:last-child td{border-bottom:none}
+</style>
+</head>
+<body class="page-wrap cse-sub">
+<div class="fixed-bg cse-hero-bg"></div>
+<div class="page-content">
+<nav class="top-bar">
+  <a href="index.html" class="back-btn">← Home</a>
+  <div class="top-bar-title">CSE Core — Complete Deep Guide</div>
+  <span class="marks-badge mb-cse">100 Marks</span>
+</nav>
+<div class="subject-hero">
+  <h1>CSE <span style="color:var(--cse)">Core</span></h1>
+  <p>10 units — Digital Electronics to Python & Web. Every concept with working examples, algorithms, diagrams in text, and exam strategy. 100 marks — the most important subject.</p>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%" id="prog"></div></div>
+  <div id="progLbl" style="font-size:12px;color:var(--text-muted);margin-top:6px">0 / 10 units studied</div>
+</div>
+<div class="units-container">
+<div class="weightage-summary">
+  <span class="ws-label">Weightage:</span>
+  <div class="ws-legend">
+    <div class="ws-item"><div class="ws-dot high"></div>High (~12–15 marks)</div>
+    <div class="ws-item"><div class="ws-dot medium"></div>Medium (~8–10 marks)</div>
+    <div class="ws-item"><div class="ws-dot low"></div>Lower (~5–7 marks)</div>
+  </div>
+</div>
+
+<!-- UNIT 1 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U1</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Digital Electronics</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High</span><span class="expected-marks">~12 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Number Systems & Conversions</h3>
+<div class="formula-block"><div class="label">Number System Bases</div>
+Binary (Base 2):   digits 0,1
+Octal (Base 8):    digits 0–7
+Decimal (Base 10): digits 0–9
+Hexadecimal (Base 16): digits 0–9, A(10), B(11), C(12), D(13), E(14), F(15)</div>
+<div class="step-box">
+<div class="step-title">Decimal → Binary (Divide by 2, read remainders upward)</div>
+<ol class="steps-list">
+<li>Divide decimal number by 2, note remainder</li>
+<li>Continue dividing quotient by 2 until quotient = 0</li>
+<li>Read remainders from BOTTOM to TOP = binary representation</li>
+</ol>
+</div>
+<div class="ex-box">
+<div class="ex-lbl">Conversion Examples</div>
+<p>Decimal 45 → Binary:
+45÷2=22 R1; 22÷2=11 R0; 11÷2=5 R1; 5÷2=2 R1; 2÷2=1 R0; 1÷2=0 R1
+Read remainders bottom-up: 101101₂ ✓
+
+Binary 110101 → Decimal:
+1×2⁵+1×2⁴+0×2³+1×2²+0×2¹+1×2⁰ = 32+16+0+4+0+1 = 53
+
+Hex 2F → Decimal: 2×16 + F×1 = 32+15 = 47
+Decimal 255 → Hex: 255÷16=15 R15(F) → 15÷16=0 R15(F) → FF</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Binary Codes</h3>
+<div class="formula-block">BCD (Binary Coded Decimal): each decimal digit represented by 4-bit binary
+  Decimal 97 → BCD: 1001 0111  (9→1001, 7→0111)
+  
+Gray Code: only ONE bit changes between consecutive values
+  Useful to avoid errors during transitions (shaft encoders)
+  Decimal→Gray: MSB same; each other bit = XOR of binary's consecutive bits
+  Binary 0101 → Gray: 0, 0⊕1=1, 1⊕0=1, 0⊕1=1 → 0111
+
+ASCII: 7-bit code for characters (128 combinations)
+  'A'=65(41H), 'a'=97(61H), '0'=48(30H)
+
+Excess-3 Code: BCD + 3 (self-complementing code)
+  Decimal 5 → BCD 0101 → Excess-3: 0101+0011=1000</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Logic Gates — Truth Tables & Symbols</h3>
+<div class="formula-block"><div class="label">All Basic Gates</div>
+AND:  Y = A·B  (Y=1 only when ALL inputs=1)
+OR:   Y = A+B  (Y=1 when ANY input=1)
+NOT:  Y = Ā    (inverts: 0→1, 1→0)
+NAND: Y = (A·B)' = Ā+B̄  (AND + NOT; universal gate)
+NOR:  Y = (A+B)' = Ā·B̄   (OR + NOT; universal gate)
+XOR:  Y = A⊕B = AB̄+ĀB  (Y=1 when inputs are DIFFERENT)
+XNOR: Y = (A⊕B)' = AB+ĀB̄ (Y=1 when inputs are SAME = equality checker)</div>
+<div class="tip-box"><span>💡</span><p><strong>Universal gates:</strong> NAND and NOR are "universal" — any logic function can be built using ONLY NAND gates (or only NOR gates). This is used in practice for chip cost reduction.</p></div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Boolean Algebra & De Morgan's Theorems</h3>
+<div class="formula-block">Basic Laws:
+  Idempotent:  A+A=A;  A·A=A
+  Identity:    A+0=A;  A·1=A
+  Complement:  A+Ā=1;  A·Ā=0
+  Dominance:   A+1=1;  A·0=0
+  Involution:  (Ā)' = A (double negation)
+  Commutative: A+B=B+A; A·B=B·A
+  Associative: A+(B+C)=(A+B)+C; A(BC)=(AB)C
+  Distributive: A(B+C)=AB+AC; A+BC=(A+B)(A+C)
+  Absorption:  A+AB=A; A(A+B)=A
+
+De Morgan's Theorems (critical!):
+  (A+B)' = Ā·B̄    [NOR = AND of complements]
+  (A·B)' = Ā+B̄    [NAND = OR of complements]
+  
+  Extension: (A+B+C)' = Ā·B̄·C̄
+             (A·B·C)' = Ā+B̄+C̄
+  
+  Memory: "Break the line, change the sign"
+  → complement the whole expression, complement each variable, change + to · (or vice versa)</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 SOP, POS & Karnaugh Maps (K-Maps)</h3>
+<div class="formula-block">SOP (Sum of Products): ORing of AND terms (minterms)
+  e.g., F = AB + ĀC + BC  → three AND terms ORed together
+
+POS (Product of Sums): ANDing of OR terms (maxterms)
+  e.g., F = (A+B)(Ā+C)(B+C)
+
+Minterm: product term where ALL variables appear (either complemented or not)
+Maxterm: sum term where ALL variables appear
+
+K-Map Method (for minimization up to 4 variables):
+  Arrange truth table output in Gray code order in a grid.
+  Group adjacent 1s in groups of 1,2,4,8 (powers of 2).
+  Groups can wrap around edges and corners.
+  Larger groups = simpler expression.
+  Variables that change within a group are eliminated; those that remain form the product term.
+  
+2-variable K-map: 2×2 grid
+3-variable K-map: 2×4 grid (rows: 00,01,10,11 in Gray order: 00,01,11,10)
+4-variable K-map: 4×4 grid</div>
+<div class="ex-box">
+<div class="ex-lbl">K-Map Example — 3 Variables</div>
+<p>F(A,B,C) = Σm(1,3,5,7) — four minterms, all where C=1
+K-map:     BC
+AB:    00  01  11  10
+  0:    0   1   1   0
+  1:    0   1   1   0
+
+The four 1s (m1,m3,m5,m7) form one group of 4 → C=1 throughout, A and B both change → eliminate A and B
+Simplified: F = C  (just the variable C!)</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Combinational Circuits</h3>
+<div class="formula-block">Half Adder:
+  Adds two 1-bit numbers (A,B). No carry input.
+  Sum S = A⊕B  (XOR)
+  Carry C = A·B (AND)
+
+Full Adder:
+  Adds three bits (A,B,Cin). Has carry-in.
+  Sum S = A⊕B⊕Cin
+  Cout = AB + Cin(A⊕B)
+  Built from two half adders + OR gate.
+
+Multiplexer (MUX): Data selector — selects one of 2ⁿ inputs based on n select lines.
+  4:1 MUX has 4 data inputs, 1 output, 2 select lines.
+  Y = S₁'S₀'·I₀ + S₁'S₀·I₁ + S₁S₀'·I₂ + S₁S₀·I₃
+
+Demultiplexer (DEMUX): 1 input → one of 2ⁿ outputs based on n select lines.
+  Inverse of MUX.
+
+Encoder: 2ⁿ inputs → n-bit binary output (e.g., 8:3 priority encoder)
+Decoder: n-bit input → 2ⁿ outputs (e.g., 2:4 decoder, 3:8 decoder)
+  Used in memory addressing.
+
+Comparator: compares two n-bit numbers A and B.
+  Outputs: A>B, A=B, A<B</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Sequential Circuits — Flip-Flops</h3>
+<div class="formula-block">Latches vs Flip-Flops:
+  Latch: level-triggered (transparent while clock=1)
+  Flip-Flop: edge-triggered (changes only on clock edge)
+  
+SR Flip-Flop: Set-Reset
+  S=0,R=0: No change (Q unchanged)
+  S=1,R=0: Set (Q=1)
+  S=0,R=1: Reset (Q=0)
+  S=1,R=1: INVALID/forbidden state (indeterminate)
+  
+D Flip-Flop: Data/Delay
+  On clock edge: Q = D (output follows input)
+  Used for data storage, shift registers.
+  
+JK Flip-Flop: Solves SR's invalid state
+  J=0,K=0: No change
+  J=1,K=0: Set (Q=1)
+  J=0,K=1: Reset (Q=0)
+  J=1,K=1: TOGGLE (Q flips to Q')  ← this is the improvement over SR
+  
+T Flip-Flop: Toggle
+  T=0: No change; T=1: Toggle (Q→Q')
+  Made from JK with J=K=T
+  Used in counters.</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Registers & Counters</h3>
+<div class="formula-block">Register: group of flip-flops storing n bits
+  SISO (Serial In, Serial Out): data shifts one bit per clock
+  SIPO (Serial In, Parallel Out): serial input, all bits available in parallel
+  PISO (Parallel In, Serial Out): parallel load, serial output
+  PIPO (Parallel In, Parallel Out): parallel load and read (fastest)
+
+Counters:
+  Ripple (Asynchronous): each FF clocked by output of previous. Simple but slow.
+  Synchronous: all FFs clocked simultaneously. Faster, more complex.
+  Up-counter: counts 0,1,2,...,2ⁿ−1,0,...
+  Down-counter: counts 2ⁿ−1,...,1,0,2ⁿ−1,...
+  MOD-N counter: counts from 0 to N-1 (N states)
+  
+Memories:
+  RAM (Random Access Memory): read/write, volatile, fast
+    SRAM: flip-flop cells, fast, expensive (cache memory)
+    DRAM: capacitor cells, needs refresh, cheaper (main memory)
+  ROM: read-only, non-volatile
+    Mask ROM, PROM, EPROM (UV-erasable), EEPROM, Flash ROM
+  Flash ROM applications: USB drives, SSDs, memory cards, BIOS chips</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 2 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U2</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Computer Architecture</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High</span><span class="expected-marks">~10 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Functional Blocks of a Computer</h3>
+<div class="formula-block">1. Input Unit: accepts data from outside (keyboard, mouse, scanner)
+2. Memory Unit: stores data and instructions
+   - Primary: RAM, ROM (fast, directly accessed by CPU)
+   - Secondary: HDD, SSD, DVD (slow, permanent storage)
+3. ALU (Arithmetic Logic Unit): performs arithmetic (+,−,×,÷) and logic (AND,OR,NOT)
+4. Control Unit (CU): fetches, decodes, executes instructions; coordinates all units
+5. Output Unit: displays/sends processed results (monitor, printer)
+
+CPU = ALU + CU + Registers
+Stored Program Concept (Von Neumann): programs stored in memory like data,
+  fetched and executed sequentially. Allows general-purpose computers.</div>
+</div>
+<div class="deep-section">
+<h3>📌 Number Representations</h3>
+<div class="formula-block">Fixed Point: decimal point at fixed position. Integer or fractional.
+
+Floating Point (IEEE 754):
+  N = (−1)^S × M × 2^E
+  S=sign bit, M=mantissa (fraction), E=exponent (with bias)
+  Single precision: 1 sign + 8 exponent + 23 mantissa = 32 bits
+  Double precision: 1+11+52 = 64 bits
+
+Complements:
+  1's complement of binary N: flip all bits (0→1, 1→0)
+    e.g., 1's comp of 1010 = 0101
+  2's complement: 1's complement + 1 (used for signed integer arithmetic)
+    e.g., 2's comp of 1010 = 0101+1 = 0110
+  
+Signed Representation:
+  Sign-magnitude: MSB=0(positive), MSB=1(negative)
+  1's complement: positive normal; negative = 1's comp of positive
+  2's complement: most common; positive normal; negative = 2's comp of positive
+    Range for n-bit: −2^(n-1) to 2^(n-1)−1
+    e.g., 8-bit: −128 to +127</div>
+</div>
+<div class="deep-section">
+<h3>📌 Instruction Formats & Addressing Modes</h3>
+<div class="formula-block">Instruction: OPCODE + ADDRESS(ES)
+  Zero-address: operands on stack (e.g., PUSH, POP) → RISC architectures
+  One-address: one operand, accumulator implied (classical CISC)
+  Two-address: 2 operands, result in one of them (MOV AX, BX)
+  Three-address: 2 source + 1 destination (RISC, e.g., ADD R1, R2, R3)
+
+Addressing Modes:
+  Immediate: operand is constant in instruction  ADD R1, #5  (5 is data)
+  Direct/Absolute: address in instruction gives location of operand  LOAD 1000
+  Indirect: instruction has address of address (pointer)  LOAD @R1 (R1 holds address)
+  Register: operand is in a CPU register  ADD R1, R2
+  Register Indirect: register holds address of operand  LOAD (R1)
+  Indexed: EA = base address + index register  LOAD 1000(R1)
+  Relative: EA = PC + offset (used in branches/jumps)
+  Base-register: EA = base register + offset (used for position-independent code)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Memory Hierarchy</h3>
+<div class="formula-block">Hierarchy (fastest→slowest, most expensive→least):
+  Registers → Cache (L1,L2,L3) → Main Memory (RAM) → Virtual Memory (Disk)
+  
+Cache Memory:
+  Sits between CPU and RAM. Stores frequently used data for fast access.
+  Hit ratio h: fraction of accesses found in cache
+  Effective access time: Teff = h×Tcache + (1−h)×TRAM
+  
+  Mapping:
+  Direct Mapping: each RAM block → fixed cache line (simple, conflict misses)
+  Associative: any RAM block → any cache line (best hit, complex hardware)
+  Set-Associative: compromise — any block → one set, any line in that set
+
+Virtual Memory: disk acts as extension of RAM using paging/segmentation.
+  Page Table maps virtual addresses to physical addresses.
+  TLB (Translation Lookaside Buffer): fast cache for page table entries.
+  Page Fault: page not in RAM → OS loads it from disk (slow!)</div>
+</div>
+<div class="deep-section">
+<h3>📌 I/O Modes & Parallel Processing</h3>
+<div class="formula-block">I/O Transfer Modes:
+  Programmed I/O (Polling): CPU continuously checks if device is ready. Wastes CPU.
+  Interrupt-driven I/O: Device interrupts CPU when ready. CPU does other work meanwhile.
+  DMA (Direct Memory Access): DMA controller handles transfer; CPU free for computation.
+    DMA is fastest for bulk transfers (disk, network, display).
+
+Pipelining:
+  Divide instruction execution into stages. Different instructions in different stages simultaneously.
+  Stages: Fetch → Decode → Execute → Write-back (4-stage example)
+  Speedup: n instructions take (k+n−1) cycles vs n×k without pipeline (k=stages)
+  Hazards: Data hazard, Control hazard (branches), Structural hazard
+  
+Flynn's Classification:
+  SISD: Single Instruction, Single Data → traditional uniprocessor
+  SIMD: Single Instruction, Multiple Data → vector processor, GPU
+  MISD: Multiple Instruction, Single Data → (rare, fault-tolerant systems)
+  MIMD: Multiple Instruction, Multiple Data → multiprocessor, parallel computers
+
+RISC vs CISC:
+  RISC: few simple instructions, fixed format, load-store architecture, many registers
+        pipelining-friendly, compiler does more work. (ARM, MIPS)
+  CISC: many complex instructions, variable length, memory-to-memory ops, fewer registers
+        hardware does more work, code is denser. (x86, x86-64)</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 3 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U3</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">C Programming & Data Structures</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 Highest Priority</span><span class="expected-marks">~15 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 C Fundamentals</h3>
+<div class="formula-block"><div class="label">C Tokens</div>
+Keywords: 32 reserved words (int, float, if, for, while, return, struct, etc.)
+Identifiers: names for variables/functions (start with letter/_, case-sensitive)
+Constants: int 42, float 3.14, char 'A', string "hello"
+Operators: arithmetic(+−*/%),relational(<>==!=),logical(&&||!),bitwise(&|^~<<>>)
+Punctuators: { } ( ) ; , .</div>
+<div class="formula-block"><div class="label">Data Types and Sizes (typical 64-bit)</div>
+char:          1 byte,  −128 to 127
+int:           4 bytes, −2³¹ to 2³¹−1
+short:         2 bytes
+long:          8 bytes
+float:         4 bytes, ~6–7 decimal digits precision
+double:        8 bytes, ~15–16 decimal digits precision
+long double:  16 bytes
+
+Format specifiers: %d(int), %f(float), %lf(double), %c(char), %s(string), %ld(long)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Operators — Precedence & Associativity</h3>
+<div class="formula-block">Precedence (highest to lowest, roughly):
+() [] → .            (postfix)         Left-to-Right
+! ~ ++ -- (type) * & (unary)           Right-to-Left
+* / %                (multiplicative)   Left-to-Right
++ -                  (additive)         Left-to-Right
+<< >>                (shift)            Left-to-Right
+< <= > >=            (relational)       Left-to-Right
+== !=                (equality)         Left-to-Right
+&                    (bitwise AND)      Left-to-Right
+^                    (bitwise XOR)      Left-to-Right
+|                    (bitwise OR)       Left-to-Right
+&&                   (logical AND)      Left-to-Right
+||                   (logical OR)       Left-to-Right
+?:                   (ternary)          Right-to-Left
+= += -= *=  etc.     (assignment)       Right-to-Left
+,                    (comma)            Left-to-Right</div>
+</div>
+<div class="deep-section">
+<h3>📌 Control Flow</h3>
+<div class="code-block">// Decision making
+if (condition) { ... }
+else if (condition) { ... }
+else { ... }
+
+switch (expr) {
+    case val1: ...; break;
+    case val2: ...; break;
+    default: ...;
+}
+
+// Loops
+for (init; condition; update) { ... }
+while (condition) { ... }
+do { ... } while (condition);  // executes at least once
+
+// Loop control
+break;    // exit loop immediately
+continue; // skip to next iteration</div>
+</div>
+<div class="deep-section">
+<h3>📌 Arrays & Strings</h3>
+<div class="code-block">// 1D Array
+int arr[5] = {1, 2, 3, 4, 5};
+arr[0] = 10;  // access by index, 0-based
+
+// 2D Array
+int matrix[3][4];  // 3 rows, 4 columns
+matrix[i][j] = value;
+
+// Strings (null-terminated char arrays)
+char str[20] = "Hello";  // str[5]='\0' (null terminator)
+char str2[] = {'H','i','\0'};
+
+// String functions (string.h)
+strlen(s)        // length (excludes \0)
+strcpy(dst,src)  // copy src to dst
+strcat(dst,src)  // append src to dst
+strcmp(s1,s2)    // 0 if equal, <0 if s1<s2, >0 if s1>s2
+strrev(s)        // reverse (non-standard but common)
+strupr/strlwr    // to uppercase/lowercase</div>
+</div>
+<div class="deep-section">
+<h3>📌 Functions, Scope & Storage Classes</h3>
+<div class="code-block">// Function declaration and definition
+return_type function_name(parameter_list);  // declaration/prototype
+
+int add(int a, int b) {  // definition
+    return a + b;
+}
+
+// Parameter passing
+// Call by Value: copy is passed; changes don't affect original
+void callByValue(int x) { x = 100; }  // original unchanged
+
+// Call by Reference (using pointers)
+void callByRef(int *x) { *x = 100; }  // original changed
+callByRef(&num);  // pass address
+
+// Recursion: function calls itself
+int factorial(int n) {
+    if (n <= 1) return 1;        // base case
+    return n * factorial(n-1);   // recursive case
+}</div>
+<div class="formula-block">Storage Classes:
+  auto:     default for local variables; created on stack; destroyed when block exits
+  static:   persists throughout program; initialized once; retains value between calls
+  register: hint to store in CPU register (fast access; no address)
+  extern:   declared elsewhere (global scope); links to external variable
+
+Scope:
+  Local: inside function/block — only accessible there
+  Global: outside all functions — accessible everywhere after declaration
+  Block: inside any {} block</div>
+</div>
+<div class="deep-section">
+<h3>📌 Structures & Unions</h3>
+<div class="code-block">// Structure: groups different data types
+struct Student {
+    int rollno;
+    char name[50];
+    float marks;
+};
+
+struct Student s1;
+s1.rollno = 101;
+strcpy(s1.name, "Raju");
+s1.marks = 89.5;
+
+// Structure pointer
+struct Student *ptr = &s1;
+ptr->rollno = 102;   // arrow operator for pointer
+
+// Union: same memory shared by all members (size = largest member)
+union Data {
+    int i;      // all share same 4 bytes
+    float f;
+    char c;
+};
+// Only ONE member valid at a time!</div>
+</div>
+<div class="deep-section">
+<h3>📌 Pointers — Deep Explanation</h3>
+<div class="code-block">int x = 10;
+int *p;       // p is a pointer to int
+p = &x;       // & = address-of operator; p now holds address of x
+printf("%d", *p);  // * = dereference; prints value at address = 10
+*p = 20;      // changes x through pointer; now x=20
+
+// Pointer arithmetic
+int arr[5] = {1,2,3,4,5};
+int *ptr = arr;  // arr name decays to pointer to first element
+ptr++;           // now points to arr[1] (advances by sizeof(int)=4 bytes)
+*(ptr+2)         // arr[3] — works because arr[i] == *(arr+i)
+
+// Dynamic Memory Allocation (stdlib.h)
+int *p = (int*)malloc(5 * sizeof(int));  // allocate 5 ints on heap
+if (p == NULL) { /* handle failure */ }
+p[0] = 10; p[1] = 20;
+free(p);  // MUST free to avoid memory leak!
+
+calloc(n, size)   // like malloc but initializes to 0
+realloc(ptr, new_size)  // resize previously allocated block</div>
+</div>
+<div class="deep-section">
+<h3>📌 Data Structures — Complete Coverage</h3>
+<div class="formula-block">Asymptotic Notations:
+  Big-O O(f(n)): upper bound (worst case) — "at most this slow"
+  Omega Ω(f(n)): lower bound (best case)
+  Theta Θ(f(n)): tight bound (average case)
+  
+  Common complexities (slow to fast):
+  O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(n³) < O(2ⁿ) < O(n!)</div>
+<div class="formula-block">Stack (LIFO — Last In, First Out):
+  Operations: push(x), pop(), peek(), isEmpty()
+  Implementation: array or linked list
+  Applications: function call stack, undo operations, expression evaluation,
+                balanced parentheses checking, DFS graph traversal
+
+Queue (FIFO — First In, First Out):
+  Operations: enqueue(x), dequeue(), front(), isEmpty()
+  Variations: Circular Queue, Deque (double-ended), Priority Queue
+  Applications: BFS graph traversal, CPU scheduling, printer queue, breadth-first search</div>
+<div class="formula-block">Linked Lists:
+  Node = data + pointer to next node
+  
+  Singly Linked List: each node points to next; last→NULL
+  Operations: insert(front/end/middle), delete, search, traverse
+  Head pointer is essential; losing it = memory leak
+  
+  Doubly Linked List: each node has next AND prev pointers
+  Allows traversal in both directions; delete easier (no need for prev pointer)
+  
+  Circular Linked List: last node points back to first node
+  Used for: round-robin scheduling, circular buffers</div>
+<div class="formula-block">Trees:
+  Binary Tree: each node has at most 2 children (left and right)
+  
+  Binary Search Tree (BST):
+    Left subtree contains values < node
+    Right subtree contains values > node
+    Searching: O(log n) average, O(n) worst (degenerate)
+    
+  Tree Traversal:
+    Inorder (L-Root-R):   gives sorted order for BST
+    Preorder (Root-L-R):  useful for copying/serializing tree
+    Postorder (L-R-Root): useful for deletion, expression trees
+  
+  Tree Terms:
+    Root: top node (no parent)
+    Leaf: node with no children
+    Height: longest path from root to leaf
+    Level: depth of a node (root is level 0 or 1)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Sorting & Searching Algorithms</h3>
+<div class="formula-block">Bubble Sort:
+  Compare adjacent elements, swap if out of order. Repeat n-1 times.
+  Best: O(n) [already sorted];  Worst/Average: O(n²)
+  Stable, in-place. Good for small/nearly sorted data only.
+
+Selection Sort:
+  Find minimum element, put in position 0. Find next min, put in position 1. Etc.
+  Always O(n²) regardless of input. Not stable. In-place.
+
+Insertion Sort:
+  Build sorted array one element at a time. Each element inserted in correct position.
+  Best: O(n); Worst/Average: O(n²). Stable. Good for small or nearly-sorted arrays.
+
+Quick Sort:
+  Pick pivot. Partition: elements < pivot go left, > pivot go right. Recurse.
+  Average: O(n log n); Worst: O(n²) (sorted array with poor pivot choice)
+  In-place (O(log n) stack space). Not stable.
+
+Merge Sort:
+  Divide array in half. Sort each half recursively. Merge the sorted halves.
+  Always O(n log n). Requires O(n) extra space. Stable.
+  Best for linked lists and external sorting (data too large for RAM).
+
+Linear Search:
+  Check each element one by one.
+  O(n) worst case. Works on unsorted arrays.
+
+Binary Search:
+  Requires SORTED array. Compare target with middle.
+  If equal: found. If target < middle: search left half. Else: search right half.
+  O(log n) time. Very efficient for large sorted datasets.</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 4 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U4</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">OOP Through C++</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High</span><span class="expected-marks">~10 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 OOP Concepts</h3>
+<div class="formula-block">4 Pillars of OOP:
+1. Encapsulation: binding data + methods into a single unit (class); hiding internal details
+2. Abstraction: showing only essential features; hiding implementation (interfaces)
+3. Inheritance: new class (derived) acquires properties of existing class (base)
+4. Polymorphism: same interface, different implementations; one name many forms
+
+Class: blueprint/template for objects (defines data members + member functions)
+Object: instance of a class (actual entity with memory)
+Access Specifiers:
+  public:    accessible from anywhere
+  private:   accessible only within the class (default in class)
+  protected: accessible within class and derived classes</div>
+</div>
+<div class="deep-section">
+<h3>📌 Classes, Objects & Constructors</h3>
+<div class="code-block">class Rectangle {
+private:
+    int length, breadth;
+
+public:
+    // Constructor (same name as class, no return type)
+    Rectangle() { length=0; breadth=0; }          // default
+    Rectangle(int l, int b) { length=l; breadth=b; }  // parameterized
+    Rectangle(const Rectangle &r) { length=r.length; breadth=r.breadth; } // copy
+
+    // Destructor (called when object goes out of scope)
+    ~Rectangle() { /* cleanup */ }
+
+    int area() { return length * breadth; }
+    void display() { cout << length << "x" << breadth; }
+};
+
+// Object creation
+Rectangle r1;           // default constructor
+Rectangle r2(5, 3);     // parameterized
+Rectangle r3 = r2;      // copy constructor
+
+// this pointer: points to current object
+int getLength() { return this->length; }</div>
+</div>
+<div class="deep-section">
+<h3>📌 Operator Overloading & Function Overloading</h3>
+<div class="code-block">// Function Overloading: same name, different parameters
+void print(int x) { cout << x; }
+void print(double x) { cout << x; }      // different parameter type
+void print(int x, int y) { cout<<x<<y; } // different number of parameters
+
+// Operator Overloading: redefine behavior of operators for user-defined types
+class Complex {
+    double real, imag;
+public:
+    Complex operator+(const Complex &c) {
+        return Complex(real+c.real, imag+c.imag);
+    }
+    // Can overload: + - * / == != < > [] () << >>
+    // Cannot overload: :: . .* ?:
+};
+
+// Constructor Overloading: multiple constructors with different parameter lists</div>
+</div>
+<div class="deep-section">
+<h3>📌 Inheritance Types</h3>
+<div class="formula-block">Single Inheritance: one derived, one base   (A→B)
+Multilevel:        chain (A→B→C; C inherits from B which inherits from A)
+Multiple:          one derived, multiple bases (B,C→D; D inherits from both B and C)
+Hierarchical:      one base, multiple derived (A→B, A→C, A→D)
+Hybrid:            combination of above types
+Multipath:         diamond problem (D inherits from B and C, both inherit from A)
+                   Solved using virtual base class: class B : virtual public A</div>
+<div class="code-block">class Animal {          // Base class
+public:
+    string name;
+    void eat() { cout << "Eating"; }
+    virtual void sound() { cout << "Some sound"; }  // virtual!
+};
+
+class Dog : public Animal {   // Derived class (public inheritance)
+public:
+    void sound() { cout << "Woof"; }  // overrides Animal::sound
+    void fetch() { cout << "Fetching"; }
+};
+
+Animal *ptr = new Dog();
+ptr->sound();  // prints "Woof" — runtime polymorphism via virtual function!</div>
+</div>
+<div class="deep-section">
+<h3>📌 Virtual Functions, Friend Functions & Templates</h3>
+<div class="code-block">// Virtual function: enables runtime polymorphism (dynamic dispatch)
+// Pure virtual function: makes class Abstract (cannot instantiate)
+virtual void draw() = 0;  // pure virtual (must be overridden in derived)
+
+// Friend function: non-member function with access to private members
+class Box {
+    int side;
+public:
+    friend int getVolume(Box b);  // declaration inside class
+};
+int getVolume(Box b) { return b.side * b.side * b.side; }  // defined outside
+
+// Friend class: all methods of one class can access private of another
+
+// Templates: generic programming
+template <typename T>
+T findMax(T a, T b) {
+    return (a > b) ? a : b;
+}
+// Works for int, float, char, etc. — compile-time polymorphism
+
+// Class template
+template <class T>
+class Stack {
+    T data[100];
+    int top;
+public:
+    void push(T x) { data[++top] = x; }
+    T pop() { return data[top--]; }
+};</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 5 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U5</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">RDBMS & SQL</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High</span><span class="expected-marks">~12 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Database Concepts</h3>
+<div class="formula-block">DBMS: software to create, manage, query databases (MySQL, Oracle, PostgreSQL, SQLite)
+Advantages over file systems: reduced redundancy, data integrity, concurrent access,
+  security, easy querying, backup/recovery.
+
+Data Abstraction Levels:
+  Physical Level: how data is actually stored (files, indexes, B-trees)
+  Logical Level: what data is stored and relationships (schema, tables)
+  View Level: what end-user sees (specific parts of database = views)
+
+Data Independence:
+  Physical: change storage without affecting logical schema
+  Logical: change schema without affecting application (views shield users)
+
+Data Models:
+  Relational: data in tables (rows/columns) — most common (SQL)
+  Hierarchical: tree structure (one parent per child)
+  Network: graph structure (multiple parents)
+  Object-oriented: objects with inheritance</div>
+</div>
+<div class="deep-section">
+<h3>📌 ER Model & Keys</h3>
+<div class="formula-block">ER (Entity-Relationship) Model:
+  Entity: real-world object (Student, Course, Employee)
+  Attribute: property of entity (StudentID, Name, Age)
+  Relationship: association between entities (Student ENROLLS IN Course)
+  
+  Strong Entity: has its own key attribute
+  Weak Entity: depends on another entity for identification (OrderItem depends on Order)
+  
+Cardinality:
+  One-to-One (1:1): one entity relates to exactly one other (Person:Passport)
+  One-to-Many (1:N): one entity relates to many (Department:Employees)
+  Many-to-Many (M:N): requires a separate relationship table (Students:Courses)
+
+Types of Keys:
+  Super Key: set of attributes that uniquely identify a tuple (row)
+  Candidate Key: minimal super key (no redundant attributes)
+  Primary Key: chosen candidate key (unique, not null, one per table)
+  Foreign Key: attribute referencing primary key of another table (ensures referential integrity)
+  Composite Key: primary key made of multiple attributes
+  Unique Key: like primary key but allows one NULL</div>
+</div>
+<div class="deep-section">
+<h3>📌 Functional Dependencies & Normal Forms</h3>
+<div class="formula-block">Functional Dependency (FD): X→Y means value of X determines value of Y
+  Trivial FD: Y ⊆ X (e.g., {A,B}→{A})
+  Non-trivial FD: Y ⊄ X (actual constraint)
+
+Normalization: process of organizing tables to reduce redundancy and anomalies.
+  Anomalies: insertion, deletion, update anomalies.
+
+1NF (First Normal Form):
+  All attributes are atomic (indivisible). No repeating groups or arrays.
+  Each row is unique. Every cell contains single value.
+
+2NF (Second Normal Form):
+  Must be in 1NF PLUS no partial dependencies.
+  Partial dependency: non-prime attribute depends on PART of composite primary key.
+  Fix: split table so each non-key attribute depends on WHOLE primary key.
+
+3NF (Third Normal Form):
+  Must be in 2NF PLUS no transitive dependencies.
+  Transitive: A→B→C where A is primary key, B is non-key, C is non-key.
+  Fix: move B→C to separate table.
+
+BCNF (Boyce-Codd Normal Form):
+  Stricter than 3NF. For every FD X→Y, X must be a super key.
+  Handles cases where candidate keys overlap.
+
+Order: BCNF is strongest → 3NF → 2NF → 1NF</div>
+</div>
+<div class="deep-section">
+<h3>📌 SQL — Complete Reference</h3>
+<div class="code-block">-- DDL (Data Definition Language)
+CREATE TABLE Student (
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    Age INT CHECK (Age >= 18),
+    DeptID INT REFERENCES Department(DeptID)  -- Foreign key
+);
+ALTER TABLE Student ADD Email VARCHAR(100);
+DROP TABLE Student;
+TRUNCATE TABLE Student;  -- deletes all rows, keeps structure
+
+-- DML (Data Manipulation Language)
+INSERT INTO Student VALUES (1, 'Raju', 20, 101);
+INSERT INTO Student (StudentID, Name) VALUES (2, 'Priya');
+UPDATE Student SET Age = 21 WHERE StudentID = 1;
+DELETE FROM Student WHERE Age < 18;
+
+-- DQL (Data Query Language)
+SELECT * FROM Student;
+SELECT Name, Age FROM Student WHERE Age > 20;
+SELECT * FROM Student ORDER BY Name ASC;
+SELECT DeptID, COUNT(*) AS Count FROM Student GROUP BY DeptID;
+SELECT DeptID, AVG(Age) FROM Student GROUP BY DeptID HAVING AVG(Age) > 20;</div>
+<div class="code-block">-- SQL Functions
+-- Aggregate: COUNT, SUM, AVG, MAX, MIN
+SELECT COUNT(*) FROM Student;
+SELECT MAX(Age), MIN(Age) FROM Student;
+
+-- String: UPPER, LOWER, LENGTH, SUBSTR, TRIM, CONCAT
+SELECT UPPER(Name) FROM Student;
+SELECT SUBSTR(Name, 1, 3) FROM Student;  -- first 3 chars
+
+-- Date: NOW(), DATE(), YEAR(), MONTH(), DAY()
+
+-- JOINs
+-- INNER JOIN: only matching rows from both tables
+SELECT S.Name, D.DeptName
+FROM Student S INNER JOIN Department D ON S.DeptID = D.DeptID;
+
+-- LEFT JOIN: all rows from left table + matching from right (NULL if no match)
+SELECT S.Name, D.DeptName
+FROM Student S LEFT JOIN Department D ON S.DeptID = D.DeptID;
+
+-- FULL OUTER JOIN: all rows from both tables
+
+-- Views, Sequences, Synonyms, Indexes
+CREATE VIEW HighScorers AS SELECT * FROM Student WHERE Marks > 80;
+CREATE INDEX idx_name ON Student(Name);  -- speeds up search on Name</div>
+<div class="code-block">-- PL/SQL (Procedural SQL — Oracle dialect)
+DECLARE
+    v_name VARCHAR(50);
+    v_age  INT;
+BEGIN
+    SELECT Name, Age INTO v_name, v_age FROM Student WHERE StudentID = 1;
+    DBMS_OUTPUT.PUT_LINE('Name: ' || v_name || ', Age: ' || v_age);
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN DBMS_OUTPUT.PUT_LINE('Not found');
+END;
+
+-- Procedure
+CREATE OR REPLACE PROCEDURE GetStudent(p_id IN INT) AS
+    v_name VARCHAR(50);
+BEGIN
+    SELECT Name INTO v_name FROM Student WHERE StudentID = p_id;
+    DBMS_OUTPUT.PUT_LINE(v_name);
+END;
+
+-- Trigger (auto-executes on INSERT/UPDATE/DELETE)
+CREATE OR REPLACE TRIGGER before_insert_student
+BEFORE INSERT ON Student
+FOR EACH ROW
+BEGIN
+    :NEW.Name := UPPER(:NEW.Name);  -- auto-uppercase name on insert
+END;
+
+-- Cursor (for row-by-row processing)
+DECLARE CURSOR c1 IS SELECT * FROM Student;
+BEGIN
+    FOR rec IN c1 LOOP
+        DBMS_OUTPUT.PUT_LINE(rec.Name);
+    END LOOP;
+END;</div>
+</div>
+<div class="deep-section">
+<h3>📌 Transactions & ACID Properties</h3>
+<div class="formula-block">Transaction: sequence of database operations treated as one unit.
+  Starts: BEGIN TRANSACTION
+  Ends: COMMIT (save) or ROLLBACK (undo)
+
+ACID Properties:
+  Atomicity: all-or-nothing — either all operations succeed or all are rolled back
+  Consistency: transaction takes database from one valid state to another valid state
+  Isolation: concurrent transactions don't interfere with each other
+  Durability: committed transactions persist even after system failure (written to disk)</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 6 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U6</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Computer Hardware & Networking</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~8 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Motherboard & Hardware</h3>
+<div class="formula-block">BIOS (Basic Input/Output System): firmware in ROM chip on motherboard.
+  POST (Power-On Self Test): BIOS tests hardware on startup.
+  Loads OS bootloader from disk. Configures hardware (IRQs, I/O ports).
+  UEFI (modern BIOS): Unified Extensible Firmware Interface — faster, secure boot.
+
+Motherboard Components:
+  CPU socket: where processor plugs in
+  RAM slots (DIMM): for memory modules
+  PCIe slots: for GPU, NIC, sound cards
+  SATA/NVMe connectors: for storage drives
+  Chipset: coordinates communication between CPU, RAM, and peripherals
+  BIOS chip, CMOS battery (keeps BIOS settings/clock alive)
+  Power connectors (24-pin ATX, 8-pin CPU)
+
+SMPS (Switched Mode Power Supply):
+  Converts 230V AC → 12V, 5V, 3.3V DC for computer components.
+  Efficient (>80%), regulated, compact.</div>
+</div>
+<div class="deep-section">
+<h3>📌 Network Types & Topologies</h3>
+<div class="table-wrap"><table>
+<tr><th>Network Type</th><th>Coverage</th><th>Example</th></tr>
+<tr><td>LAN (Local Area Network)</td><td>Building/Campus, up to 1 km</td><td>Office network, home Wi-Fi</td></tr>
+<tr><td>MAN (Metropolitan Area Network)</td><td>City, 1–100 km</td><td>Cable TV network, city Wi-Fi</td></tr>
+<tr><td>WAN (Wide Area Network)</td><td>Country/World, unlimited</td><td>Internet, MPLS networks</td></tr>
+</table></div>
+<div class="formula-block">Topologies:
+  Bus: all devices on single cable; simple, cheap; single point failure = whole network down
+  Ring: devices in closed loop; data flows one direction; failure = network break
+  Star: all devices connect to central switch/hub; failure of switch = all down; most common
+  Mesh: every device connected to every other; highest redundancy; expensive; used in WAN
+  Hybrid: combination (e.g., star-bus, star-ring)</div>
+</div>
+<div class="deep-section">
+<h3>📌 OSI & TCP/IP Reference Models</h3>
+<div class="formula-block">OSI Model (7 layers, top to bottom):
+Layer 7 — Application:  HTTP, FTP, SMTP, DNS, Telnet (user interface)
+Layer 6 — Presentation: encryption, compression, translation (SSL/TLS)
+Layer 5 — Session:      manage connections (start, maintain, terminate)
+Layer 4 — Transport:    end-to-end delivery; TCP (reliable), UDP (fast)
+Layer 3 — Network:      routing; IP, ICMP; logical addressing
+Layer 2 — Data Link:    framing, MAC addressing, error detection; Ethernet, Wi-Fi
+Layer 1 — Physical:     bits on wire; cables, hubs, repeaters
+
+Memory trick: "All People Seem To Need Data Processing" (top to bottom)
+
+TCP/IP Model (4 layers):
+Application:   HTTP, FTP, DNS, SMTP (= OSI layers 5+6+7)
+Transport:     TCP, UDP (= OSI layer 4)
+Internet:      IP, ICMP, ARP (= OSI layer 3)
+Network Access: Ethernet, Wi-Fi (= OSI layers 1+2)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Network Devices & Protocols</h3>
+<div class="formula-block">Network Devices:
+  Repeater: amplifies/regenerates signal. Layer 1. Extends cable length.
+  Hub: broadcasts to all ports. Layer 1. Dumb device. (obsolete)
+  Bridge: connects two LANs. Layer 2. Uses MAC addresses.
+  Switch: smart hub — sends data only to destination port. Layer 2.
+          Most common LAN device. Uses MAC address table.
+  Router: connects different networks. Layer 3. Uses IP routing tables.
+          The gateway to internet.
+  Gateway: protocol converter between different network types. Any layer.
+  NIC (Network Interface Card): hardware for network connection. Has MAC address.
+  Modem: MOdulator-DEModulator. Converts digital↔analog for telephone/cable lines.
+
+Key Protocols:
+  HTTP:  Hypertext Transfer Protocol. Web pages. Port 80.
+  HTTPS: HTTP + SSL/TLS encryption. Port 443.
+  FTP:   File Transfer Protocol. Ports 20 (data), 21 (control).
+  SMTP:  Simple Mail Transfer Protocol. Email sending. Port 25.
+  POP3:  Email receiving. Port 110. Downloads emails.
+  IMAP:  Email receiving. Port 143. Keeps emails on server.
+  DNS:   Domain Name System. Converts domain names → IP addresses. Port 53.
+  DHCP:  Dynamically assigns IP addresses to devices. Port 67/68.
+  Telnet: Remote login (insecure). Port 23.
+  SSH:   Secure Shell. Encrypted remote login. Port 22.</div>
+</div>
+<div class="deep-section">
+<h3>📌 IP Addressing & Subnetting</h3>
+<div class="formula-block">IPv4: 32-bit address in dotted decimal notation (e.g., 192.168.1.1)
+  4 octets of 8 bits each. Range: 0.0.0.0 to 255.255.255.255
+
+IP Address Classes:
+  Class A: 1.0.0.0   – 126.255.255.255  (/8,  ~16M hosts per network)
+  Class B: 128.0.0.0 – 191.255.255.255  (/16, ~65K hosts per network)
+  Class C: 192.0.0.0 – 223.255.255.255  (/24, 254 hosts per network)
+  Class D: 224–239   (Multicast)
+  Class E: 240–255   (Research/Reserved)
+
+Private IP ranges (not routed on internet):
+  10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16
+
+Subnetting:
+  Subnet mask: determines which part is network and which is host
+  /24 = 255.255.255.0 → 256 addresses, 254 usable hosts
+  /25 = 255.255.255.128 → 128 addresses, 126 usable hosts
+  Subnets = 2^(borrowed bits); Hosts per subnet = 2^(host bits) - 2</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 7 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U7</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Operating Systems</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High</span><span class="expected-marks">~12 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 OS Concepts & Process Management</h3>
+<div class="formula-block">OS Goals:
+  User goal: convenient to use, reliable, fast
+  System goal: efficient resource utilization
+
+Services: process management, memory management, file management, I/O management,
+  security, network, user interface
+
+Process: program in execution. Has its own memory space (code, data, stack, heap).
+Thread: lightweight process — shares memory with parent process.
+  Advantages: faster creation, less memory, better communication.
+
+Process States:
+  New → Ready → Running → Waiting → Terminated
+  Running→Waiting: I/O request or event
+  Running→Ready: time slice expired (preemption)
+  Waiting→Ready: I/O completed
+
+PCB (Process Control Block): OS data structure for each process.
+  Contains: PID, state, PC (program counter), registers, memory info, open files, priority</div>
+</div>
+<div class="deep-section">
+<h3>📌 CPU Scheduling Algorithms</h3>
+<div class="formula-block">Scheduling Criteria:
+  CPU Utilization (↑), Throughput (↑), Turnaround Time (↓), Waiting Time (↓), Response Time (↓)
+
+FCFS (First Come First Served):
+  Non-preemptive. Process served in arrival order.
+  Con: Convoy effect — short jobs wait behind long ones. High average wait time.
+
+SJF (Shortest Job First):
+  Non-preemptive: picks shortest burst time from ready queue.
+  SRTF (preemptive version): preempts if new process has shorter remaining time.
+  Optimal average waiting time. Problem: need to know burst time in advance.
+
+Round Robin (RR):
+  Each process gets a time quantum q. If not done, goes back to ready queue.
+  Preemptive. Fair. Good for time-sharing.
+  q too small → too much context switching. q too large → becomes FCFS.
+  
+Priority Scheduling:
+  Each process has priority number. Highest priority runs first.
+  Starvation problem: low priority may never run. Solution: Aging (gradually increase priority).
+
+Multilevel Queue:
+  Ready queue divided into separate queues for different types (foreground/background).
+  Each queue has its own algorithm.
+
+Multilevel Feedback Queue:
+  Processes can move between queues based on CPU behavior.
+  Most flexible, most complex. Used in real OS (Linux CFS, Windows).</div>
+<div class="ex-box">
+<div class="ex-lbl">Scheduling Example — FCFS</div>
+<p>Processes: P1(burst=24), P2(burst=3), P3(burst=3), all arrive at t=0
+Gantt Chart: |P1(0-24)|P2(24-27)|P3(27-30)|
+Waiting times: P1=0, P2=24, P3=27
+Average waiting time = (0+24+27)/3 = 17 ms (poor!)
+
+If SJF order: P2, P3, P1
+Waiting: P2=0, P3=3, P1=6 → Average = 3 ms (optimal!)</p>
+</div>
+</div>
+<div class="deep-section">
+<h3>📌 Synchronization & Deadlocks</h3>
+<div class="formula-block">Critical Section Problem:
+  Multiple processes access shared resource; only one should be in critical section at a time.
+  Requirements: Mutual Exclusion, Progress, Bounded Waiting
+  
+Semaphore: integer variable with wait(P) and signal(V) operations (atomic)
+  Counting semaphore: allows multiple processes (counts resources)
+  Binary semaphore (mutex): 0 or 1 (mutual exclusion)
+  
+Monitor: high-level synchronization construct; encapsulates shared data + procedures.
+
+Deadlock: processes permanently waiting for resources held by each other.
+
+4 Necessary Conditions (ALL must hold for deadlock):
+  1. Mutual Exclusion: resource can't be shared
+  2. Hold and Wait: process holds one resource, waits for another
+  3. No Preemption: resource can't be forcibly taken away
+  4. Circular Wait: P1 waits for P2, P2 waits for P3, ..., Pn waits for P1
+
+Deadlock Handling:
+  Prevention: eliminate one of the 4 conditions
+  Avoidance: Banker's Algorithm (safe state analysis)
+  Detection: Resource Allocation Graph; recovery by process termination/resource preemption
+  Ignorance: Ostrich Algorithm (pretend it doesn't happen — used in practice!)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Memory Management</h3>
+<div class="formula-block">Overlays: programmer manually loads parts of program (old technique)
+Swapping: entire process moved to disk temporarily to free memory.
+Fragmentation:
+  External: free memory exists but not contiguous (fix: compaction)
+  Internal: allocated memory > needed (fix: smaller blocks)
+
+Paging: divide physical memory into fixed-size frames; logical memory into pages.
+  No external fragmentation. Page Table maps page number → frame number.
+  Internal fragmentation possible (last page may not be full).
+  
+Segmentation: divide logical memory into variable-size segments (code, data, stack).
+  Segment Table maps segment → base+limit. External fragmentation possible.
+
+Virtual Memory: allows process to be larger than physical RAM.
+  Uses demand paging: pages loaded only when needed.
+  Page Fault: page not in RAM → OS loads from disk (swap space).
+
+Page Replacement Algorithms (when no free frame available):
+  FIFO: replace oldest page. Simple. Can suffer Belady's anomaly.
+  LRU (Least Recently Used): replace page not used for longest time. Optimal in practice.
+  Optimal: replace page that won't be used for longest future time. Theoretical, best performance.
+
+Thrashing: process spends more time paging than executing. Fix: reduce multiprogramming.</div>
+</div>
+<div class="deep-section">
+<h3>📌 Disk Scheduling & File Management</h3>
+<div class="formula-block">Disk Scheduling (minimize seek time):
+  FCFS: service requests in arrival order. Fair but poor performance.
+  SSTF (Shortest Seek Time First): go to nearest track first. Risk of starvation.
+  SCAN (Elevator): head moves in one direction, services all, then reverses.
+  C-SCAN: like SCAN but only services in one direction; jumps back to start.
+  
+File Operations: create, read, write, seek, delete, open, close, rename
+
+Access Methods:
+  Sequential: read records in order (tapes)
+  Direct (Random): access any record directly by position
+  Indexed: use index to find record location
+
+Directory Structure:
+  Single-level: one directory for all users (conflicts, no organization)
+  Two-level: separate directory per user
+  Tree-structured: hierarchical (Unix/Windows filesystem)
+  Acyclic graph: allows sharing (hard links, symbolic links)
+  General graph: cycles possible (use garbage collection)</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 8 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U8</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Java Programming</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~8 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Java Fundamentals</h3>
+<div class="formula-block">Java Features: Platform-independent (Write Once Run Anywhere — WORA via JVM),
+  Object-Oriented, Strongly typed, Automatic garbage collection, Multithreaded,
+  Secure (no pointers, sandbox), Robust (exception handling, type checking)
+
+JVM (Java Virtual Machine): interprets bytecode (.class files).
+  Source (.java) → javac compiler → Bytecode (.class) → JVM → Execution
+
+Primitive types: byte(1B), short(2B), int(4B), long(8B), float(4B),
+                 double(8B), char(2B, Unicode), boolean(true/false)
+
+Java vs C++:
+  No pointers (uses references), garbage collection, single inheritance (multiple via interfaces),
+  no operator overloading, no global variables</div>
+</div>
+<div class="deep-section">
+<h3>📌 Classes, Inheritance & Interfaces</h3>
+<div class="code-block">// Class with constructors
+class Animal {
+    private String name;
+    
+    public Animal(String name) { this.name = name; }
+    
+    public String getName() { return name; }
+    
+    public void makeSound() { System.out.println("Some sound"); }
+}
+
+// Inheritance (extends)
+class Dog extends Animal {
+    public Dog(String name) { super(name); }  // super() calls parent constructor
+    
+    @Override
+    public void makeSound() { System.out.println("Woof!"); }
+    
+    public void fetch() { System.out.println(getName() + " fetches!"); }
+}
+
+// Interface (implements)
+interface Drawable {
+    void draw();  // abstract method (public abstract by default)
+    default void describe() { System.out.println("A drawable object"); }  // Java 8+
+}
+
+// Abstract class (partial implementation)
+abstract class Shape {
+    abstract double area();  // subclass must implement
+    void print() { System.out.println("Area: " + area()); }  // concrete method
+}
+
+// this and super
+// this: refers to current object
+// super: refers to parent class (super(), super.method())</div>
+</div>
+<div class="deep-section">
+<h3>📌 Exception Handling & Multithreading</h3>
+<div class="code-block">// Exception Handling
+try {
+    int result = 10 / 0;  // throws ArithmeticException
+    int[] arr = new int[5];
+    arr[10] = 1;           // throws ArrayIndexOutOfBoundsException
+} catch (ArithmeticException e) {
+    System.out.println("Arithmetic error: " + e.getMessage());
+} catch (ArrayIndexOutOfBoundsException e) {
+    System.out.println("Array error: " + e.getMessage());
+} catch (Exception e) {  // catches any exception (catch-all)
+    e.printStackTrace();
+} finally {
+    System.out.println("Always runs!");  // cleanup code
+}
+
+// Checked vs Unchecked:
+// Checked: must handle (IOException, SQLException) — compile error if not
+// Unchecked: RuntimeException (NullPointerException, ArrayIndexOutOfBoundsException)
+
+// Custom exception
+class InsufficientFundsException extends Exception {
+    public InsufficientFundsException(String msg) { super(msg); }
+}
+
+// Multithreading
+class MyThread extends Thread {
+    public void run() {
+        for(int i=0; i<5; i++) System.out.println("Thread: " + i);
+    }
+}
+// OR implement Runnable (preferred):
+class MyRunnable implements Runnable {
+    public void run() { System.out.println("Running!"); }
+}
+Thread t = new Thread(new MyRunnable());
+t.start();  // DO NOT call run() directly — call start()!
+Thread.sleep(1000);  // pause for 1 second (throws InterruptedException)</div>
+</div>
+<div class="deep-section">
+<h3>📌 JDBC & Servlets</h3>
+<div class="code-block">// JDBC (Java Database Connectivity)
+import java.sql.*;
+
+Connection conn = DriverManager.getConnection(
+    "jdbc:mysql://localhost:3306/mydb", "user", "password");
+Statement stmt = conn.createStatement();
+ResultSet rs = stmt.executeQuery("SELECT * FROM Student");
+while (rs.next()) {
+    System.out.println(rs.getInt("StudentID") + " " + rs.getString("Name"));
+}
+// PreparedStatement (prevents SQL injection):
+PreparedStatement ps = conn.prepareStatement("SELECT * FROM Student WHERE ID=?");
+ps.setInt(1, 101);
+rs = ps.executeQuery();
+conn.close();
+
+// Servlet lifecycle:
+// init() → service() (handles requests) → destroy()
+// doGet() and doPost() inside service()
+// HttpServletRequest: getParameter(), getSession()
+// HttpServletResponse: setContentType(), getWriter()</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 9 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U9</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Python Programming</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~8 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Python Fundamentals</h3>
+<div class="formula-block">Python Features: interpreted, dynamically typed, indentation-based (no braces),
+  garbage collected, extensive standard library, readable syntax, multiparadigm.
+
+Indentation is SYNTAX (not style): wrong indentation = IndentationError.
+  Standard: 4 spaces per level.
+
+Data Types:
+  int: 42, −5 (arbitrary precision in Python!)
+  float: 3.14, 2e10
+  str: 'hello' or "world" (immutable sequences of Unicode chars)
+  bool: True / False (capital letters!)
+  NoneType: None (null equivalent)</div>
+<div class="code-block"># Strings
+s = "Hello Python"
+s.upper()       # "HELLO PYTHON"
+s.lower()       # "hello python"
+s.split()       # ["Hello", "Python"]
+s.replace("Python","World")
+s[0:5]          # "Hello" (slicing)
+s[::-1]         # reverse string
+f"Name: {s}"    # f-string formatting (Python 3.6+)
+len(s)          # 12
+
+# Decision making
+if x > 0:
+    print("Positive")
+elif x == 0:
+    print("Zero")
+else:
+    print("Negative")
+
+# Loops
+for i in range(5):    # 0,1,2,3,4
+    print(i)
+for item in [1,2,3]:  # iterate over list
+    print(item)
+while x > 0:
+    x -= 1
+# No do-while in Python! Use: while True: ... if cond: break</div>
+</div>
+<div class="deep-section">
+<h3>📌 Python Data Structures</h3>
+<div class="code-block"># List: mutable, ordered, allows duplicates, indexed
+fruits = ["apple", "banana", "cherry"]
+fruits.append("date")       # add to end
+fruits.insert(1, "blueberry")  # insert at index
+fruits.remove("banana")     # remove by value
+fruits.pop(0)               # remove by index (returns element)
+fruits.sort()               # in-place sort
+fruits.reverse()
+len(fruits)                 # length
+fruits[0:2]                 # slicing
+[x**2 for x in range(5)]   # list comprehension: [0,1,4,9,16]
+
+# Tuple: immutable, ordered, allows duplicates
+coords = (10, 20)           # cannot be changed after creation
+x, y = coords               # tuple unpacking
+single = (42,)              # single-element tuple needs trailing comma
+
+# Set: mutable, unordered, NO duplicates
+s = {1, 2, 3, 3}           # {1, 2, 3} — duplicates removed automatically
+s.add(4); s.remove(2)
+s1 | s2   # union; s1 & s2 = intersection; s1 - s2 = difference
+
+# Dictionary: mutable, ordered (Python 3.7+), key-value pairs
+student = {"name":"Raju", "age":20, "marks":85}
+student["name"]             # access by key
+student["email"] = "r@g.com"  # add/update
+student.get("phone", "N/A")   # get with default (no KeyError)
+student.keys()     # dict_keys
+student.values()   # dict_values
+student.items()    # dict_items (key-value pairs)
+for k,v in student.items(): print(k, v)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Functions, Classes & Modules</h3>
+<div class="code-block">def greet(name, greeting="Hello"):  # default parameter
+    return f"{greeting}, {name}!"
+
+greet("Raju")            # "Hello, Raju!"
+greet("Priya","Hi")      # "Hi, Priya!"
+
+# *args and **kwargs
+def func(*args, **kwargs):  # args=tuple, kwargs=dict
+    print(args, kwargs)
+func(1,2,3, a=4, b=5)   # (1,2,3) {'a':4,'b':5}
+
+# Lambda (anonymous function)
+square = lambda x: x**2
+sorted(students, key=lambda s: s["marks"])  # sort by marks
+
+# OOP in Python
+class Student:
+    school = "ABC College"  # class variable (shared)
+    
+    def __init__(self, name, marks):
+        self.name = name    # instance variable
+        self.marks = marks
+    
+    def grade(self):
+        return "Pass" if self.marks >= 35 else "Fail"
+    
+    def __str__(self):  # string representation
+        return f"Student({self.name})"
+    
+    @classmethod
+    def from_string(cls, s):  # cls refers to class
+        name, marks = s.split(",")
+        return cls(name, int(marks))
+
+class TopStudent(Student):      # inheritance
+    def grade(self):            # method overriding
+        return "Distinction" if self.marks >= 75 else super().grade()
+
+# Modules
+import math; math.sqrt(16)     # standard library
+from datetime import date; date.today()
+import random; random.randint(1,100)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Exception Handling, File I/O & Multithreading</h3>
+<div class="code-block">try:
+    x = int(input("Enter number: "))
+    result = 10 / x
+except ValueError:
+    print("Not a number!")
+except ZeroDivisionError:
+    print("Can't divide by zero!")
+else:
+    print(f"Result: {result}")   # runs if no exception
+finally:
+    print("Done")                # always runs
+
+# File Operations
+with open("file.txt", "r") as f:    # 'r'=read,'w'=write,'a'=append,'rb'=binary
+    content = f.read()
+    # OR: lines = f.readlines()
+
+with open("output.txt", "w") as f:
+    f.write("Hello, World!\n")
+
+# Multithreading
+import threading
+def task(name):
+    print(f"Thread {name} running")
+    
+t1 = threading.Thread(target=task, args=("T1",))
+t2 = threading.Thread(target=task, args=("T2",))
+t1.start(); t2.start()
+t1.join(); t2.join()  # wait for threads to finish
+
+# Regular expressions
+import re
+pattern = r"\d+"          # one or more digits
+re.findall(pattern, "abc 123 def 456")   # ['123', '456']
+re.match(r"hello", "hello world")       # match at beginning
+re.search(r"\d+", "abc 42 xyz")        # search anywhere
+re.sub(r"\s+", "_", "hello world")     # replace</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 10 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U10</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Web Technologies</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~5 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 HTML & CSS</h3>
+<div class="code-block"><!-- HTML Structure -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+<body>
+    <!-- Text tags -->
+    <h1>Heading 1</h1> ... <h6>Heading 6</h6>
+    <p>Paragraph</p>
+    <strong>Bold</strong>, <i>Italic</i>, <u>Underline</u>
+    <sub>Subscript</sub>, <sup>Superscript</sup>
+    <big>Bigger</big>, <small>Smaller</small>
+    <del>Strikethrough</del>, <ins>Inserted</ins>
+    <q>Short quote</q>
+    <marquee>Scrolling text</marquee>
+    
+    <!-- Table -->
+    <table border="1">
+        <tr><th>Name</th><th>Age</th></tr>
+        <tr><td>Raju</td><td>20</td></tr>
+    </table>
+    
+    <!-- Form -->
+    <form action="submit.php" method="POST">
+        <input type="text" name="name" placeholder="Enter name">
+        <input type="email" name="email">
+        <input type="submit" value="Submit">
+        <select name="city">
+            <option>Hyderabad</option>
+        </select>
+        <textarea name="msg"></textarea>
+    </form>
+    
+    <!-- Frame (deprecated but in syllabus) -->
+    <frameset cols="30%,70%">
+        <frame src="menu.html">
+        <frame src="content.html">
+    </frameset>
+</body>
+</html></div>
+<div class="formula-block">CSS (Cascading Style Sheets):
+  Inline: style attribute on element (highest priority)
+  Internal: &lt;style&gt; tag in &lt;head&gt;
+  External: separate .css file linked with &lt;link&gt; (best practice)
+  
+Selectors:
+  Element: p { color: red; }
+  Class: .myClass { font-size: 16px; }
+  ID: #myId { background: blue; }   (highest specificity among selectors)
+  
+Box Model: Content → Padding → Border → Margin (outside to inside for rendering)
+Flexbox: display:flex for flexible layouts
+Grid: display:grid for 2D layouts</div>
+</div>
+<div class="deep-section">
+<h3>📌 JavaScript Essentials</h3>
+<div class="code-block">// Variables and types
+var x = 10;     // function-scoped, hoisted (old)
+let y = 20;     // block-scoped (modern, preferred)
+const PI = 3.14; // constant, cannot reassign
+
+// Functions
+function add(a, b) { return a + b; }
+const multiply = (a, b) => a * b;  // arrow function
+
+// Arrays
+let arr = [1, 2, 3, 4, 5];
+arr.push(6);      arr.pop();
+arr.shift();      arr.unshift(0);  // from front
+arr.map(x => x*2);      // [2,4,6,8,10]
+arr.filter(x => x>2);   // [3,4,5]
+arr.reduce((a,b)=>a+b);  // sum
+
+// DOM Manipulation
+document.getElementById("myDiv").innerHTML = "New Content";
+document.querySelector(".myClass").style.color = "red";
+document.addEventListener("click", function() { alert("Clicked!"); });
+
+// Events
+element.onclick = function() { ... }
+element.addEventListener("mouseover", handler);</div>
+</div>
+<div class="deep-section">
+<h3>📌 PHP — Server-Side Scripting</h3>
+<div class="code-block"><?php
+// Variables start with $
+$name = "Raju";
+$age = 20;
+$marks = [85, 90, 78];
+
+// String functions
+echo strtoupper($name);     // RAJU
+echo strlen($name);          // 4
+echo str_replace("u","a",$name);  // Raja
+
+// Arrays
+$fruits = array("apple","banana");  // or ["apple","banana"]
+array_push($fruits, "cherry");
+count($fruits);
+sort($fruits);
+foreach($fruits as $fruit) { echo $fruit; }
+
+// Associative array
+$student = array("name"=>"Raju", "age"=>20);
+echo $student["name"];
+foreach($student as $key=>$val) { echo "$key: $val"; }
+
+// Functions
+function greet($name="World") {
+    return "Hello, $name!";
+}
+
+// Form handling
+$username = $_POST["username"];  // from POST form
+$id = $_GET["id"];               // from URL query string
+
+// Sessions and Cookies
+session_start();
+$_SESSION["user"] = "Raju";    // store session data
+setcookie("username","Raju",time()+3600);  // expires in 1 hour
+echo $_COOKIE["username"];
+
+// Database (MySQLi)
+$conn = mysqli_connect("localhost","root","","mydb");
+$result = mysqli_query($conn, "SELECT * FROM students");
+while($row = mysqli_fetch_assoc($result)) {
+    echo $row["name"];
+}
+mysqli_close($conn);
+?></div>
+</div>
+</div>
+</div>
+
+</div><!-- units-container -->
+</div><!-- page-content -->
+<script>
+function toggleUnit(header){
+  const card=header.closest('.unit-card');
+  card.classList.toggle('open');
+  updateProg();
+}
+function updateProg(){
+  const total=document.querySelectorAll('.unit-card').length;
+  const open=document.querySelectorAll('.unit-card.open').length;
+  const pct=Math.round((open/total)*100);
+  document.getElementById('prog').style.width=pct+'%';
+  document.getElementById('progLbl').textContent=open+' / '+total+' units studied';
+}
+document.querySelector('.unit-card').classList.add('open');
+updateProg();
+</script>
+</body>
+</html>

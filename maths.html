@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathematics — TG ECET 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.deep-section{margin:22px 0}
+.deep-section h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px;color:#fff;display:flex;align-items:center;gap:8px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.deep-para{font-size:13.5px;color:var(--text-muted);line-height:1.85;margin-bottom:10px}
+.deep-para strong{color:var(--text)}
+.formula-block{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px 18px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#c9d1d9;line-height:2;white-space:pre-wrap}
+.formula-block .label{font-family:'Space Grotesk',sans-serif;font-size:10px;color:var(--maths);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;font-weight:700}
+.step-box{background:var(--bg3);border-radius:10px;padding:14px 18px;margin:10px 0}
+.step-box .step-title{font-size:12px;font-weight:700;color:var(--maths);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px}
+.steps-list{list-style:none;counter-reset:steps;padding:0}
+.steps-list li{counter-increment:steps;display:flex;gap:12px;padding:7px 0;font-size:13px;color:var(--text-muted);line-height:1.65;border-bottom:1px solid rgba(255,255,255,0.04)}
+.steps-list li:last-child{border-bottom:none}
+.steps-list li::before{content:counter(steps);width:22px;height:22px;min-width:22px;background:rgba(244,162,97,0.2);color:var(--maths);font-size:11px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0}
+.ex-box{background:linear-gradient(135deg,rgba(244,162,97,0.07),rgba(244,162,97,0.01));border:1px solid rgba(244,162,97,0.18);border-radius:10px;padding:14px 18px;margin:10px 0}
+.ex-box .ex-lbl{font-size:10px;font-weight:700;color:var(--maths);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.ex-box p{font-size:13px;color:var(--text-muted);line-height:1.75}
+.tip-box{background:rgba(255,209,102,0.05);border:1px solid rgba(255,209,102,0.2);border-radius:10px;padding:12px 16px;margin:10px 0;display:flex;gap:10px;align-items:flex-start}
+.tip-box span{font-size:16px;flex-shrink:0}
+.tip-box p{font-size:13px;color:var(--text-muted);line-height:1.65;margin:0}
+.tip-box strong{color:var(--medium)}
+.warn-box{background:rgba(255,107,107,0.05);border:1px solid rgba(255,107,107,0.2);border-radius:10px;padding:12px 16px;margin:10px 0;display:flex;gap:10px;align-items:flex-start}
+.warn-box span{font-size:16px;flex-shrink:0}
+.warn-box p{font-size:13px;color:var(--text-muted);line-height:1.65;margin:0}
+.warn-box strong{color:var(--high)}
+.table-wrap{overflow-x:auto;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:rgba(255,255,255,0.06);padding:9px 14px;text-align:left;font-weight:600;color:var(--text);border-bottom:1px solid var(--border)}
+td{padding:8px 14px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-muted)}
+tr:last-child td{border-bottom:none}
+</style>
+</head>
+<body class="page-wrap maths">
+<div class="fixed-bg maths-hero-bg"></div>
+<div class="page-content">
+<nav class="top-bar">
+  <a href="index.html" class="back-btn">← Home</a>
+  <div class="top-bar-title">Mathematics — Complete Deep Guide</div>
+  <span class="marks-badge mb-maths">50 Marks</span>
+</nav>
+<div class="subject-hero">
+  <h1>Math<span style="color:var(--maths)">ematics</span></h1>
+  <p>8 units — every concept explained from scratch. Formulas, step-by-step methods, worked examples, and exam tips included.</p>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%" id="prog"></div></div>
+  <div id="progLbl" style="font-size:12px;color:var(--text-muted);margin-top:6px">0 / 8 units studied</div>
+</div>
+<div class="units-container">
+<div class="weightage-summary">
+  <span class="ws-label">Weightage:</span>
+  <div class="ws-legend">
+    <div class="ws-item"><div class="ws-dot high"></div>High (~7–8 marks)</div>
+    <div class="ws-item"><div class="ws-dot medium"></div>Medium (~5–6 marks)</div>
+    <div class="ws-item"><div class="ws-dot low"></div>Low (~3–4 marks)</div>
+  </div>
+</div>
+
+<!-- UNIT 1 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U1</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Matrices, Determinants, Partial Fractions & Logarithms</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High</span><span class="expected-marks">~7 marks</span></div>
+  </div>
+  <div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+
+<div class="deep-section">
+<h3>📌 What is a Matrix?</h3>
+<p class="deep-para">A <strong>matrix</strong> is a rectangular array of numbers arranged in rows and columns. If a matrix has m rows and n columns it is called an <strong>m×n matrix</strong>. The number m×n is called its order. Each number in the matrix is called an <strong>element</strong> and is denoted aᵢⱼ where i = row number, j = column number.</p>
+<div class="table-wrap"><table>
+<tr><th>Matrix Type</th><th>Definition</th><th>Key Property</th></tr>
+<tr><td>Row Matrix</td><td>Has only 1 row (1×n)</td><td>Like a row vector</td></tr>
+<tr><td>Column Matrix</td><td>Has only 1 column (n×1)</td><td>Like a column vector</td></tr>
+<tr><td>Square Matrix</td><td>Number of rows = number of columns</td><td>Can compute determinant</td></tr>
+<tr><td>Diagonal Matrix</td><td>All elements except main diagonal are zero</td><td>aᵢⱼ=0 for i≠j</td></tr>
+<tr><td>Identity (Unit) Matrix I</td><td>Diagonal=1, rest=0</td><td>AI = IA = A always</td></tr>
+<tr><td>Null (Zero) Matrix O</td><td>All elements = 0</td><td>A+O=A, AO=OA=O</td></tr>
+<tr><td>Symmetric Matrix</td><td>Aᵀ = A (aᵢⱼ = aⱼᵢ)</td><td>Elements mirror across diagonal</td></tr>
+<tr><td>Skew-Symmetric</td><td>Aᵀ = −A (aᵢⱼ = −aⱼᵢ)</td><td>All diagonal elements must be 0</td></tr>
+</table></div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Matrix Operations</h3>
+<p class="deep-para"><strong>Transpose (Aᵀ):</strong> Rows become columns, columns become rows. If A is m×n, then Aᵀ is n×m.</p>
+<p class="deep-para"><strong>Addition/Subtraction:</strong> Only matrices of the <em>same order</em> can be added. Add element-by-element. (A+B)ᵀ = Aᵀ+Bᵀ.</p>
+<p class="deep-para"><strong>Scalar Multiplication:</strong> Each element is multiplied by the scalar k. d(kA)/dk = A (trivially).</p>
+<p class="deep-para"><strong>Matrix Multiplication:</strong> A(m×n) × B(n×p) = C(m×p). The element cᵢⱼ = sum of products of row i of A with column j of B. Critical rule: <strong>number of columns of A must equal number of rows of B</strong>. Matrix multiplication is <strong>NOT commutative</strong> — AB ≠ BA in general. But it IS associative: A(BC)=(AB)C.</p>
+<div class="formula-block">Properties of Transpose:
+(Aᵀ)ᵀ = A
+(A+B)ᵀ = Aᵀ + Bᵀ
+(AB)ᵀ = BᵀAᵀ   ← order REVERSES!
+(kA)ᵀ = k·Aᵀ</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Determinants — Full Theory</h3>
+<p class="deep-para">The <strong>determinant</strong> is a special scalar value computed from a square matrix. It tells us whether the matrix has an inverse. Think of it as a "scaling factor" — if det=0, the matrix collapses space to lower dimension (no inverse). If det≠0, the matrix is invertible.</p>
+<div class="formula-block"><div class="label">For 2×2 matrix A = [[a,b],[c,d]]</div>
+|A| = det(A) = ad − bc
+Example: |[[3,2],[1,4]]| = 3×4 − 2×1 = 12−2 = 10</div>
+<div class="formula-block"><div class="label">For 3×3 matrix — Expansion along Row 1 (Laplace Expansion)</div>
+|A| = a₁₁·|M₁₁| − a₁₂·|M₁₂| + a₁₃·|M₁₃|
+
+Where Mᵢⱼ = Minor = 2×2 submatrix after deleting row i and column j
+
+Sign Pattern (cofactor signs):
+  + − +
+  − + −
+  + − +
+Position (i,j) has sign (−1)^(i+j)</div>
+<p class="deep-para"><strong>Key Properties of Determinants:</strong></p>
+<div class="formula-block">1. |Aᵀ| = |A|
+2. If any row/column is all zeros → |A| = 0
+3. Interchange two rows → determinant changes sign
+4. Multiply a row by k → determinant multiplies by k
+5. |kA| = kⁿ·|A| for n×n matrix
+6. If two rows are identical → |A| = 0
+7. Adding multiple of one row to another → |A| unchanged
+8. |AB| = |A|·|B|</div>
+<div class="ex-box">
+<div class="ex-lbl">Worked Example — 3×3 Determinant</div>
+<p>A = [[1,2,3],[4,5,6],[7,8,9]]
+|A| = 1·(5×9−6×8) − 2·(4×9−6×7) + 3·(4×8−5×7)
+    = 1·(45−48) − 2·(36−42) + 3·(32−35)
+    = 1·(−3) − 2·(−6) + 3·(−3)
+    = −3 + 12 − 9 = 0  ← Singular! (rows are in AP)</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Adjoint and Inverse of a Matrix</h3>
+<p class="deep-para"><strong>Minor Mᵢⱼ:</strong> Delete row i and column j from matrix → determinant of remaining 2×2 submatrix.<br>
+<strong>Cofactor Cᵢⱼ:</strong> Cᵢⱼ = (−1)^(i+j) × Mᵢⱼ — same as minor but with sign adjustment.<br>
+<strong>Adjoint adj(A):</strong> Transpose of the cofactor matrix (i.e., replace each element by its cofactor, then transpose).<br>
+<strong>Inverse A⁻¹:</strong> Only exists when |A| ≠ 0. Formula: A⁻¹ = adj(A) / |A|</p>
+<div class="formula-block"><div class="label">Quick formula for 2×2 inverse</div>
+If A = [[a,b],[c,d]], then A⁻¹ = (1/|A|)·[[d,−b],[−c,a]]
+Just swap main diagonal, negate off-diagonal, divide by determinant!</div>
+<div class="tip-box"><span>💡</span><p><strong>Verify your inverse:</strong> Always check A·A⁻¹ = I. If you made an error in adj(A) or |A|, this check will catch it immediately. It takes 30 seconds and saves marks.</p></div>
+</div>
+
+<div class="deep-section">
+<h3>📌 System of Linear Equations — 3 Methods</h3>
+<p class="deep-para">Given 3 equations: a₁x+b₁y+c₁z=d₁, a₂x+b₂y+c₂z=d₂, a₃x+b₃y+c₃z=d₃</p>
+<div class="step-box">
+<div class="step-title">Method 1: Cramer's Rule (Fast & Clean) ⭐ Most Used</div>
+<ol class="steps-list">
+<li>Set up coefficient matrix A. Calculate Δ = |A|. If Δ=0, system has no unique solution.</li>
+<li>Form Δₓ by replacing column 1 (x-column) with the constant column [d₁,d₂,d₃]. Calculate Δₓ.</li>
+<li>Form Δᵧ by replacing column 2 (y-column) with constants. Calculate Δᵧ.</li>
+<li>Form Δᵤ by replacing column 3 (z-column) with constants. Calculate Δᵤ.</li>
+<li>Solutions: x = Δₓ/Δ, y = Δᵧ/Δ, z = Δᵤ/Δ</li>
+</ol>
+</div>
+<div class="step-box">
+<div class="step-title">Method 2: Matrix Inversion (AX = B → X = A⁻¹B)</div>
+<ol class="steps-list">
+<li>Write in matrix form AX=B where A is coefficient matrix, X=[x,y,z]ᵀ, B=[d₁,d₂,d₃]ᵀ</li>
+<li>Find |A|. If |A|≠0, find adj(A), then A⁻¹ = adj(A)/|A|</li>
+<li>Multiply: X = A⁻¹·B. Each component gives the value of x, y, z</li>
+</ol>
+</div>
+<div class="step-box">
+<div class="step-title">Method 3: Gauss-Jordan (Row Reduction to Reduced Row Echelon Form)</div>
+<ol class="steps-list">
+<li>Write augmented matrix [A|B] — a 3×4 matrix</li>
+<li>Using row operations (R₂→R₂−(a₂₁/a₁₁)R₁ etc.), create zeros below the first pivot (element [1,1])</li>
+<li>Create zeros below second pivot (element [2,2])</li>
+<li>Then eliminate UPWARD too: make zeros above each pivot (this is what makes it Gauss-JORDAN vs plain Gauss)</li>
+<li>Divide each row so each pivot = 1. The right side of [I|X] gives the solution directly.</li>
+</ol>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Partial Fractions — All 4 Cases</h3>
+<p class="deep-para">Partial fractions split a rational function P(x)/Q(x) [where degree(P) &lt; degree(Q)] into simpler pieces that are easy to integrate or work with. First factor Q(x) completely.</p>
+<div class="table-wrap"><table>
+<tr><th>Factor Type in Q(x)</th><th>Partial Fraction Form</th></tr>
+<tr><td>Non-repeated linear: (x−a)</td><td>A/(x−a)</td></tr>
+<tr><td>Repeated linear: (x−a)²</td><td>A/(x−a) + B/(x−a)²</td></tr>
+<tr><td>Repeated n times: (x−a)ⁿ</td><td>A₁/(x−a) + A₂/(x−a)² + … + Aₙ/(x−a)ⁿ</td></tr>
+<tr><td>Non-repeated quadratic: (x²+px+q)</td><td>(Ax+B)/(x²+px+q)</td></tr>
+<tr><td>Repeated quadratic: (x²+px+q)²</td><td>(Ax+B)/(x²+px+q) + (Cx+D)/(x²+px+q)²</td></tr>
+</table></div>
+<p class="deep-para"><strong>Procedure:</strong> Write the partial fraction form, multiply both sides by the full denominator Q(x), substitute convenient values of x (roots of factors) to find constants. For irreducible quadratics, compare coefficients of equal powers of x.</p>
+<div class="ex-box">
+<div class="ex-lbl">Full Worked Example</div>
+<p>Resolve (2x+1)/[(x−1)(x+2)(x−3)] into partial fractions.
+Write: (2x+1)/[(x−1)(x+2)(x−3)] = A/(x−1) + B/(x+2) + C/(x−3)
+Multiply both sides by (x−1)(x+2)(x−3):
+2x+1 = A(x+2)(x−3) + B(x−1)(x−3) + C(x−1)(x+2)
+
+Put x=1:  3 = A(3)(−2) = −6A → A = −1/2
+Put x=−2: −3 = B(−3)(−5) = 15B → B = −1/5
+Put x=3:  7 = C(2)(5) = 10C → C = 7/10
+
+Answer: −(1/2)/(x−1) − (1/5)/(x+2) + (7/10)/(x−3)</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Logarithms — Complete Theory</h3>
+<p class="deep-para">Definition: <strong>logₐN = x ⟺ aˣ = N</strong>. The base a must satisfy a>0, a≠1. N must be positive (log of 0 or negative is undefined in reals).</p>
+<div class="formula-block"><div class="label">All Logarithm Properties</div>
+logₐ(mn) = logₐm + logₐn          [Product → sum]
+logₐ(m/n) = logₐm − logₐn         [Quotient → difference]
+logₐ(mⁿ) = n·logₐm                [Power → coefficient]
+logₐa = 1                           [Log of base = 1]
+logₐ1 = 0                           [Log of 1 is always 0]
+logₐ(1/n) = −logₐn
+logₐm = logbm / logba              [Change of base formula]
+log₁₀x ≡ log x  (common logarithm, base 10)
+logₑx ≡ ln x  (natural logarithm, base e, where e≈2.71828)</div>
+<div class="formula-block"><div class="label">Exponential Function Properties</div>
+eˣ is strictly increasing; domain=all reals, range=(0,∞)
+e⁰=1, e¹=e, e⁻ˣ=1/eˣ
+ln(eˣ) = x and e^(lnx) = x  [they are inverses]
+d/dx(eˣ) = eˣ  [unique function that equals its own derivative!]
+∫eˣdx = eˣ + C</div>
+</div>
+</div>
+
+</div><!-- unit-body -->
+</div><!-- unit-card -->
+
+<!-- UNIT 2 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U2</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Trigonometry & Complex Numbers</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~6 marks</span></div>
+  </div>
+  <div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Compound Angle Formulas — The Foundation</h3>
+<p class="deep-para">Every multiple angle, half angle, product formula in trigonometry is derived from these six identities. If you know nothing else, know these.</p>
+<div class="formula-block">sin(A+B) = sinA·cosB + cosA·sinB
+sin(A−B) = sinA·cosB − cosA·sinB
+cos(A+B) = cosA·cosB − sinA·sinB
+cos(A−B) = cosA·cosB + sinA·sinB
+tan(A+B) = (tanA+tanB)/(1−tanA·tanB)
+tan(A−B) = (tanA−tanB)/(1+tanA·tanB)</div>
+<div class="tip-box"><span>💡</span><p><strong>Memory:</strong> sin(A±B) = "sin-cos ± cos-sin". cos(A+B) = "cos-cos ∓ sin-sin" — the ∓ means cos(A+B) subtracts but cos(A−B) adds.</p></div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Multiple & Sub-Multiple Angle Formulas</h3>
+<p class="deep-para">Derived by setting B=A in compound angle formulas:</p>
+<div class="formula-block"><div class="label">Double Angle Formulas (A+A = 2A)</div>
+sin 2A = 2 sinA cosA
+cos 2A = cos²A − sin²A
+       = 1 − 2sin²A         [use when you need sin²A: sin²A=(1−cos2A)/2]
+       = 2cos²A − 1         [use when you need cos²A: cos²A=(1+cos2A)/2]
+tan 2A = 2tanA / (1−tan²A)
+
+Expressed in terms of t=tanA:
+sin 2A = 2t/(1+t²)
+cos 2A = (1−t²)/(1+t²)
+tan 2A = 2t/(1−t²)</div>
+<div class="formula-block"><div class="label">Triple Angle Formulas</div>
+sin 3A = 3sinA − 4sin³A
+cos 3A = 4cos³A − 3cosA
+tan 3A = (3tanA − tan³A)/(1−3tan²A)</div>
+<div class="formula-block"><div class="label">Half-Angle Formulas (set A=θ/2 in double angle)</div>
+sin²(θ/2) = (1−cosθ)/2    →  sin(θ/2) = ±√[(1−cosθ)/2]
+cos²(θ/2) = (1+cosθ)/2    →  cos(θ/2) = ±√[(1+cosθ)/2]
+tan(θ/2)  = sinθ/(1+cosθ) = (1−cosθ)/sinθ</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Product-to-Sum & Sum-to-Product</h3>
+<div class="formula-block"><div class="label">Product → Sum (add or subtract compound angle formulas)</div>
+2sinA cosB = sin(A+B) + sin(A−B)
+2cosA sinB = sin(A+B) − sin(A−B)
+2cosA cosB = cos(A−B) + cos(A+B)
+2sinA sinB = cos(A−B) − cos(A+B)</div>
+<div class="formula-block"><div class="label">Sum → Product (replace A+B=C, A−B=D → A=(C+D)/2, B=(C−D)/2)</div>
+sinC + sinD = 2 sin((C+D)/2) cos((C−D)/2)
+sinC − sinD = 2 cos((C+D)/2) sin((C−D)/2)
+cosC + cosD = 2 cos((C+D)/2) cos((C−D)/2)
+cosC − cosD = −2 sin((C+D)/2) sin((C−D)/2)</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Properties of Triangles & Solution Methods</h3>
+<p class="deep-para">In triangle ABC, sides a,b,c are opposite to angles A,B,C respectively. All angles add to 180°.</p>
+<div class="formula-block">Sine Rule:      a/sinA = b/sinB = c/sinC = 2R   (R=circumradius)
+Cosine Rule:    a² = b²+c²−2bc·cosA  → cosA = (b²+c²−a²)/2bc
+Tangent Rule:   tan((A−B)/2) = ((a−b)/(a+b))·cot(C/2)
+Projection:     a = b·cosC + c·cosB</div>
+<div class="table-wrap"><table>
+<tr><th>Given</th><th>Method</th><th>Steps</th></tr>
+<tr><td>3 sides (SSS)</td><td>Cosine Rule first</td><td>Find largest angle with cosine rule, then sine rule for others</td></tr>
+<tr><td>2 sides + included angle (SAS)</td><td>Cosine Rule</td><td>Find opposite side using cosine rule, then sine rule</td></tr>
+<tr><td>1 side + 2 angles (SAA)</td><td>Sine Rule</td><td>Third angle=180°−A−B, then b=a·sinB/sinA, c=a·sinC/sinA</td></tr>
+</table></div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Inverse Trigonometric Functions</h3>
+<p class="deep-para">sin⁻¹x (arcsin) gives the angle whose sine is x. Domain: [−1,1]. Range: [−π/2, π/2].<br>
+cos⁻¹x: Domain: [−1,1]. Range: [0, π].<br>
+tan⁻¹x: Domain: all reals. Range: (−π/2, π/2).</p>
+<div class="formula-block">Complementary pairs:
+sin⁻¹x + cos⁻¹x = π/2
+tan⁻¹x + cot⁻¹x = π/2
+sec⁻¹x + csc⁻¹x = π/2
+
+Addition formulas:
+tan⁻¹x + tan⁻¹y = tan⁻¹[(x+y)/(1−xy)]  when xy < 1
+                 = π + tan⁻¹[(x+y)/(1−xy)] when xy > 1, x>0
+
+2·tan⁻¹x = sin⁻¹(2x/(1+x²)) = cos⁻¹((1−x²)/(1+x²))</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Hyperbolic Functions</h3>
+<div class="formula-block">sinh x = (eˣ−e⁻ˣ)/2       cosh x = (eˣ+e⁻ˣ)/2
+tanh x = sinh x/cosh x    sech x = 1/cosh x
+coth x = cosh x/sinh x    csch x = 1/sinh x
+
+Fundamental Identity:    cosh²x − sinh²x = 1
+Other identities:        1 − tanh²x = sech²x
+                          coth²x − 1 = csch²x
+
+Derivatives:
+d/dx(sinh x) = cosh x,   d/dx(cosh x) = sinh x
+d/dx(tanh x) = sech²x</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Complex Numbers — From Basics to Euler Form</h3>
+<p class="deep-para">A complex number z = a+ib where i=√(−1). Note: i²=−1, i³=−i, i⁴=1 (cycles with period 4). <strong>Real part</strong> Re(z)=a, <strong>Imaginary part</strong> Im(z)=b.</p>
+<div class="formula-block">Arithmetic:
+(a+ib)+(c+id) = (a+c)+i(b+d)
+(a+ib)−(c+id) = (a−c)+i(b−d)
+(a+ib)(c+id) = (ac−bd)+i(ad+bc)   [use i²=−1]
+(a+ib)/(c+id) = [(a+ib)(c−id)]/[(c+id)(c−id)] = [(ac+bd)+i(bc−ad)]/(c²+d²)
+
+Conjugate: z̄ = a−ib;   z·z̄ = a²+b² = |z|²
+Modulus: |z| = r = √(a²+b²)
+Argument: θ = arg(z) = tan⁻¹(b/a)  [adjust for correct quadrant!]
+
+Polar Form:  z = r(cosθ+i sinθ)   where r=|z|, θ=arg(z)
+Euler Form:  z = r·e^(iθ)          [since e^(iθ)=cosθ+i sinθ]</div>
+<div class="formula-block"><div class="label">De Moivre's Theorem (Critical for Exam)</div>
+(cosθ + i sinθ)ⁿ = cos(nθ) + i sin(nθ)
+Equivalently: (e^(iθ))ⁿ = e^(inθ)
+
+Application — nth roots of unity:
+zⁿ=1 has n roots: e^(i·2kπ/n), k=0,1,2,...,n−1
+These are equally spaced on unit circle in Argand plane.</div>
+<div class="ex-box">
+<div class="ex-lbl">Example: Multiplication in Polar Form</div>
+<p>z₁=2(cos60°+isin60°), z₂=3(cos30°+isin30°)
+z₁·z₂ = 2×3 [cos(60°+30°)+isin(60°+30°)]
+      = 6[cos90°+isin90°] = 6[0+i·1] = 6i
+
+Key: Multiply moduli, Add arguments. For division: divide moduli, subtract arguments.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 3 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U3</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Analytical Geometry</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~5 marks</span></div>
+  </div>
+  <div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Straight Lines — Every Form You Need</h3>
+<p class="deep-para">The <strong>slope</strong> (m) of a line is tan θ where θ is the angle it makes with the positive x-axis. m = (y₂−y₁)/(x₂−x₁). Slope encodes direction: positive slope → rising line, negative → falling line, zero → horizontal, undefined → vertical.</p>
+<div class="formula-block">Slope-intercept:   y = mx + c              [m=slope, c=y-intercept]
+Point-slope:        y−y₁ = m(x−x₁)         [given slope + one point]
+Two-point form:     (y−y₁)/(y₂−y₁) = (x−x₁)/(x₂−x₁)
+Intercept form:     x/a + y/b = 1           [a=x-intercept, b=y-intercept]
+Normal form:        x cosα + y sinα = p      [p=perp. distance from origin]
+General form:       ax + by + c = 0</div>
+<div class="formula-block"><div class="label">Distance, Angle, and Parallel/Perpendicular Conditions</div>
+Perpendicular distance from (x₁,y₁) to line ax+by+c=0:
+  d = |ax₁+by₁+c| / √(a²+b²)
+
+Angle θ between lines with slopes m₁ and m₂:
+  tan θ = |(m₁−m₂)/(1+m₁m₂)|
+
+Parallel lines: m₁ = m₂   (equal slopes)
+Perpendicular:  m₁×m₂ = −1  (product of slopes = −1)
+
+Distance between parallel lines ax+by+c₁=0 and ax+by+c₂=0:
+  d = |c₁−c₂| / √(a²+b²)</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Circles — All Forms and Tangent/Normal</h3>
+<div class="formula-block">Standard form (centre h,k; radius r):
+  (x−h)² + (y−k)² = r²
+
+General form: x²+y²+2gx+2fy+c = 0
+  Centre = (−g, −f)
+  Radius  = √(g²+f²−c)
+
+Diameter form (endpoints of diameter (x₁,y₁) and (x₂,y₂)):
+  (x−x₁)(x−x₂) + (y−y₁)(y−y₂) = 0
+
+Condition for general equation to be a real circle: g²+f²−c > 0</div>
+<div class="formula-block"><div class="label">Tangent and Normal to Circle x²+y²=r² at point (x₁,y₁)</div>
+Tangent: x·x₁ + y·y₁ = r²
+Normal:  y/x = y₁/x₁  → passes through centre (0,0)
+
+For general circle x²+y²+2gx+2fy+c=0 at (x₁,y₁):
+Tangent: x·x₁+y·y₁+g(x+x₁)+f(y+y₁)+c = 0
+
+Condition for line y=mx+c to touch circle x²+y²=r²:
+  c² = r²(1+m²)  →  c = ±r√(1+m²)</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Conic Sections — Complete Reference</h3>
+<p class="deep-para">A conic section is the curve obtained by intersecting a cone with a plane. The type of conic depends on the angle of intersection. The eccentricity e classifies them:</p>
+<div class="table-wrap"><table>
+<tr><th>Conic</th><th>Equation (standard)</th><th>Eccentricity</th><th>Focus/Foci</th><th>Directrix</th></tr>
+<tr><td>Parabola (→)</td><td>y² = 4ax (a>0)</td><td>e = 1</td><td>(a, 0)</td><td>x = −a</td></tr>
+<tr><td>Parabola (←)</td><td>y² = −4ax</td><td>e = 1</td><td>(−a, 0)</td><td>x = a</td></tr>
+<tr><td>Parabola (↑)</td><td>x² = 4ay</td><td>e = 1</td><td>(0, a)</td><td>y = −a</td></tr>
+<tr><td>Parabola (↓)</td><td>x² = −4ay</td><td>e = 1</td><td>(0, −a)</td><td>y = a</td></tr>
+<tr><td>Ellipse</td><td>x²/a²+y²/b²=1, a>b>0</td><td>e = c/a &lt; 1</td><td>(±ae, 0)</td><td>x = ±a/e</td></tr>
+<tr><td>Hyperbola</td><td>x²/a²−y²/b²=1</td><td>e = c/a > 1</td><td>(±ae, 0)</td><td>x = ±a/e</td></tr>
+</table></div>
+<div class="formula-block"><div class="label">Key Relations</div>
+Parabola y²=4ax:  Latus rectum length = 4a; vertex=(0,0); axis=x-axis
+Ellipse:  b²=a²(1−e²),  c²=a²−b²,  Latus rectum=2b²/a
+          Sum of focal distances = 2a (constant — definition of ellipse)
+Hyperbola: b²=a²(e²−1),  c²=a²+b²
+           Asymptotes: y = ±(b/a)·x  (hyperbola never crosses these)
+           Difference of focal distances = 2a</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 4 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U4</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Differentiation & Its Applications</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 Highest Priority</span><span class="expected-marks">~8 marks</span></div>
+  </div>
+  <div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 The Concept of Differentiation</h3>
+<p class="deep-para">The derivative of y=f(x) at a point x is defined as: <strong>dy/dx = lim(h→0) [f(x+h)−f(x)]/h</strong>. Geometrically it is the <em>slope of the tangent</em> to the curve at that point. Physically it is the <em>instantaneous rate of change</em>. A function is differentiable at x if this limit exists.</p>
+</div>
+
+<div class="deep-section">
+<h3>📌 All Standard Derivatives (Must Memorize)</h3>
+<div class="formula-block">Algebraic:
+d/dx(xⁿ) = nxⁿ⁻¹        d/dx(√x) = 1/(2√x)
+d/dx(1/x) = −1/x²        d/dx(c) = 0
+
+Exponential & Log:
+d/dx(eˣ) = eˣ             d/dx(aˣ) = aˣ·ln a
+d/dx(ln x) = 1/x          d/dx(logₐx) = 1/(x·ln a)
+
+Trigonometric:
+d/dx(sin x) = cos x       d/dx(cos x) = −sin x
+d/dx(tan x) = sec²x       d/dx(cot x) = −csc²x
+d/dx(sec x) = sec x·tan x d/dx(csc x) = −csc x·cot x
+
+Inverse Trigonometric:
+d/dx(sin⁻¹x) = 1/√(1−x²)    d/dx(cos⁻¹x) = −1/√(1−x²)
+d/dx(tan⁻¹x) = 1/(1+x²)     d/dx(cot⁻¹x) = −1/(1+x²)
+d/dx(sec⁻¹x) = 1/(|x|√(x²−1))
+
+Hyperbolic:
+d/dx(sinh x) = cosh x      d/dx(cosh x) = sinh x
+d/dx(tanh x) = sech²x      d/dx(coth x) = −csch²x</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Rules of Differentiation</h3>
+<div class="formula-block">Sum/Difference Rule:  (f±g)' = f'±g'
+Product Rule:         (uv)' = u'v + uv'  ← "UV formula"
+Quotient Rule:        (u/v)' = (u'v−uv')/v²  ← "VdU−UdV over V²"
+Chain Rule:           d/dx[f(g(x))] = f'(g(x))·g'(x)
+                      dy/dx = (dy/du)·(du/dx)</div>
+<div class="ex-box">
+<div class="ex-lbl">Chain Rule Examples</div>
+<p>① d/dx[sin(x²)] = cos(x²)·2x = 2x·cos(x²)
+② d/dx[e^(3x+1)] = e^(3x+1)·3 = 3e^(3x+1)
+③ d/dx[ln(sin x)] = (1/sin x)·cos x = cot x
+④ d/dx[(x²+1)⁵] = 5(x²+1)⁴·2x = 10x(x²+1)⁴</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Implicit Differentiation</h3>
+<p class="deep-para">When y is defined implicitly by an equation like F(x,y)=0, differentiate both sides w.r.t. x. Every term with y requires chain rule: d/dx[f(y)] = f'(y)·(dy/dx). Collect all dy/dx terms on one side and solve.</p>
+<div class="ex-box">
+<div class="ex-lbl">Example</div>
+<p>Find dy/dx for x²+y²=25 (circle of radius 5)
+Differentiate: 2x + 2y·(dy/dx) = 0
+Solve: dy/dx = −x/y   [slope of tangent to circle at any point]
+
+At point (3,4): dy/dx = −3/4 ← tangent slope at that point.</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Parametric Differentiation</h3>
+<p class="deep-para">When both x and y are functions of a parameter t: x=f(t), y=g(t), use dy/dx = (dy/dt)÷(dx/dt).</p>
+<p class="deep-para">For second derivative: d²y/dx² = [d/dt(dy/dx)] / (dx/dt). Important: <strong>do NOT just square dy/dx</strong>.</p>
+<div class="ex-box">
+<div class="ex-lbl">Example — Cycloid</div>
+<p>x = a(t−sin t), y = a(1−cos t)
+dx/dt = a(1−cos t),  dy/dt = a·sin t
+dy/dx = a·sin t / [a(1−cos t)] = sin t/(1−cos t)
+
+Using half-angle: = 2sin(t/2)cos(t/2) / 2sin²(t/2) = cos(t/2)/sin(t/2) = cot(t/2)</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Logarithmic Differentiation</h3>
+<p class="deep-para">Used for functions of the form y = [f(x)]^g(x) (variable in both base and exponent), or products/quotients of many functions. Take ln of both sides first, then differentiate.</p>
+<div class="ex-box">
+<div class="ex-lbl">Example</div>
+<p>Find dy/dx for y = xˢⁱⁿˣ
+Take ln: ln y = sin x · ln x
+Differentiate: (1/y)·dy/dx = cos x·ln x + sin x·(1/x)
+dy/dx = y·[cos x·ln x + sin x/x]
+     = xˢⁱⁿˣ·[cos x·ln x + sin x/x]</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Applications — Tangent, Normal, Increasing/Decreasing</h3>
+<div class="formula-block">Tangent at (x₁,y₁) on y=f(x):  m = f'(x₁)
+  Equation: y−y₁ = m(x−x₁)
+
+Normal at (x₁,y₁):  slope = −1/m  (perpendicular to tangent)
+  Equation: y−y₁ = (−1/m)(x−x₁)
+
+Increasing function: f'(x) > 0 in that interval
+Decreasing function: f'(x) < 0 in that interval
+Rate of change: if y=f(t), dy/dt is rate of change at time t</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Maxima & Minima — Second Derivative Test</h3>
+<div class="step-box">
+<div class="step-title">Complete Procedure</div>
+<ol class="steps-list">
+<li>Find dy/dx (first derivative). Set dy/dx = 0. Solve for x. These are <strong>critical points</strong>.</li>
+<li>Find d²y/dx² (second derivative).</li>
+<li>For each critical point x=c: If d²y/dx²|ₓ₌꜀ &lt; 0 → <strong>Local Maximum</strong>; if &gt; 0 → <strong>Local Minimum</strong>; if = 0 → inconclusive.</li>
+<li>Maximum value = f(c) at max critical point. Minimum value = f(c) at min critical point.</li>
+</ol>
+</div>
+<div class="ex-box">
+<div class="ex-lbl">Full Example</div>
+<p>f(x) = x³ − 6x² + 9x + 2
+f'(x) = 3x²−12x+9 = 3(x²−4x+3) = 3(x−1)(x−3) = 0
+Critical points: x=1 and x=3
+
+f''(x) = 6x−12
+At x=1: f''(1) = 6−12 = −6 < 0 → Local MAXIMUM; f(1)=1−6+9+2=6
+At x=3: f''(3) = 18−12 = 6 > 0 → Local MINIMUM; f(3)=27−54+27+2=2</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Partial Differentiation & Euler's Theorem</h3>
+<p class="deep-para">For z=f(x,y), the partial derivative ∂z/∂x means differentiate w.r.t. x treating y as a constant — as if y is just another number coefficient. ∂z/∂y treats x as constant.</p>
+<div class="formula-block">If z = x³y² + 2x²y + 5xy³
+∂z/∂x = 3x²y² + 4xy + 5y³     (differentiate each term, treat y as constant)
+∂z/∂y = 2x³y + 2x² + 15xy²    (differentiate each term, treat x as constant)
+
+Second-order partials:
+∂²z/∂x² = 6xy² + 4y
+∂²z/∂y² = 2x³ + 30xy
+∂²z/∂x∂y = 6x²y + 4x + 15y²   (mixed — differentiate ∂z/∂x w.r.t. y)
+Note: ∂²z/∂x∂y = ∂²z/∂y∂x always (Clairaut's theorem)</div>
+<div class="formula-block"><div class="label">Euler's Theorem for Homogeneous Functions</div>
+f(x,y) is HOMOGENEOUS of degree n if f(tx,ty) = tⁿ·f(x,y)
+
+Examples: x²+xy+y² is degree 2; x³+x²y is degree 3; x/y is degree 0
+
+EULER'S THEOREM: If f is homogeneous of degree n, then:
+  x·∂f/∂x + y·∂f/∂y = n·f
+
+Extended version (second-order):
+  x²·∂²f/∂x² + 2xy·∂²f/∂x∂y + y²·∂²f/∂y² = n(n−1)·f</div>
+<div class="ex-box">
+<div class="ex-lbl">Euler's Theorem Example</div>
+<p>Verify for f(x,y) = x²+2xy+y² (homogeneous, degree 2)
+∂f/∂x = 2x+2y,  ∂f/∂y = 2x+2y
+x·∂f/∂x + y·∂f/∂y = x(2x+2y) + y(2x+2y)
+= 2x²+2xy + 2xy+2y² = 2(x²+2xy+y²) = 2f ✓ (n=2)</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 5 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U5</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Integration & Its Applications</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 Highest Priority</span><span class="expected-marks">~8 marks</span></div>
+  </div>
+  <div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Integration — The Concept</h3>
+<p class="deep-para">Integration is the reverse of differentiation. ∫f(x)dx = F(x)+C means F'(x)=f(x). The constant C is the constant of integration — it appears because differentiating a constant gives zero, so the "antiderivative" is not unique. The integral is also the <strong>area under the curve</strong> from a geometrical perspective.</p>
+</div>
+
+<div class="deep-section">
+<h3>📌 Standard Integrals Master Table</h3>
+<div class="formula-block">∫xⁿ dx = xⁿ⁺¹/(n+1) + C         (n ≠ −1)
+∫1/x dx = ln|x| + C
+∫eˣ dx = eˣ + C
+∫aˣ dx = aˣ/ln a + C
+
+∫sin x dx = −cos x + C
+∫cos x dx = sin x + C
+∫tan x dx = ln|sec x| + C  (=−ln|cos x|+C)
+∫cot x dx = ln|sin x| + C
+∫sec x dx = ln|sec x + tan x| + C
+∫csc x dx = ln|csc x − cot x| + C
+∫sec²x dx = tan x + C
+∫csc²x dx = −cot x + C
+∫sec x tan x dx = sec x + C
+∫csc x cot x dx = −csc x + C
+
+∫1/(x²+a²) dx = (1/a)·tan⁻¹(x/a) + C
+∫1/√(a²−x²) dx = sin⁻¹(x/a) + C
+∫1/√(x²+a²) dx = ln|x+√(x²+a²)| + C
+∫1/(x²−a²) dx = (1/2a)·ln|(x−a)/(x+a)| + C
+∫√(a²−x²) dx = (x/2)√(a²−x²) + (a²/2)sin⁻¹(x/a) + C</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Integration by Substitution</h3>
+<p class="deep-para">The key insight: if you see a function and its derivative (or a multiple of it) in the same integrand, substitution converts it to a standard form. Let u = inner function → du = derivative·dx → solve for dx → substitute everything → integrate w.r.t. u → back-substitute.</p>
+<div class="ex-box">
+<div class="ex-lbl">Multiple Examples</div>
+<p>① ∫2x(x²+1)⁷ dx: Let u=x²+1, du=2x dx
+  = ∫u⁷ du = u⁸/8 + C = (x²+1)⁸/8 + C
+
+② ∫sin³x·cos x dx: Let u=sin x, du=cos x dx
+  = ∫u³ du = u⁴/4 + C = sin⁴x/4 + C
+
+③ ∫eˢⁱⁿˣ·cos x dx: Let u=sin x, du=cos x dx
+  = ∫eᵘ du = eᵘ + C = e^(sin x) + C
+
+④ ∫tan x dx = ∫sin x/cos x dx: Let u=cos x, du=−sin x dx
+  = ∫−1/u du = −ln|u| + C = −ln|cos x| + C = ln|sec x| + C</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Integration by Parts — ILATE Rule</h3>
+<p class="deep-para">Formula: ∫u dv = uv − ∫v du. The ILATE order tells you which function to take as 'u':<br>
+<strong>I</strong>nverse trig (sin⁻¹x, tan⁻¹x) → <strong>L</strong>og (ln x) → <strong>A</strong>lgebraic (xⁿ) → <strong>T</strong>rig (sin x, cos x) → <strong>E</strong>xponential (eˣ)<br>
+Pick the one that comes <em>earlier</em> in ILATE as u. The remaining part is dv.</p>
+<div class="ex-box">
+<div class="ex-lbl">Integration by Parts Examples</div>
+<p>① ∫x·sin x dx: (A before T) → u=x, dv=sin x dx
+  du=dx, v=−cos x
+  = x(−cos x) − ∫(−cos x) dx = −x cos x + sin x + C
+
+② ∫x²·eˣ dx: (A before E) → u=x², dv=eˣ dx
+  du=2x dx, v=eˣ
+  = x²eˣ − ∫2x eˣ dx  [apply parts again to ∫xeˣ]
+  = x²eˣ − 2(xeˣ−eˣ) + C = eˣ(x²−2x+2) + C
+
+③ ∫eˣ·sin x dx: (E and T — either order works but leads to solve by recurrence)
+  Let I = ∫eˣ sin x dx; u=sin x, dv=eˣ dx → v=eˣ, du=cos x dx
+  I = eˣ sin x − ∫eˣ cos x dx
+  For ∫eˣ cos x dx: u=cos x, dv=eˣ dx → = eˣcos x + ∫eˣsin x dx = eˣcos x + I
+  So: I = eˣ sin x − (eˣcos x + I) → 2I = eˣ(sin x−cos x)
+  I = eˣ(sin x−cos x)/2 + C</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Definite Integrals & Key Properties</h3>
+<div class="formula-block">∫ₐᵇ f(x)dx = F(b)−F(a)   [Fundamental Theorem of Calculus]
+
+Properties:
+P1: ∫ₐᵃ f(x)dx = 0
+P2: ∫ₐᵇ f(x)dx = −∫ᵦₐ f(x)dx
+P3: ∫ₐᵇ f(x)dx = ∫ₐᶜ f(x)dx + ∫ᶜᵇ f(x)dx
+P4 (King): ∫ₐᵇ f(x)dx = ∫ₐᵇ f(a+b−x)dx  ← VERY USEFUL for simplification
+P5: ∫₀ᵃ f(x)dx = ∫₀ᵃ f(a−x)dx
+P6: ∫₋ₐᵃ f(x)dx = 2∫₀ᵃ f(x)dx if f is EVEN; = 0 if f is ODD</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Areas and Volumes of Revolution</h3>
+<div class="formula-block">Area between curve y=f(x) and x-axis from x=a to x=b:
+  A = ∫ₐᵇ |f(x)| dx
+  If curve is entirely above x-axis: A = ∫ₐᵇ f(x) dx
+
+Area between two curves f(x) and g(x) [f(x)≥g(x)] from a to b:
+  A = ∫ₐᵇ [f(x)−g(x)] dx
+
+Volume of solid of revolution about x-axis (Disk Method):
+  V = π∫ₐᵇ [y]² dx = π∫ₐᵇ [f(x)]² dx
+
+Volume about y-axis:
+  V = π∫ᶜᵈ [x]² dy = π∫ᶜᵈ [g(y)]² dy
+
+Volume between two curves (Washer Method):
+  V = π∫ₐᵇ {[f(x)]²−[g(x)]²} dx</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Mean, RMS Values & Numerical Methods</h3>
+<div class="formula-block">Mean (Average) Value of f(x) over [a,b]:
+  f̄ = (1/(b−a)) · ∫ₐᵇ f(x) dx
+
+RMS (Root Mean Square) Value:
+  f_rms = √[ (1/(b−a))·∫ₐᵇ {f(x)}² dx ]
+
+Note: For current in AC circuits, RMS = Peak/√2 for sinusoidal waves</div>
+<div class="formula-block"><div class="label">Trapezoidal Rule — h=(b−a)/n, yᵢ=f(a+i·h)</div>
+∫ₐᵇ f(x)dx ≈ (h/2)[y₀ + 2y₁ + 2y₂ + ... + 2yₙ₋₁ + yₙ]
+= (h/2)[First + Last + 2×(all middle terms)]
+
+Simpson's 1/3 Rule — n must be EVEN:
+∫ₐᵇ f(x)dx ≈ (h/3)[y₀ + 4y₁ + 2y₂ + 4y₃ + 2y₄ + ... + 4yₙ₋₁ + yₙ]
+Pattern: 1, 4, 2, 4, 2, 4, ..., 4, 1
+Coefficients: 1 and 1 for endpoints; 4 for odd-indexed; 2 for even-indexed middle
+
+Simpson's is MORE ACCURATE than Trapezoidal for smooth functions.</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 6 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U6</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Differential Equations</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High Priority</span><span class="expected-marks">~7 marks</span></div>
+  </div>
+  <div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Basics — Order, Degree, Formation</h3>
+<p class="deep-para">A <strong>Differential Equation (DE)</strong> involves derivatives of an unknown function. <strong>Order</strong> = the highest derivative in the equation. <strong>Degree</strong> = the power of the highest-order derivative (after clearing radicals and fractions involving derivatives).</p>
+<div class="formula-block">dy/dx = x²+y        → Order 1, Degree 1
+d²y/dx² + 4dy/dx + y = 0  → Order 2, Degree 1
+(d²y/dx²)² + dy/dx = x   → Order 2, Degree 2
+√(dy/dx) = x   → degree ambiguous until squared: dy/dx=x² → Order 1, Degree 1</div>
+<p class="deep-para"><strong>Formation:</strong> Eliminate arbitrary constants from a family of curves to form a DE. If n arbitrary constants → nth order DE needed.</p>
+</div>
+
+<div class="deep-section">
+<h3>📌 Variable Separable Method</h3>
+<p class="deep-para">A DE of the form dy/dx = f(x)·g(y) can be separated: <strong>dy/g(y) = f(x)dx</strong>. Integrate both sides separately.</p>
+<div class="ex-box">
+<div class="ex-lbl">Examples</div>
+<p>① Solve: dy/dx = xy
+Separate: dy/y = x dx
+Integrate: ln|y| = x²/2 + C₁ → y = Ae^(x²/2) where A=e^C₁
+
+② Solve: (1+x²)dy = xy dx
+Separate: dy/y = x/(1+x²) dx
+Integrate: ln|y| = (1/2)ln(1+x²) + C
+y = A·√(1+x²)</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Homogeneous Equations</h3>
+<p class="deep-para">A DE dy/dx = f(x,y) is homogeneous if f(tx,ty)=f(x,y) — i.e., f is degree 0, meaning it depends only on y/x. <strong>Substitute v=y/x</strong> (so y=vx, dy/dx=v+x·dv/dx). This always converts to a separable equation.</p>
+<div class="ex-box">
+<div class="ex-lbl">Homogeneous Example</div>
+<p>Solve: dy/dx = (x²+y²)/(2xy)
+Check homogeneity: f(tx,ty)=(t²x²+t²y²)/(2·tx·ty) = (x²+y²)/(2xy) = f(x,y) ✓ degree 0
+
+Substitute y=vx → dy/dx = v+x·dv/dx
+v+x·dv/dx = (x²+v²x²)/(2x·vx) = (1+v²)/(2v)
+x·dv/dx = (1+v²)/(2v) − v = (1+v²−2v²)/(2v) = (1−v²)/(2v)
+Separate: 2v/(1−v²) dv = dx/x
+−ln|1−v²| = ln|x| + C
+1−v² = A/x  → 1−y²/x² = A/x → x²−y² = Ax (general solution)</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Linear First-Order DE: dy/dx + Py = Q</h3>
+<p class="deep-para">This is the most important 1st-order type. The <strong>Integrating Factor (IF) = e^(∫P dx)</strong>. Multiplying the equation by IF converts the LHS into d/dx[y·IF].</p>
+<div class="formula-block"><div class="label">Complete Solution Formula</div>
+Given: dy/dx + P(x)·y = Q(x)
+
+IF = e^(∫P dx)
+y·(IF) = ∫[Q·(IF)] dx + C</div>
+<div class="ex-box">
+<div class="ex-lbl">Linear DE Full Solution</div>
+<p>Solve: dy/dx − y/x = x²
+Here P = −1/x, Q = x²
+IF = e^(∫−1/x dx) = e^(−ln x) = e^(ln(1/x)) = 1/x
+
+Multiply: (1/x)dy/dx − y/x² = x
+LHS = d/dx[y·(1/x)]  → integrate both sides:
+y/x = ∫x dx = x²/2 + C
+y = x³/2 + Cx</p>
+</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Bernoulli's Equation</h3>
+<p class="deep-para">Form: dy/dx + Py = Qyⁿ (n≠0,1). Divide by yⁿ and substitute <strong>v = y^(1−n)</strong> to convert to linear DE.</p>
+<div class="formula-block">Substitution: v = y^(1−n)
+dv/dx = (1−n)·y^(−n)·dy/dx
+After substitution: (1/(1−n))·dv/dx + Pv = Q
+i.e.,  dv/dx + (1−n)P·v = (1−n)Q  ← this is a LINEAR DE in v</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Second-Order Linear DE with Constant Coefficients</h3>
+<p class="deep-para">Form: ay'' + by' + cy = f(x). General solution = <strong>CF + PI</strong> (Complementary Function + Particular Integral).</p>
+<div class="step-box">
+<div class="step-title">Finding CF via Auxiliary Equation</div>
+<ol class="steps-list">
+<li>Write the Auxiliary Equation (AE): am²+bm+c = 0</li>
+<li>Solve for m using the quadratic formula: m = [−b±√(b²−4ac)]/(2a)</li>
+<li><strong>Case 1 — Real distinct roots m₁≠m₂:</strong> CF = C₁e^(m₁x) + C₂e^(m₂x)</li>
+<li><strong>Case 2 — Equal roots m₁=m₂=m:</strong> CF = (C₁+C₂x)e^(mx)</li>
+<li><strong>Case 3 — Complex roots m=α±iβ:</strong> CF = e^(αx)[C₁cos(βx)+C₂sin(βx)]</li>
+</ol>
+</div>
+<div class="formula-block"><div class="label">PI Rules — Symbolic Operator Method (D≡d/dx)</div>
+For f(D)y = eᵃˣ:
+  PI = eᵃˣ/f(a)   if f(a)≠0
+  PI = x·eᵃˣ/f'(a) if f(a)=0 (first failure)
+
+For f(D)y = sin(ax) or cos(ax):
+  Replace D² by −a²:  PI = sin(ax)/f(−a²)  or  cos(ax)/f(−a²)
+  If denominator=0 → multiply numerator by x and divide by derivative of denominator
+
+For f(D)y = xⁿ (polynomial):
+  PI = [f(D)]⁻¹·xⁿ
+  Expand (1+D)⁻¹ = 1−D+D²−D³+... using binomial, operate term by term
+  Each Dᵏ·xⁿ = n!/(n−k)!·xⁿ⁻ᵏ  (i.e., differentiate k times)
+
+For eᵃˣ·V(x): PI = eᵃˣ·[f(D+a)]⁻¹·V(x)  [Exponential Shift Theorem]</div>
+<div class="ex-box">
+<div class="ex-lbl">Full 2nd Order DE Example</div>
+<p>Solve: y'' − 3y' + 2y = e^(4x)
+AE: m²−3m+2=0 → (m−1)(m−2)=0 → m=1,2 (real distinct)
+CF = C₁eˣ + C₂e^(2x)
+
+PI: f(D)=D²−3D+2; R=e^(4x); substitute D=4: f(4)=16−12+2=6
+PI = e^(4x)/6
+
+General Solution: y = C₁eˣ + C₂e^(2x) + e^(4x)/6</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 7 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U7</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Laplace Transforms</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~6 marks</span></div>
+  </div>
+  <div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 What is the Laplace Transform?</h3>
+<p class="deep-para">The Laplace Transform converts a time-domain function f(t) into a complex-frequency-domain function F(s): <strong>L{f(t)} = F(s) = ∫₀^∞ e^(−st)·f(t) dt</strong>. Its power: it turns differential equations into <em>algebraic</em> equations, which are far easier to solve. After solving algebraically, take the Inverse Laplace Transform to get back the time-domain answer.</p>
+</div>
+
+<div class="deep-section">
+<h3>📌 Standard LT Table</h3>
+<div class="formula-block">L{1} = 1/s                              (s>0)
+L{t} = 1/s²
+L{tⁿ} = n!/s^(n+1)                      (n is positive integer)
+L{eᵃᵗ} = 1/(s−a)                        (s>a)
+L{e⁻ᵃᵗ} = 1/(s+a)
+L{sin at} = a/(s²+a²)
+L{cos at} = s/(s²+a²)
+L{sinh at} = a/(s²−a²)
+L{cosh at} = s/(s²−a²)
+L{t sin at} = 2as/(s²+a²)²
+L{t cos at} = (s²−a²)/(s²+a²)²</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Properties of Laplace Transforms</h3>
+<div class="formula-block">Linearity: L{af(t)+bg(t)} = aF(s)+bG(s)
+
+First Shifting (s-shift):
+  L{eᵃᵗ f(t)} = F(s−a)  ← just replace s by (s−a) in F(s)
+
+Change of Scale:
+  L{f(at)} = (1/a)·F(s/a)
+
+Multiplication by t:
+  L{t·f(t)} = −d/ds[F(s)] = −F'(s)
+  L{tⁿf(t)} = (−1)ⁿ·dⁿF(s)/dsⁿ
+
+Division by t:
+  L{f(t)/t} = ∫ₛ^∞ F(u) du  (improper integral)
+
+Derivatives:
+  L{f'(t)} = sF(s) − f(0)
+  L{f''(t)} = s²F(s) − s·f(0) − f'(0)
+  L{f'''(t)} = s³F(s) − s²f(0) − s·f'(0) − f''(0)
+
+Integrals:
+  L{∫₀ᵗ f(u)du} = F(s)/s</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Unit Step Function & Second Shifting</h3>
+<div class="formula-block">Heaviside Unit Step:
+  u(t−a) = 0 for t < a;  u(t−a) = 1 for t ≥ a
+
+LT of unit step: L{u(t−a)} = e^(−as)/s
+
+Second Shifting Theorem:
+  L{f(t−a)·u(t−a)} = e^(−as)·F(s)
+  Inverse: L⁻¹{e^(−as)·F(s)} = f(t−a)·u(t−a)</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Inverse LT & Convolution Theorem</h3>
+<div class="formula-block">To find L⁻¹{F(s)}:
+Step 1: Decompose F(s) using partial fractions into recognizable terms
+Step 2: Apply ILT to each term using standard table
+
+Key ILT results:
+L⁻¹{1/s} = 1,   L⁻¹{1/s²} = t,   L⁻¹{n!/s^(n+1)} = tⁿ
+L⁻¹{1/(s−a)} = eᵃᵗ
+L⁻¹{a/(s²+a²)} = sin at,   L⁻¹{s/(s²+a²)} = cos at
+
+Convolution: (f*g)(t) = ∫₀ᵗ f(τ)·g(t−τ) dτ
+Convolution Theorem: L{f*g} = F(s)·G(s)
+Inverse form: L⁻¹{F(s)·G(s)} = f(t)*g(t)</div>
+<div class="step-box">
+<div class="step-title">Solving Initial Value Problems (IVP) with Laplace</div>
+<ol class="steps-list">
+<li>Take LT of both sides of the DE. Use L{y''} = s²Y−sy(0)−y'(0), L{y'} = sY−y(0), L{y} = Y(s). Substitute given initial conditions.</li>
+<li>Collect all Y(s) terms. Solve algebraically for Y(s).</li>
+<li>Simplify Y(s) using partial fractions.</li>
+<li>Take inverse LT of each term. The result y(t) is the particular solution (already satisfying initial conditions!).</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 8 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U8</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Fourier Series</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-low">✅ Lower Priority</span><span class="expected-marks">~3 marks</span></div>
+  </div>
+  <div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 What is a Fourier Series?</h3>
+<p class="deep-para">Any periodic function f(x) with period 2π can be expressed as an infinite series of sines and cosines: <strong>f(x) = a₀/2 + Σ[aₙcos(nx) + bₙsin(nx)]</strong>. This is like decomposing a complex wave into fundamental frequencies — which is why it's used in signal processing, electronics, and heat transfer. The Euler formulas give you the coefficients.</p>
+</div>
+
+<div class="deep-section">
+<h3>📌 Euler's Coefficient Formulas</h3>
+<div class="formula-block"><div class="label">For period 2π over interval (C, C+2π)</div>
+f(x) = a₀/2 + Σₙ₌₁^∞ [aₙcos(nx) + bₙsin(nx)]
+
+a₀ = (1/π)∫_C^(C+2π) f(x) dx
+
+aₙ = (1/π)∫_C^(C+2π) f(x)·cos(nx) dx    (n = 1,2,3,...)
+
+bₙ = (1/π)∫_C^(C+2π) f(x)·sin(nx) dx    (n = 1,2,3,...)
+
+Most common interval: (−π, π) or (0, 2π)</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Even & Odd Functions — Shortcut</h3>
+<p class="deep-para"><strong>Even function:</strong> f(−x) = f(x) — symmetric about y-axis. The product of two even functions is even; even × odd = odd.<br>
+<strong>Odd function:</strong> f(−x) = −f(x) — antisymmetric about origin.</p>
+<div class="formula-block">For EVEN function on (−π, π):
+All bₙ = 0 (no sine terms). f(x) = a₀/2 + Σaₙcos(nx)
+a₀ = (2/π)∫₀^π f(x) dx
+aₙ = (2/π)∫₀^π f(x)·cos(nx) dx
+
+For ODD function on (−π, π):
+a₀=0, all aₙ=0 (no cosine terms). f(x) = Σbₙsin(nx)
+bₙ = (2/π)∫₀^π f(x)·sin(nx) dx</div>
+</div>
+
+<div class="deep-section">
+<h3>📌 Half-Range Series</h3>
+<p class="deep-para">When f(x) is only defined on (0,π), you can choose to extend it as even or odd, giving two different series:</p>
+<div class="formula-block">Half-range COSINE series (extend as even function):
+f(x) = a₀/2 + Σaₙcos(nx)
+a₀ = (2/π)∫₀^π f(x) dx
+aₙ = (2/π)∫₀^π f(x)·cos(nx) dx
+
+Half-range SINE series (extend as odd function):
+f(x) = Σbₙsin(nx)
+bₙ = (2/π)∫₀^π f(x)·sin(nx) dx</div>
+<div class="tip-box"><span>💡</span><p><strong>Famous result from Fourier series:</strong> Expanding f(x)=x on (−π,π) and evaluating at x=π/2 gives: <strong>π/4 = 1 − 1/3 + 1/5 − 1/7 + ...</strong> (Leibniz formula). Expanding f(x)=x² and using Parseval's identity gives π²/6 = 1 + 1/4 + 1/9 + ... (Basel problem). These are classic ECET exam questions!</p></div>
+</div>
+</div>
+</div>
+
+</div><!-- units-container -->
+</div><!-- page-content -->
+
+<script>
+function toggleUnit(header){
+  const card=header.closest('.unit-card');
+  card.classList.toggle('open');
+  updateProg();
+}
+function updateProg(){
+  const total=document.querySelectorAll('.unit-card').length;
+  const open=document.querySelectorAll('.unit-card.open').length;
+  const pct=Math.round((open/total)*100);
+  document.getElementById('prog').style.width=pct+'%';
+  document.getElementById('progLbl').textContent=open+' / '+total+' units studied';
+}
+document.querySelector('.unit-card').classList.add('open');
+updateProg();
+</script>
+</body>
+</html>

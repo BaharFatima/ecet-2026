@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemistry — TG ECET 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.deep-section{margin:22px 0}
+.deep-section h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px;color:#fff;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.deep-para{font-size:13.5px;color:var(--text-muted);line-height:1.85;margin-bottom:10px}
+.deep-para strong{color:var(--text)}
+.formula-block{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px 18px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#c9d1d9;line-height:2;white-space:pre-wrap}
+.formula-block .label{font-family:'Space Grotesk',sans-serif;font-size:10px;color:var(--chem-dark);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;font-weight:700}
+.step-box{background:var(--bg3);border-radius:10px;padding:14px 18px;margin:10px 0}
+.step-box .step-title{font-size:12px;font-weight:700;color:var(--chem-dark);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px}
+.steps-list{list-style:none;counter-reset:steps;padding:0}
+.steps-list li{counter-increment:steps;display:flex;gap:12px;padding:7px 0;font-size:13px;color:var(--text-muted);line-height:1.65;border-bottom:1px solid rgba(255,255,255,0.04)}
+.steps-list li:last-child{border-bottom:none}
+.steps-list li::before{content:counter(steps);width:22px;height:22px;min-width:22px;background:rgba(82,183,136,0.2);color:var(--chem-dark);font-size:11px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0}
+.ex-box{background:linear-gradient(135deg,rgba(82,183,136,0.07),rgba(82,183,136,0.01));border:1px solid rgba(82,183,136,0.18);border-radius:10px;padding:14px 18px;margin:10px 0}
+.ex-box .ex-lbl{font-size:10px;font-weight:700;color:var(--chem-dark);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.ex-box p{font-size:13px;color:var(--text-muted);line-height:1.75}
+.tip-box{background:rgba(255,209,102,0.05);border:1px solid rgba(255,209,102,0.2);border-radius:10px;padding:12px 16px;margin:10px 0;display:flex;gap:10px;align-items:flex-start}
+.tip-box span{font-size:16px;flex-shrink:0}
+.tip-box p{font-size:13px;color:var(--text-muted);line-height:1.65;margin:0}
+.tip-box strong{color:var(--medium)}
+.table-wrap{overflow-x:auto;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:rgba(255,255,255,0.06);padding:9px 14px;text-align:left;font-weight:600;color:var(--text);border-bottom:1px solid var(--border)}
+td{padding:8px 14px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-muted)}
+tr:last-child td{border-bottom:none}
+</style>
+</head>
+<body class="page-wrap chem">
+<div class="fixed-bg chem-hero-bg"></div>
+<div class="page-content">
+<nav class="top-bar">
+  <a href="index.html" class="back-btn">← Home</a>
+  <div class="top-bar-title">Chemistry — Complete Deep Guide</div>
+  <span class="marks-badge mb-chem">25 Marks</span>
+</nav>
+<div class="subject-hero">
+  <h1>Chem<span style="color:var(--chem-dark)">istry</span></h1>
+  <p>12 units — atomic structure to polymers to fuels. Full conceptual depth, reaction mechanisms, numerical methods, and exam-focused examples throughout.</p>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%" id="prog"></div></div>
+  <div id="progLbl" style="font-size:12px;color:var(--text-muted);margin-top:6px">0 / 12 units studied</div>
+</div>
+<div class="units-container">
+<div class="weightage-summary">
+  <span class="ws-label">Weightage:</span>
+  <div class="ws-legend">
+    <div class="ws-item"><div class="ws-dot high"></div>High (~3 marks)</div>
+    <div class="ws-item"><div class="ws-dot medium"></div>Medium (~2 marks)</div>
+    <div class="ws-item"><div class="ws-dot low"></div>Low (~1 mark)</div>
+  </div>
+</div>
+
+<!-- UNIT 1 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U1</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Fundamentals — Atomic Structure & Chemical Bonding</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High</span><span class="expected-marks">~3 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Atomic Structure</h3>
+<p class="deep-para"><strong>Atomic Number (Z):</strong> Number of protons in the nucleus. Determines the element. <strong>Mass Number (A):</strong> Protons + Neutrons. Electrons = Protons (in neutral atom).<br>
+<strong>Isotopes:</strong> Same Z, different A (same element, different neutrons). e.g., ¹H, ²H(deuterium), ³H(tritium).<br>
+<strong>Isobars:</strong> Same A, different Z. e.g., ⁴⁰Ca and ⁴⁰Ar (same mass number, different elements).</p>
+<div class="formula-block"><div class="label">Bohr's Atomic Model (for H-like atoms)</div>
+Key postulates:
+1. Electrons move in fixed circular orbits (stationary states) without radiating energy.
+2. Only certain orbits are allowed — those where angular momentum = nh/(2π), n=1,2,3...
+3. Energy is emitted or absorbed only when electron jumps between orbits.
+
+Energy of nth orbit: Eₙ = −13.6/n² eV  (for Hydrogen)
+Radius of nth orbit: rₙ = 0.529n² Å  (Bohr radius for n=1 is 0.529 Å)
+Velocity in nth orbit: vₙ = 2.18×10⁶/n m/s
+
+Limitation: Cannot explain multi-electron atoms, fine structure, or Zeeman effect.</div>
+<div class="formula-block"><div class="label">Orbitals and Quantum Numbers</div>
+Principal quantum number (n): shell number, n=1,2,3,4... (K,L,M,N)
+Azimuthal (l): subshell; l=0(s), 1(p), 2(d), 3(f)
+Magnetic (mₗ): orientation; −l to +l
+Spin (mₛ): +½ or −½
+
+s-orbital: spherical, 1 orbital, holds 2 electrons
+p-orbital: dumbbell shape, 3 orbitals (pₓ,pᵧ,p_z), holds 6 electrons
+d-orbital: complex shapes, 5 orbitals, holds 10 electrons
+f-orbital: 7 orbitals, holds 14 electrons</div>
+<div class="formula-block"><div class="label">Electronic Configuration Rules</div>
+Aufbau Principle: Fill orbitals from lowest to highest energy.
+  Energy order: 1s < 2s < 2p < 3s < 3p < 4s < 3d < 4p < 5s < 4d < 5p...
+  Memory: use (n+l) rule — lower (n+l) fills first; equal (n+l) → lower n first.
+
+Pauli's Exclusion Principle: No two electrons in an atom can have the same
+  set of all four quantum numbers. Max 2 electrons per orbital (opposite spins).
+
+Hund's Rule: In degenerate orbitals (same energy, e.g., 2p), electrons fill
+  one-by-one with parallel spins before pairing.
+  Example: C (Z=6): 1s²2s²2p² → the 2 electrons in 2p go into 2 different p orbitals
+
+Examples:
+  Na (Z=11): 1s²2s²2p⁶3s¹  [or  [Ne]3s¹]
+  Fe (Z=26): [Ar]3d⁶4s²
+  Cu (Z=29): [Ar]3d¹⁰4s¹  ← exception! (full d is more stable)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Chemical Bonding</h3>
+<div class="formula-block"><div class="label">Types of Chemical Bonds</div>
+Ionic Bond:
+  Transfer of electrons from metal to non-metal.
+  Metal gives electrons (oxidized) → cation; Non-metal takes (reduced) → anion.
+  Electrostatic attraction between oppositely charged ions.
+  Properties: high MP/BP, crystalline solid, conducts electricity when dissolved/molten.
+  Example: NaCl (Na→Na⁺ + e⁻; Cl + e⁻→Cl⁻)
+
+Covalent Bond:
+  Sharing of electron pairs between non-metals.
+  Single bond: 1 shared pair (e.g., H₂, CH₄)
+  Double bond: 2 shared pairs (e.g., O₂, CO₂)
+  Triple bond: 3 shared pairs (e.g., N₂, C₂H₂)
+  Properties: low BP, can be gas/liquid/solid, poor electrical conductor.
+
+Co-ordinate (Dative) Covalent Bond:
+  Both electrons of the shared pair come from ONE atom (donor/Lewis base).
+  Example: NH₄⁺ (NH₃ donates lone pair to H⁺), H₃O⁺, BF₃·NH₃ complex.
+
+Metallic Bond:
+  Positive metal ions in a "sea" of delocalized electrons.
+  Explains conductivity, malleability, ductility, metallic lustre.
+
+Hydrogen Bond:
+  Electrostatic attraction between δ+ H (bonded to F,O,N) and lone pair on F,O,N
+  Intermolecular H-bond: between different molecules (e.g., water-water: causes high BP)
+  Intramolecular H-bond: within same molecule (e.g., o-nitrophenol: lowers BP)
+  H-bond is MUCH weaker than covalent but critically important in biology (DNA, proteins)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Oxidation-Reduction (Redox)</h3>
+<div class="formula-block">Oxidation: loss of electrons / increase in oxidation number
+Reduction: gain of electrons / decrease in oxidation number
+(OIL RIG — Oxidation Is Loss, Reduction Is Gain)
+
+Oxidation Number Rules:
+1. Free element = 0 (e.g., O₂=0, Fe=0)
+2. Monoatomic ion = charge (e.g., Fe³⁺ = +3)
+3. H = +1 (except in metal hydrides where H = −1, e.g., NaH)
+4. O = −2 (except in peroxides O₂²⁻: O=−1; OF₂: O=+2)
+5. F always = −1 (most electronegative)
+6. Sum of oxidation numbers = overall charge
+
+Examples:
+  Cr in K₂Cr₂O₇: 2(+1)+2(Cr)+7(−2)=0 → 2Cr=12 → Cr=+6
+  Mn in KMnO₄: (+1)+Mn+4(−2)=0 → Mn=+7
+  S in H₂SO₄: 2(+1)+S+4(−2)=0 → S=+6</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 2 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U2</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Solutions & Colloids</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~2 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Concentration Units — Molarity & Normality</h3>
+<p class="deep-para"><strong>Atomic Weight:</strong> average mass of atoms of an element relative to 1/12 mass of ¹²C. <strong>Molecular Weight:</strong> sum of atomic weights of all atoms in a molecule. <strong>Equivalent Weight:</strong> molecular weight divided by valency (n-factor).</p>
+<div class="formula-block">Mole: 1 mole = 6.022×10²³ particles (Avogadro's number)
+  Number of moles = mass(g) / molar mass(g/mol)
+                  = volume(L) / 22.4 L (for gas at STP)
+
+Molarity (M): moles of solute per litre of solution
+  M = n(solute) / V(solution in L)
+  M = mass(g) / [MW × V(L)]
+
+Normality (N): gram equivalents of solute per litre of solution
+  N = gram equivalents / V(L)
+  N = mass(g) / [EW × V(L)]
+  where EW = equivalent weight = MW / n-factor
+  
+Relation: N = M × n-factor
+  Acid: n-factor = number of H⁺ ions it can donate
+  Base: n-factor = number of OH⁻ ions it can provide
+  
+For dilution: M₁V₁ = M₂V₂  (moles conserved)</div>
+<div class="ex-box">
+<div class="ex-lbl">Numerical Example</div>
+<p>Find molarity of H₂SO₄ solution: 49g dissolved in 500 mL.
+MW of H₂SO₄ = 2+32+64 = 98 g/mol
+Moles = 49/98 = 0.5 mol
+Volume = 500 mL = 0.5 L
+Molarity = 0.5/0.5 = 1 M
+
+Normality: n-factor of H₂SO₄ = 2 (dibasic acid)
+N = M × 2 = 2 N</p>
+</div>
+</div>
+<div class="deep-section">
+<h3>📌 Colloids — Types and Properties</h3>
+<p class="deep-para">A <strong>colloid</strong> is a mixture where particles (1–100 nm) are dispersed in a medium without settling. It's intermediate between a true solution (particles &lt;1 nm) and a suspension (particles &gt;100 nm, settle).</p>
+<div class="formula-block">Classification by dispersed phase and medium:
+  Aerosol: solid/liquid in gas (smoke, fog, clouds)
+  Foam: gas in liquid/solid (shaving cream, sponge)
+  Emulsion: liquid in liquid (milk, cream, mayonnaise)
+  Sol: solid in liquid (gold sol, starch in water)
+  Gel: liquid in solid (gelatin, cheese, butter)
+
+Lyophilic: solvent-loving colloids (stable, e.g., starch, gelatin)
+Lyophobic: solvent-hating colloids (unstable, need stabilizer, e.g., gold sol)
+
+Protective Colloids: Lyophilic colloids added to stabilize lyophobic ones.
+  Gold Number: minimum mg of protective colloid needed to prevent coagulation
+  of 10 mL gold sol when 1 mL 10% NaCl is added.
+  SMALLER gold number = MORE protective power.
+
+Properties of Colloids:
+  Tyndall Effect: scattering of light beam (beam visible from the side)
+  Brownian Motion: random zigzag motion of colloidal particles
+  Coagulation: destabilization by adding electrolyte (Hardy-Schulze rule:
+    higher valence ion = greater coagulating power)
+  Electrophoresis: movement of colloidal particles under electric field</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 3 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U3</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Acids, Bases & pH</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High</span><span class="expected-marks">~3 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Theories of Acids and Bases</h3>
+<div class="table-wrap"><table>
+<tr><th>Theory</th><th>Acid</th><th>Base</th><th>Limitation</th></tr>
+<tr><td>Arrhenius</td><td>Gives H⁺ in water</td><td>Gives OH⁻ in water</td><td>Only for aqueous solutions</td></tr>
+<tr><td>Bronsted-Lowry</td><td>Proton (H⁺) donor</td><td>Proton acceptor</td><td>Only proton transfer; excludes non-proton acids</td></tr>
+<tr><td>Lewis</td><td>Electron pair acceptor</td><td>Electron pair donor</td><td>Most general; applicable everywhere</td></tr>
+</table></div>
+<p class="deep-para"><strong>Conjugate acid-base pairs:</strong> When an acid donates H⁺, the species formed is its conjugate base. e.g., HCl (acid) → Cl⁻ (conjugate base); NH₃ (base) → NH₄⁺ (conjugate acid).</p>
+</div>
+<div class="deep-section">
+<h3>📌 pH Scale & Ionic Product of Water</h3>
+<div class="formula-block">Ionic product of water: Kw = [H⁺][OH⁻] = 10⁻¹⁴ at 25°C
+  In pure water: [H⁺] = [OH⁻] = 10⁻⁷ mol/L
+
+pH = −log[H⁺]  (power of Hydrogen)
+pOH = −log[OH⁻]
+pH + pOH = 14  (at 25°C)
+
+pH < 7: acidic solution ([H⁺] > 10⁻⁷)
+pH = 7: neutral
+pH > 7: basic/alkaline
+
+Strong acid (fully dissociates): [H⁺] = concentration of acid
+  e.g., 0.01 M HCl → [H⁺] = 0.01 = 10⁻² → pH = 2
+
+Strong base: [OH⁻] = concentration of base → pOH = −log[OH⁻] → pH = 14−pOH
+  e.g., 0.001 M NaOH → [OH⁻] = 10⁻³ → pOH=3 → pH=11</div>
+<div class="ex-box">
+<div class="ex-lbl">pH Numerical Examples</div>
+<p>① Find pH of 0.001 M H₂SO₄ (strong, diprotic):
+[H⁺] = 2×0.001 = 0.002 = 2×10⁻³ mol/L
+pH = −log(2×10⁻³) = −log2 − log10⁻³ = −0.301+3 = 2.699 ≈ 2.7
+
+② Find pH of 0.1 M NaOH:
+[OH⁻] = 0.1 = 10⁻¹; pOH = 1; pH = 14−1 = 13</p>
+</div>
+</div>
+<div class="deep-section">
+<h3>📌 Buffer Solutions</h3>
+<p class="deep-para">A <strong>buffer solution</strong> resists changes in pH when small amounts of acid or base are added. Composed of a weak acid + its salt with a strong base (acidic buffer) OR weak base + its salt with a strong acid (basic buffer).</p>
+<div class="formula-block">Henderson-Hasselbalch Equation:
+  pH = pKa + log([Salt]/[Acid])   for acidic buffer
+  pOH = pKb + log([Salt]/[Base])  for basic buffer
+
+Example: CH₃COOH/CH₃COONa buffer (acetic acid + sodium acetate)
+  pKa of CH₃COOH = 4.74
+  pH = 4.74 + log([CH₃COONa]/[CH₃COOH])
+  Equal concentrations → pH = pKa = 4.74
+
+Buffer Capacity: maximum amount of acid or base that can be added without
+  significant pH change. Maximum capacity when [Salt]=[Acid] (pH=pKa).
+
+Applications: Blood (pH maintained at 7.4 by H₂CO₃/HCO₃⁻ buffer),
+  enzyme reactions, pharmaceutical formulations, food preservation.</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 4 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U4</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Environmental Science</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-low">✅ Low</span><span class="expected-marks">~1 mark</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Ecosystem & Biogeochemical Cycles</h3>
+<p class="deep-para"><strong>Ecosystem</strong> = biotic (living) + abiotic (non-living) components interacting as a system. <strong>Producers</strong> (plants) → <strong>Consumers</strong> (herbivores→carnivores) → <strong>Decomposers</strong> (bacteria, fungi).</p>
+<div class="formula-block">Food Chain: Grass → Grasshopper → Frog → Snake → Eagle
+  Energy flows one way; only ~10% transfers to next level (10% rule)
+  
+Food Web: Multiple interconnected food chains (more realistic)
+
+Carbon Cycle: CO₂ → photosynthesis → glucose → respiration → CO₂
+  Also: decomposition, combustion, ocean absorption
+  
+Nitrogen Cycle: N₂ → nitrogen fixation (Rhizobium bacteria) → NH₃ → NO₃⁻
+  → plant uptake → proteins → decomposition → N₂ (denitrification)
+
+Biodiversity: variety of species in an ecosystem. 
+Threats: habitat loss, climate change, pollution, invasive species, overexploitation.
+Deforestation: loss of trees → soil erosion, climate change, biodiversity loss.
+
+Green Chemistry: design chemical processes that reduce/eliminate use or
+  generation of hazardous substances. 12 principles (atom economy, catalysis etc.)
+  
+E-Waste Management: segregation, collection, formal recycling (not burning/dumping).
+  Contains valuable metals (Au, Ag, Cu) but also toxic (Pb, Hg, Cd).</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 5 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U5</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Water Technology</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~2 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Hardness of Water</h3>
+<p class="deep-para">Water is <strong>hard</strong> when it does not readily form lather with soap. Caused by dissolved calcium (Ca²⁺) and magnesium (Mg²⁺) salts. These ions react with soap (sodium stearate) to form insoluble scum instead of lather.</p>
+<div class="formula-block">Temporary Hardness: caused by Ca(HCO₃)₂ and Mg(HCO₃)₂
+  Removed by: Boiling → Ca(HCO₃)₂ → CaCO₃↓ + H₂O + CO₂
+              Clarke's method (add lime Ca(OH)₂)
+
+Permanent Hardness: caused by CaSO₄, CaCl₂, MgSO₄, MgCl₂
+  Cannot be removed by boiling. Needs chemical/exchange treatment.
+  Removed by: Washing soda (Na₂CO₃) treatment
+              Ion exchange (zeolite/permutit) process
+              Synthetic resin ion exchange
+
+Degree of Hardness: expressed as ppm of CaCO₃ equivalent
+  ppm = mg of CaCO₃ equivalent per litre of water
+  Soft water: 0–75 ppm;  Hard: >150 ppm</div>
+</div>
+<div class="deep-section">
+<h3>📌 Softening Methods</h3>
+<div class="formula-block">Permutit (Zeolite) Process:
+  Zeolite (Na₂Al₂Si₂O₈·nH₂O = Na₂Ze) exchanges Na⁺ for Ca²⁺,Mg²⁺
+  Ca²⁺ + Na₂Ze → CaZe + 2Na⁺  (water softened)
+  Regeneration: CaZe + 2NaCl → Na₂Ze + CaCl₂ (using brine)
+  Limitation: Cannot remove acidic/alkaline impurities.
+
+Ion Exchange (Deionization):
+  Two resin columns: cation exchanger (R-H) and anion exchanger (R-OH)
+  Cation: Ca²⁺ + 2R-H → R₂Ca + 2H⁺
+  Anion:  SO₄²⁻ + 2R-OH → R₂SO₄ + 2OH⁻
+  H⁺ + OH⁻ → H₂O  (nearly pure water obtained)
+
+Reverse Osmosis (RO):
+  Applied pressure > osmotic pressure forces water through semi-permeable membrane.
+  Membrane blocks dissolved salts, ions, bacteria.
+  Produces very pure water. Used in drinking water purification.
+  Osmosis: water moves naturally from dilute to concentrated side.
+  Reverse osmosis: PRESSURE forces water from concentrated to dilute.
+
+Desalination by Electrodialysis:
+  Salt water placed between ion-selective membranes.
+  Under electric field, cations move toward cathode, anions toward anode.
+  Fresh water region in the middle. Used for seawater desalination.
+
+Defluoridation (Nalgonda Technique):
+  Removes excess fluoride (>1.5 ppm) from drinking water.
+  Add alum (Al₂(SO₄)₃) + lime (Ca(OH)₂) → flocculation → settle/filter.
+  Used in rural Telangana and Andhra Pradesh.</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 6 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U6</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Electrochemistry</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~2 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Electrolysis & Faraday's Laws</h3>
+<p class="deep-para"><strong>Electrolysis</strong> is the decomposition of a compound (electrolyte) by passing direct electric current through its solution or melt. The <strong>cathode</strong> (−) attracts cations (reduced); the <strong>anode</strong> (+) attracts anions (oxidized).</p>
+<div class="formula-block">Electrolysis of Fused NaCl:
+  At cathode: Na⁺ + e⁻ → Na  (sodium metal deposited)
+  At anode:   Cl⁻ → (1/2)Cl₂ + e⁻  (chlorine gas evolved)
+  Used in Downs process to manufacture sodium metal.
+
+Electrolysis of Aqueous NaCl (brine):
+  At cathode: 2H₂O + 2e⁻ → H₂↑ + 2OH⁻  (H₂ gas)
+  At anode:   2Cl⁻ → Cl₂↑ + 2e⁻  (Cl₂ gas)
+  Solution becomes NaOH (Chlor-alkali process)
+
+Arrhenius Theory of Electrolytic Dissociation:
+  Electrolytes dissociate into ions when dissolved in water.
+  Strong electrolytes: complete dissociation (HCl, NaOH, NaCl)
+  Weak electrolytes: partial dissociation (CH₃COOH, NH₃)</div>
+<div class="formula-block"><div class="label">Faraday's Laws of Electrolysis</div>
+First Law: Mass deposited (m) ∝ quantity of electricity (Q)
+  m = ZQ = ZIt
+  Z = electrochemical equivalent (g/C)
+
+Second Law: When same charge passed through different electrolytes,
+  masses deposited are proportional to their equivalent weights.
+  m₁/m₂ = E₁/E₂
+
+Useful Formula: m = (E/96500) × I × t
+  where E = equivalent weight, I = current (A), t = time (s)
+  96500 C/mol = 1 Faraday = charge of 1 mole of electrons</div>
+<div class="ex-box">
+<div class="ex-lbl">Faraday's Law Example</div>
+<p>How much silver (E=108) is deposited by 2A in 1 hour?
+m = (E/96500) × I × t
+m = (108/96500) × 2 × 3600
+m = 108 × 7200/96500 = 777600/96500 ≈ 8.06 g</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 7 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U7</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Metallurgy</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~2 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Key Definitions</h3>
+<div class="formula-block">Mineral: naturally occurring compound of a metal in the earth's crust
+Ore: mineral from which metal can be extracted economically
+Gangue (Matrix): impurities mixed with ore (sand, clay, etc.)
+Flux: substance added to react with gangue to form easily removable slag
+Slag: fusible product of flux + gangue
+  acidic flux (SiO₂) + basic gangue (CaO) → CaSiO₃ (slag)
+  basic flux (CaO) + acidic gangue (SiO₂) → CaSiO₃ (slag)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Concentration of Ore & Extraction</h3>
+<div class="formula-block">Concentration Methods:
+  Gravity Separation: dense ore particles separated from lighter gangue by water flow
+  Froth Flotation: sulfide ores; ore particles cling to froth (with pine oil), gangue sinks
+  Magnetic Separation: magnetic ores (magnetite, Fe₃O₄) separated by magnetic field
+
+Extraction Methods:
+  Calcination: heating carbonate/hydroxide ores WITHOUT air → oxide + CO₂
+    e.g., CaCO₃ → CaO + CO₂ (limestone → lime)
+  Roasting: heating sulfide ores IN air → oxide + SO₂
+    e.g., 2ZnS + 3O₂ → 2ZnO + 2SO₂
+  Smelting: reduction of oxide ore with coke (carbon) at high temperature
+    e.g., ZnO + C → Zn + CO
+
+Blast Furnace (Iron extraction):
+  Zone 1 (bottom, 1800°C): C+O₂→CO₂; CO₂+C→2CO (reducing agent)
+  Zone 2 (middle, 700°C): Fe₂O₃+3CO→2Fe+3CO₂ (iron reduced)
+  Zone 3 (top): CaCO₃→CaO+CO₂; CaO+SiO₂→CaSiO₃ (slag removal)
+  Pig iron (molten Fe) collected at bottom; slag floats.</div>
+</div>
+<div class="deep-section">
+<h3>📌 Important Alloys</h3>
+<div class="table-wrap"><table>
+<tr><th>Alloy</th><th>Composition</th><th>Properties/Uses</th></tr>
+<tr><td>Brass</td><td>Cu (70%) + Zn (30%)</td><td>Corrosion resistant, decorative, fittings, musical instruments</td></tr>
+<tr><td>German Silver</td><td>Cu+Zn+Ni (60:20:20)</td><td>Silvery appearance, cutlery, electrical contacts</td></tr>
+<tr><td>Nichrome</td><td>Ni(60%)+Cr(40%)</td><td>High resistance + heat resistant; heating elements, furnaces</td></tr>
+<tr><td>Stainless Steel</td><td>Fe+Cr(12-18%)+Ni</td><td>Corrosion-free; kitchen utensils, surgical tools, cutlery</td></tr>
+<tr><td>Duralumin</td><td>Al+Cu(4%)+Mg+Mn</td><td>Light + strong; aircraft bodies, spacecraft</td></tr>
+</table></div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 8 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U8</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Corrosion</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-low">✅ Low</span><span class="expected-marks">~1 mark</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Corrosion Theory & Prevention</h3>
+<p class="deep-para"><strong>Corrosion</strong> is the gradual deterioration of a metal due to chemical or electrochemical reactions with the environment. Rusting of iron is the most common example.</p>
+<div class="formula-block">Rusting of Iron (Electrochemical/Wet Corrosion):
+  Anodic areas: Fe → Fe²⁺ + 2e⁻  (oxidation, iron dissolves)
+  Cathodic areas: O₂ + 2H₂O + 4e⁻ → 4OH⁻  (reduction, oxygen consumed)
+  Fe²⁺ + 2OH⁻ → Fe(OH)₂ → further oxidizes → Fe₂O₃·nH₂O (rust)
+
+Factors affecting rate of corrosion:
+  1. Nature of metal (reactive metals corrode faster)
+  2. Position in electrochemical series (greater potential diff = faster corrosion)
+  3. Presence of electrolyte (salt water corrodes faster than pure)
+  4. Temperature (higher = faster)
+  5. pH (acidic conditions accelerate)
+  6. Stress in metal
+  
+Types of Corrosion Cells:
+  Composition cell: two different metals in contact + electrolyte
+  Stress cell: stressed vs unstressed parts of same metal
+  Concentration cell: same metal, different O₂ concentrations
+
+Prevention Methods:
+  Cathodic protection: connect iron to more active metal (Mg, Zn) as sacrificial anode
+  Galvanizing: coating with zinc (zinc corrodes preferentially)
+  Tinning: coating with tin (only mechanical barrier)
+  Painting: physical barrier (oxide primer, zinc chromate)
+  Alloying: making stainless steel, etc.
+  
+Paint Constituents: Pigment (color/opacity), Vehicle/Binder (film-forming oil),
+  Drier (accelerates drying), Thinner (adjusts viscosity), Extender (CaCO₃, BaSO₄)</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 9 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U9</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Polymers</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High</span><span class="expected-marks">~3 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Polymerization Types</h3>
+<div class="formula-block">Addition Polymerization:
+  Monomers with C=C double bond add to each other without losing any atoms.
+  No by-product formed. Monomer = repeat unit.
+  e.g., nCH₂=CH₂ → (-CH₂-CH₂-)ₙ  (Polyethylene/Polythene)
+
+Condensation Polymerization:
+  Monomers with two functional groups react with elimination of small molecules
+  (H₂O, HCl, etc.) from each step.
+  e.g., Nylon 6,6: hexamethylenediamine + adipic acid → Nylon + nH₂O</div>
+</div>
+<div class="deep-section">
+<h3>📌 Plastics — Types and Examples</h3>
+<div class="formula-block">Thermoplastics: soften on heating, harden on cooling (reversible)
+  Can be recycled. Long linear chains.
+  Examples: Polythene, PVC, Polystyrene, Teflon, Nylon, Polyester
+
+Thermosetting: permanently harden on heating (irreversible, cross-linked 3D network)
+  Cannot be remoulded once set. Examples: Bakelite, Urea-formaldehyde, Melamine
+
+Important Plastics:
+Polythene (polyethylene): CH₂=CH₂ → LDPE (low density, flexible, bags)
+                            HDPE (high density, rigid, pipes, bottles)
+PVC (polyvinyl chloride): CH₂=CHCl → pipes, flooring, insulation, records
+Teflon (PTFE): CF₂=CF₂ → non-stick, chemically inert, low friction; cooking utensils
+Polystyrene: CH₂=CH-C₆H₅ → transparent, rigid; disposable cups, insulation foam
+Urea-formaldehyde: urea + formaldehyde → electrical fittings, adhesives, laminates
+Bakelite: phenol + formaldehyde → first synthetic plastic; electrical insulator, handles</div>
+</div>
+<div class="deep-section">
+<h3>📌 Rubber & Synthetic Elastomers</h3>
+<div class="formula-block">Natural Rubber: polymer of isoprene (2-methylbutadiene); C₅H₈ units
+  Soft, sticky, not durable; poor in heat/cold/chemicals.
+
+Vulcanization: heating natural rubber with sulfur (2-8%)
+  Sulfur cross-links polymer chains → stronger, elastic, non-sticky, durable.
+  Hard rubber (ebonite): 30-50% sulfur.
+
+Synthetic Rubbers:
+  Buna-S (SBR): butadiene + styrene; general-purpose tyres
+  Buna-N (Nitrile rubber): butadiene + acrylonitrile; oil-resistant gaskets, gloves
+  Neoprene (Polychloroprene): chloroprene polymerization; weather/oil resistant; wetsuits
+  Butyl rubber: isobutylene + isoprene; low gas permeability; inner tubes</div>
+</div>
+<div class="deep-section">
+<h3>📌 Fibres & Biodegradable Polymers</h3>
+<div class="formula-block">Nylon 6,6 (Polyamide):
+  Monomers: Hexamethylenediamine (H₂N-(CH₂)₆-NH₂) + Adipic acid (HOOC-(CH₂)₄-COOH)
+  Condensation: amide bond (CO-NH) formed with loss of H₂O
+  Properties: strong, elastic, abrasion resistant, silk-like
+  Uses: hosiery, ropes, parachutes, toothbrush bristles
+
+Polyester (PET — Polyethylene Terephthalate):
+  Monomers: Ethylene glycol + Terephthalic acid → ester bond with loss of H₂O
+  Uses: Dacron (fiber for clothes), Terylene, plastic bottles (PET bottles)
+
+Biodegradable Polymers: broken down by microorganisms
+  PHBV (polyhydroxy butyrate-co-valerate): medical implants, packaging
+  Nylon 2-nylon 6: alternating glycine and aminocaproic acid units</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 10 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U10</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Fuels & Lubricants</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~2 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Fuels — Classification & Calorific Values</h3>
+<div class="formula-block">Classification:
+  Solid: coal, wood, coke, charcoal
+  Liquid: petrol, diesel, kerosene, alcohol
+  Gaseous: LPG, CNG, biogas, hydrogen, coal gas, water gas, producer gas
+
+Calorific Value: heat energy released per unit mass/volume of fuel
+  HCV (Higher Calorific Value): includes latent heat of water vapor formed
+  LCV (Lower Calorific Value): excludes latent heat (water remains as vapor)
+  LCV = HCV − 9H × 2445  (H = mass fraction of hydrogen, 2445 kJ/kg = latent heat)
+
+Characteristics of Good Fuel:
+  High calorific value, low ignition temperature, low cost, easy to store/transport,
+  no harmful combustion products, burns steadily.</div>
+<div class="table-wrap"><table>
+<tr><th>Gaseous Fuel</th><th>Composition</th><th>Calorific Value</th><th>Uses</th></tr>
+<tr><td>LPG</td><td>Propane+Butane (C₃H₈+C₄H₁₀)</td><td>~50 MJ/kg</td><td>Domestic cooking, vehicles</td></tr>
+<tr><td>CNG</td><td>Mainly methane (CH₄, ~90%)</td><td>~55 MJ/kg</td><td>Vehicles, industrial</td></tr>
+<tr><td>Water Gas</td><td>CO + H₂ (50:50)</td><td>~11 MJ/m³</td><td>Industrial fuel and synthesis</td></tr>
+<tr><td>Producer Gas</td><td>CO + N₂ (30:70)</td><td>~5.5 MJ/m³</td><td>Industrial heating (low CV)</td></tr>
+<tr><td>Coal Gas</td><td>H₂+CH₄+CO+N₂</td><td>~21 MJ/m³</td><td>Street lighting (historically), industrial</td></tr>
+<tr><td>Biogas</td><td>CH₄(65%)+CO₂+H₂S</td><td>~25 MJ/m³</td><td>Rural cooking, electricity</td></tr>
+</table></div>
+</div>
+<div class="deep-section">
+<h3>📌 Lubricants</h3>
+<div class="formula-block">Function: Reduce friction, wear, heat between moving surfaces.
+  Also: carry away heat, prevent corrosion, seal gaps.
+
+Classification:
+  Solid: graphite, MoS₂ (used in high temp, extreme pressure situations)
+  Liquid/Oil: mineral oils (petroleum-derived), vegetable oils, synthetic oils
+  Semi-solid/Grease: mineral oil + soap (sodium/lithium stearate thickener)
+  
+Viscosity: most important property of liquid lubricant.
+  Too thin (low viscosity) → oil squeezes out → metal-to-metal contact
+  Too thick (high viscosity) → energy wasted churning oil → overheating
+  
+Flash Point: lowest temperature at which oil gives ignitable vapor.
+  High flash point = safer (less fire risk).
+  
+Pour Point: lowest temperature at which oil flows freely.
+  Important for cold-climate applications.</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 11 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U11</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Electrochemical Cells & Batteries</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~2 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Galvanic Cell & EMF</h3>
+<div class="formula-block">Galvanic (Voltaic) Cell: spontaneous redox reaction → electrical energy
+  Anode (−): oxidation occurs (loses electrons) [AN OX]
+  Cathode (+): reduction occurs (gains electrons) [RED CAT]
+  Salt bridge: maintains electrical neutrality by ion flow between half-cells
+  
+Standard Electrode Potential (E°): measured vs Standard Hydrogen Electrode (SHE, E°=0V)
+  Positive E°: species is reduced relative to H₂ (good oxidizing agent)
+  Negative E°: species oxidized relative to H₂ (good reducing agent)
+  
+EMF of cell: E°cell = E°cathode − E°anode = E°reduction − E°oxidation
+  
+Daniel Cell: Zn|ZnSO₄||CuSO₄|Cu
+  Anode: Zn → Zn²⁺ + 2e⁻  (E°= −0.76V)
+  Cathode: Cu²⁺ + 2e⁻ → Cu (E°= +0.34V)
+  E°cell = 0.34 − (−0.76) = 1.10V</div>
+</div>
+<div class="deep-section">
+<h3>📌 Batteries & Fuel Cells</h3>
+<div class="table-wrap"><table>
+<tr><th>Battery</th><th>Type</th><th>EMF</th><th>Anode/Cathode</th><th>Uses</th></tr>
+<tr><td>Dry cell (Leclanché)</td><td>Primary</td><td>1.5V</td><td>Zn/MnO₂</td><td>Torches, clocks</td></tr>
+<tr><td>Lead-acid</td><td>Secondary</td><td>2V/cell</td><td>Pb/PbO₂</td><td>Car battery (6 cells=12V)</td></tr>
+<tr><td>Ni-Cd</td><td>Secondary</td><td>1.25V</td><td>Cd/NiOOH</td><td>Rechargeable tools</td></tr>
+<tr><td>Li-ion</td><td>Secondary</td><td>3.7V</td><td>C(graphite)/LiCoO₂</td><td>Phones, laptops, EVs</td></tr>
+</table></div>
+<div class="formula-block">Fuel Cell: electrochemical cell that converts chemical energy of fuel directly to electricity
+  No combustion; very efficient (up to 70%)
+  H₂-O₂ Fuel Cell:
+    Anode: H₂ → 2H⁺ + 2e⁻  (hydrogen fuel oxidized)
+    Cathode: O₂ + 4H⁺ + 4e⁻ → 2H₂O  (oxygen reduced)
+    EMF ≈ 1.23V; product = only water (zero emission!)
+  Applications: space vehicles, submarines, backup power, future EVs</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 12 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U12</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Environmental Pollution</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-low">✅ Low</span><span class="expected-marks">~1 mark</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Air, Water & Soil Pollution</h3>
+<div class="formula-block">Air Pollution Sources & Effects:
+  CO (carbon monoxide): incomplete combustion; binds to haemoglobin (carboxyhemoglobin)
+  SO₂: burning coal; causes acid rain (SO₂+H₂O→H₂SO₃), respiratory problems
+  NOₓ: vehicle exhaust; photochemical smog, acid rain
+  Particulates (PM2.5, PM10): respiratory diseases, visibility reduction
+  CFC: ozone layer depletion → increased UV → skin cancer
+  CO₂: greenhouse gas → global warming
+  
+Control: Catalytic converters, scrubbers, electrostatic precipitators, CNG vehicles
+
+Water Pollution:
+  Industrial effluents: heavy metals (Hg, Pb, Cd), acids, BOD increase
+  Agricultural: fertilizers (nitrate runoff → eutrophication), pesticides
+  Sewage: pathogens, BOD increase, DO decrease
+  Thermal: warm water from power plants → less dissolved O₂
+  
+Eutrophication: excess nutrients → algal bloom → oxygen depletion → fish death
+BOD (Biological Oxygen Demand): O₂ needed to decompose organic waste; high BOD = more pollution
+
+Soil Pollution:
+  Causes: pesticides, industrial waste, plastic waste, mining, acid rain
+  Effects: reduced soil fertility, bioaccumulation in food chain
+  Control: organic farming, bioremediation, composting
+
+Carbon Trading: market-based approach where companies buy/sell carbon emission permits
+  Cap-and-trade system reduces total emissions economically.</div>
+</div>
+</div>
+</div>
+
+</div><!-- units-container -->
+</div><!-- page-content -->
+<script>
+function toggleUnit(header){
+  const card=header.closest('.unit-card');
+  card.classList.toggle('open');
+  updateProg();
+}
+function updateProg(){
+  const total=document.querySelectorAll('.unit-card').length;
+  const open=document.querySelectorAll('.unit-card.open').length;
+  const pct=Math.round((open/total)*100);
+  document.getElementById('prog').style.width=pct+'%';
+  document.getElementById('progLbl').textContent=open+' / '+total+' units studied';
+}
+document.querySelector('.unit-card').classList.add('open');
+updateProg();
+</script>
+</body>
+</html>

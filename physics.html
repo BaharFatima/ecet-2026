@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physics — TG ECET 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.deep-section{margin:22px 0}
+.deep-section h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px;color:#fff;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.deep-para{font-size:13.5px;color:var(--text-muted);line-height:1.85;margin-bottom:10px}
+.deep-para strong{color:var(--text)}
+.formula-block{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px 18px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#c9d1d9;line-height:2;white-space:pre-wrap}
+.formula-block .label{font-family:'Space Grotesk',sans-serif;font-size:10px;color:var(--physics);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;font-weight:700}
+.step-box{background:var(--bg3);border-radius:10px;padding:14px 18px;margin:10px 0}
+.step-box .step-title{font-size:12px;font-weight:700;color:var(--physics);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px}
+.steps-list{list-style:none;counter-reset:steps;padding:0}
+.steps-list li{counter-increment:steps;display:flex;gap:12px;padding:7px 0;font-size:13px;color:var(--text-muted);line-height:1.65;border-bottom:1px solid rgba(255,255,255,0.04)}
+.steps-list li:last-child{border-bottom:none}
+.steps-list li::before{content:counter(steps);width:22px;height:22px;min-width:22px;background:rgba(72,202,228,0.2);color:var(--physics);font-size:11px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0}
+.ex-box{background:linear-gradient(135deg,rgba(72,202,228,0.07),rgba(72,202,228,0.01));border:1px solid rgba(72,202,228,0.18);border-radius:10px;padding:14px 18px;margin:10px 0}
+.ex-box .ex-lbl{font-size:10px;font-weight:700;color:var(--physics);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.ex-box p{font-size:13px;color:var(--text-muted);line-height:1.75}
+.tip-box{background:rgba(255,209,102,0.05);border:1px solid rgba(255,209,102,0.2);border-radius:10px;padding:12px 16px;margin:10px 0;display:flex;gap:10px;align-items:flex-start}
+.tip-box span{font-size:16px;flex-shrink:0}
+.tip-box p{font-size:13px;color:var(--text-muted);line-height:1.65;margin:0}
+.tip-box strong{color:var(--medium)}
+.table-wrap{overflow-x:auto;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:rgba(255,255,255,0.06);padding:9px 14px;text-align:left;font-weight:600;color:var(--text);border-bottom:1px solid var(--border)}
+td{padding:8px 14px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-muted)}
+tr:last-child td{border-bottom:none}
+</style>
+</head>
+<body class="page-wrap physics">
+<div class="fixed-bg physics-hero-bg"></div>
+<div class="page-content">
+<nav class="top-bar">
+  <a href="index.html" class="back-btn">← Home</a>
+  <div class="top-bar-title">Physics — Complete Deep Guide</div>
+  <span class="marks-badge mb-physics">25 Marks</span>
+</nav>
+<div class="subject-hero">
+  <h1>Phy<span style="color:var(--physics)">sics</span></h1>
+  <p>12 units — full conceptual explanations, all derivations, every formula with meaning, worked numerical examples, and exam strategy for each unit.</p>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%" id="prog"></div></div>
+  <div id="progLbl" style="font-size:12px;color:var(--text-muted);margin-top:6px">0 / 12 units studied</div>
+</div>
+<div class="units-container">
+<div class="weightage-summary">
+  <span class="ws-label">Weightage:</span>
+  <div class="ws-legend">
+    <div class="ws-item"><div class="ws-dot high"></div>High (~3–4 marks)</div>
+    <div class="ws-item"><div class="ws-dot medium"></div>Medium (~2 marks)</div>
+    <div class="ws-item"><div class="ws-dot low"></div>Low (~1 mark)</div>
+  </div>
+</div>
+
+<!-- UNIT 1 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U1</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Units, Dimensions & Measurements</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-low">✅ Low</span><span class="expected-marks">~1 mark</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Physical Quantities & SI Units</h3>
+<p class="deep-para">A <strong>physical quantity</strong> is anything that can be measured. They are of two types: <strong>Fundamental (Base) quantities</strong> — independent, not derived from others; and <strong>Derived quantities</strong> — obtained by combining fundamental ones (e.g., velocity = distance/time).</p>
+<div class="table-wrap"><table>
+<tr><th>SI Base Quantity</th><th>Unit</th><th>Symbol</th></tr>
+<tr><td>Length</td><td>metre</td><td>m</td></tr>
+<tr><td>Mass</td><td>kilogram</td><td>kg</td></tr>
+<tr><td>Time</td><td>second</td><td>s</td></tr>
+<tr><td>Electric Current</td><td>ampere</td><td>A</td></tr>
+<tr><td>Temperature</td><td>kelvin</td><td>K</td></tr>
+<tr><td>Amount of substance</td><td>mole</td><td>mol</td></tr>
+<tr><td>Luminous intensity</td><td>candela</td><td>cd</td></tr>
+</table></div>
+<p class="deep-para"><strong>Advantages of SI:</strong> Internationally accepted, coherent (derived units obtained by simple multiplication/division with no conversion factors), rational (one unit per physical quantity), decimal-based.</p>
+</div>
+<div class="deep-section">
+<h3>📌 Dimensions & Dimensional Analysis</h3>
+<p class="deep-para">The <strong>dimension</strong> of a physical quantity tells you which fundamental quantities it is made of and in what power. We write dimensions using letters: <strong>M</strong>(mass), <strong>L</strong>(length), <strong>T</strong>(time), <strong>I</strong>(current), <strong>θ</strong>(temperature).</p>
+<div class="formula-block"><div class="label">Important Dimensional Formulae (Memorize These)</div>
+Velocity          = [LT⁻¹]
+Acceleration      = [LT⁻²]
+Force (F=ma)      = [MLT⁻²]
+Work/Energy       = [ML²T⁻²]
+Power             = [ML²T⁻³]
+Pressure          = [ML⁻¹T⁻²]
+Momentum          = [MLT⁻¹]
+Impulse           = [MLT⁻¹]
+Torque            = [ML²T⁻²]
+Gravitational Const G = [M⁻¹L³T⁻²]
+Planck's Const h  = [ML²T⁻¹]
+Density           = [ML⁻³]
+Frequency         = [T⁻¹]
+Angle             = Dimensionless [M⁰L⁰T⁰]</div>
+<p class="deep-para"><strong>Principle of Homogeneity:</strong> Every term in a physically correct equation must have the same dimensions. This is used to: (1) check correctness of equations, (2) derive relations between quantities, (3) convert units from one system to another.</p>
+<div class="ex-box">
+<div class="ex-lbl">Checking Equation Correctness</div>
+<p>Check v² = u² + 2as
+LHS: [v²] = [LT⁻¹]² = [L²T⁻²]
+RHS: [u²] = [L²T⁻²]; [2as] = [LT⁻²·L] = [L²T⁻²]
+All terms = [L²T⁻²] ✓ Dimensionally correct!</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 2 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U2</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Vectors</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~2 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Scalars vs Vectors</h3>
+<p class="deep-para"><strong>Scalar:</strong> Has only magnitude. Examples: mass, temperature, speed, distance, energy, time.<br>
+<strong>Vector:</strong> Has both magnitude AND direction. Examples: displacement, velocity, acceleration, force, momentum. Represented by arrow over letter (→A) or bold (A). The <strong>magnitude</strong> of vector A is |A| or simply A.</p>
+<div class="table-wrap"><table>
+<tr><th>Vector Type</th><th>Description</th></tr>
+<tr><td>Unit Vector (â)</td><td>Magnitude = 1; used to show direction only. â = A/|A|</td></tr>
+<tr><td>Null/Zero Vector</td><td>Magnitude = 0, direction undefined. A+0=A</td></tr>
+<tr><td>Equal Vectors</td><td>Same magnitude AND same direction</td></tr>
+<tr><td>Negative Vector</td><td>Same magnitude, opposite direction: −A</td></tr>
+<tr><td>Position Vector</td><td>Vector from origin O to point P: OP = r = xî+yĵ+zk̂</td></tr>
+</table></div>
+</div>
+<div class="deep-section">
+<h3>📌 Resolution of Vectors</h3>
+<p class="deep-para">Any vector A making angle θ with x-axis can be split into: <strong>Aₓ = A cosθ</strong> (horizontal component) and <strong>Aᵧ = A sinθ</strong> (vertical component). In 3D: <strong>A = Aₓî + Aᵧĵ + Aᵤk̂</strong>, magnitude = √(Aₓ²+Aᵧ²+Aᵤ²).</p>
+</div>
+<div class="deep-section">
+<h3>📌 Parallelogram Law of Vector Addition</h3>
+<p class="deep-para"><strong>Statement:</strong> If two vectors A and B act simultaneously on a particle represented as adjacent sides of a parallelogram, then the resultant is the diagonal of the parallelogram.</p>
+<div class="formula-block"><div class="label">Resultant Magnitude and Direction</div>
+R = √(A² + B² + 2AB·cosθ)
+
+where θ = angle between A and B
+
+Direction of resultant (angle α with A):
+tan α = B·sinθ / (A + B·cosθ)
+
+Special cases:
+θ=0° (same direction): R = A+B (maximum resultant)
+θ=180° (opposite):     R = |A−B| (minimum resultant)
+θ=90°:                 R = √(A²+B²)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Scalar (Dot) Product</h3>
+<p class="deep-para">A·B = |A||B|cosθ. Result is a <strong>scalar</strong>. Geometrically it is the projection of one vector on the other times the magnitude of the other.</p>
+<div class="formula-block">î·î = ĵ·ĵ = k̂·k̂ = 1        (parallel unit vectors)
+î·ĵ = ĵ·k̂ = k̂·î = 0        (perpendicular unit vectors)
+A·B = AₓBₓ + AᵧBᵧ + AᵤBᵤ   (component form)
+
+Commutative: A·B = B·A
+Distributive: A·(B+C) = A·B + A·C
+If A⊥B: A·B = 0
+
+Applications:
+Work: W = F·d = Fd·cosθ
+Power: P = F·v</div>
+</div>
+<div class="deep-section">
+<h3>📌 Vector (Cross) Product</h3>
+<p class="deep-para">A×B = |A||B|sinθ·n̂ where n̂ is perpendicular to both A and B (right-hand rule). Result is a <strong>vector</strong>.</p>
+<div class="formula-block">î×î = ĵ×ĵ = k̂×k̂ = 0
+î×ĵ = k̂,  ĵ×k̂ = î,  k̂×î = ĵ  (cyclic order)
+ĵ×î = −k̂  (anti-cyclic = negative)
+
+A×B = |î  ĵ  k̂ |
+       |Aₓ Aᵧ Aᵤ|
+       |Bₓ Bᵧ Bᵤ|
+
+NOT commutative: A×B = −(B×A)
+If A∥B: A×B = 0
+
+Applications:
+Torque: τ = r×F (magnitude = rF sinθ)
+Area of parallelogram = |A×B|
+Area of triangle = (1/2)|A×B|</div>
+</div>
+<div class="deep-section">
+<h3>📌 Lami's Theorem</h3>
+<p class="deep-para">If three concurrent coplanar forces are in equilibrium, each force divided by the sine of the angle between the other two is constant:</p>
+<div class="formula-block">F₁/sin α₁ = F₂/sin α₂ = F₃/sin α₃
+where α₁,α₂,α₃ are angles OPPOSITE to F₁,F₂,F₃ respectively.</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 3 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U3</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Mechanics</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High</span><span class="expected-marks">~4 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Friction — Complete Theory</h3>
+<p class="deep-para"><strong>Friction</strong> is a contact force that opposes relative motion between surfaces. It acts parallel to the surface. It arises due to intermolecular attractions and interlocking of surface irregularities.</p>
+<div class="formula-block"><div class="label">Types and Laws of Friction</div>
+Static Friction: opposes impending motion; can vary from 0 to μₛN
+Limiting Friction (fₗ): maximum static friction = μₛ·N
+Kinetic Friction: constant once motion begins = μₖ·N   (μₖ < μₛ)
+
+Normal Reaction: N = mg·cosθ (on incline at angle θ)
+
+Coefficient of friction: μ = tan φ where φ = angle of friction
+                         (angle of friction = angle R makes with normal)
+
+On horizontal surface:
+  Acceleration: a = μg (deceleration while sliding)
+  Distance to stop from speed u: s = u²/(2μg)
+  Time to stop: t = u/(μg)
+
+On rough inclined plane (angle θ, block sliding down):
+  a = g(sinθ − μcosθ)   [μcosθ = friction component]
+  For equilibrium: tanθ ≤ μ
+  Angle of repose = tan⁻¹(μ) ← angle at which block just begins to slide</div>
+</div>
+<div class="deep-section">
+<h3>📌 Projectile Motion — Full Derivation</h3>
+<p class="deep-para">A projectile moves under gravity alone (no air resistance). It has: <strong>horizontal motion</strong> (uniform velocity, no force) and <strong>vertical motion</strong> (uniformly accelerated by gravity). These two are <em>independent</em> of each other.</p>
+<div class="formula-block"><div class="label">Oblique Projection (angle θ, initial speed u)</div>
+Horizontal component: uₓ = u cosθ  (constant throughout)
+Vertical component:   uᵧ = u sinθ  (decreases going up)
+
+At time t:
+  x = u cosθ · t
+  y = u sinθ · t − (1/2)g·t²
+  vₓ = u cosθ  (unchanged)
+  vᵧ = u sinθ − g·t
+
+Key Results:
+  Max Height:    H = u²sin²θ / 2g
+  Time of Ascent: t₁ = u sinθ / g
+  Time of Flight: T = 2u sinθ / g  (= 2 × ascent time)
+  Horizontal Range: R = u²sin2θ / g
+  Maximum Range: R_max = u²/g  (occurs at θ=45°)
+
+Equation of Trajectory (parabola):
+  y = x tanθ − gx²/(2u²cos²θ)   ← this is a parabola y = ax − bx²</div>
+<div class="tip-box"><span>💡</span><p><strong>Key insight:</strong> Range is same for complementary angles. If θ₁+θ₂=90°, then R(θ₁)=R(θ₂). e.g., range at 30° = range at 60°. Maximum range is always at 45°. For maximum height: θ=90°.</p></div>
+<div class="formula-block"><div class="label">Horizontal Projection (thrown horizontally from height H)</div>
+x = u·t           (horizontal, uniform)
+y = (1/2)g·t²     (vertical, from rest)
+Time to reach ground: t = √(2H/g)
+Range: R = u·√(2H/g)
+Final velocity: v = √(u²+g²t²), angle = tan⁻¹(gt/u) below horizontal</div>
+</div>
+<div class="deep-section">
+<h3>📌 Circular Motion — Complete Theory</h3>
+<p class="deep-para">When a particle moves in a circle of radius r, even at constant speed it is <em>accelerating</em> because its direction changes. This acceleration (centripetal) always points toward the center.</p>
+<div class="formula-block"><div class="label">Key Quantities and Relations</div>
+Angular displacement: θ (in radians)
+Angular velocity: ω = dθ/dt = 2πf = 2π/T  (rad/s)
+Angular acceleration: α = dω/dt  (rad/s²)
+
+Linear ↔ Angular:
+  v = rω              (linear velocity = radius × angular velocity)
+  a = rα              (linear acceleration = radius × angular acceleration)
+  
+Centripetal (towards centre):
+  aₙ = v²/r = rω²    (centripetal acceleration)
+  Fₙ = mv²/r = mrω²  (centripetal force — provided by tension, gravity, normal force etc.)
+
+Centrifugal force: −mv²/r (pseudo force in rotating frame, appears to act outward)
+
+Period: T = 2πr/v = 2π/ω
+Frequency: f = 1/T</div>
+<div class="formula-block"><div class="label">Banking of Roads</div>
+A banked road allows vehicles to take a turn without relying on friction.
+The required banking angle θ:
+  tan θ = v²/rg     (ideal banking, no friction)
+  v_optimal = √(rg·tanθ)
+
+For a cyclist bending inward:
+  tan θ = v²/rg  (same relation — cyclist bends to provide centripetal force)</div>
+<div class="ex-box">
+<div class="ex-lbl">Numerical Example</div>
+<p>A car moves at 72 km/h on a circular track of radius 200 m. Find centripetal acceleration and force (mass=1000 kg).
+v = 72 km/h = 72×(1000/3600) = 20 m/s
+aₙ = v²/r = 400/200 = 2 m/s²
+Fₙ = m·aₙ = 1000×2 = 2000 N</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 4 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U4</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Properties of Matter</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~2 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Elasticity — Stress, Strain & Hooke's Law</h3>
+<p class="deep-para"><strong>Elasticity</strong> is the property of a material to regain its original shape after the deforming force is removed. <strong>Elastic limit</strong> — the maximum stress up to which a body is perfectly elastic. Beyond this, permanent deformation occurs.</p>
+<div class="formula-block">Stress = Force / Area = F/A         Units: Pa (= N/m²)
+  Types: Tensile (stretching), Compressive (squeezing), Shear (sliding)
+
+Strain = Change / Original = ΔL/L   (dimensionless)
+  Types: Longitudinal (ΔL/L), Volumetric (ΔV/V), Shear strain
+
+Hooke's Law: Within elastic limit, Stress ∝ Strain
+  i.e., Stress/Strain = constant = Modulus of Elasticity
+
+Young's Modulus (Y): for longitudinal stress/strain
+  Y = (F/A)/(ΔL/L) = FL/(AΔL)      Units: Pa or N/m²
+  Derivation: stretch a wire of length L, area A, by force F, elongation ΔL
+
+Bulk Modulus (K): for volumetric stress/strain
+  K = −P/(ΔV/V)   (negative because volume decreases under pressure)
+
+Modulus of Rigidity (G): for shear stress/strain
+  G = Shear Stress / Shear Strain</div>
+<div class="tip-box"><span>💡</span><p><strong>Stress-strain curve key points:</strong> OA = perfectly elastic (Hooke's law); A = proportional limit; B = elastic limit; C = yield point (permanent deformation starts); D = ultimate stress (max load); E = breaking point (fracture).</p></div>
+</div>
+<div class="deep-section">
+<h3>📌 Surface Tension & Capillarity</h3>
+<p class="deep-para"><strong>Surface tension (T)</strong> is the force per unit length acting along the surface of a liquid, due to intermolecular attractions. The surface behaves like a stretched elastic membrane. Unit: N/m.</p>
+<div class="formula-block">Surface tension: T = F/L  (force per unit length)
+
+Excess pressure inside:
+  Liquid drop:     ΔP = 2T/r
+  Soap bubble:     ΔP = 4T/r   (two surfaces)
+  Air bubble in liquid: ΔP = 2T/r
+
+Capillary Rise (angle of contact θ):
+  h = 2T cosθ / (rρg)
+  
+  where h=height, T=surface tension, θ=contact angle,
+        r=radius of capillary, ρ=liquid density, g=9.8 m/s²
+
+Effect of temperature: Surface tension DECREASES with increase in temperature.
+Effect of impurity: Soap/detergent DECREASES surface tension (used for cleaning).
+                    Dissolved salt INCREASES surface tension.</div>
+</div>
+<div class="deep-section">
+<h3>📌 Viscosity — Newton's Law & Poiseuille's Equation</h3>
+<p class="deep-para"><strong>Viscosity</strong> is the internal friction between layers of fluid in relative motion. A high-viscosity fluid (like honey) flows slowly; low-viscosity (water) flows freely.</p>
+<div class="formula-block">Newton's Law of Viscosity:
+  F = η · A · (dv/dx)
+  Viscous force = η × area × velocity gradient
+  η = Coefficient of viscosity   Unit: Pa·s (N·s/m²)
+
+Poiseuille's Equation (volume flow through a pipe):
+  Q = πr⁴P / (8ηL)
+  
+  where Q=flow rate (m³/s), r=pipe radius, P=pressure diff, L=length
+
+Effect of Temperature:
+  Liquids: η DECREASES as T increases (less intermolecular bonding)
+  Gases:   η INCREASES as T increases (more kinetic energy → more momentum transfer)
+  
+This is the OPPOSITE behavior — very commonly tested!</div>
+</div>
+<div class="deep-section">
+<h3>📌 Fluid Dynamics — Bernoulli's Theorem</h3>
+<div class="formula-block">Streamline flow: orderly, layers don't mix
+Turbulent flow: chaotic mixing (occurs above critical velocity)
+Reynolds Number: Re = ρvD/η
+  Re < 2000 → streamline;  Re > 3000 → turbulent
+
+Equation of Continuity (mass conservation):
+  A₁v₁ = A₂v₂   (for incompressible fluid)
+  Narrow pipe → faster flow; Wide pipe → slower flow
+
+Bernoulli's Theorem (energy conservation along streamline):
+  P + (1/2)ρv² + ρgh = constant
+
+  P = pressure energy per unit volume
+  (1/2)ρv² = kinetic energy per unit volume
+  ρgh = potential energy per unit volume
+
+Applications:
+  Venturimeter (measures flow rate using pressure difference)
+  Aerofoil/Aircraft wing (faster flow above = lower pressure → lift)
+  Carburetor (fuel atomization)
+  Spray gun (atomizer)</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 5 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U5</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Conservation Laws & Energy</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High</span><span class="expected-marks">~3 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Work, Energy & Power</h3>
+<div class="formula-block">Work: W = F·d·cosθ
+  where θ = angle between force and displacement
+  W = 0 if force ⊥ displacement (e.g., circular motion, normal force)
+  W > 0 if force in direction of motion; W < 0 if against motion
+  Unit: Joule (J) = N·m
+
+Kinetic Energy: KE = (1/2)mv²    [energy of motion]
+Potential Energy (Gravitational): PE = mgh   [energy of position]
+
+Power: P = W/t = F·v·cosθ    Unit: Watt (W)
+  1 Horsepower = 746 W
+  1 kWh = 3.6×10⁶ J (unit of electrical energy)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Work-Energy Theorem</h3>
+<p class="deep-para">The <strong>net work done on an object equals the change in its kinetic energy</strong>. This is derived directly from Newton's second law integrated over displacement.</p>
+<div class="formula-block">Derivation:
+F = ma, and v² = u² + 2as → as = (v²−u²)/2
+W = F·s = ma·s = m·(as) = m·(v²−u²)/2 = (1/2)mv² − (1/2)mu²
+
+W_net = ΔKE = KE_final − KE_initial
+
+If W_net > 0 → KE increases (speeds up)
+If W_net < 0 → KE decreases (slows down)
+If W_net = 0 → KE unchanged (constant speed)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Conservation of Energy</h3>
+<p class="deep-para"><strong>Law of Conservation of Energy:</strong> Energy can neither be created nor destroyed; it can only be converted from one form to another. The total mechanical energy (KE+PE) of a system is conserved when only conservative forces act.</p>
+<div class="formula-block"><div class="label">Proof: Freely Falling Body (mass m, released from height H)</div>
+At top (height H):    KE=0, PE=mgH, Total=mgH
+At height h:          v²=2g(H−h); KE=(1/2)mv²=mg(H−h); PE=mgh; Total=mgH ✓
+At bottom (h=0):      v²=2gH; KE=mgH; PE=0; Total=mgH ✓
+
+Total mechanical energy remains mgH throughout!</div>
+<div class="formula-block"><div class="label">Simple Pendulum — Energy Transformation</div>
+At extreme position (max displacement A):
+  v = 0 → KE = 0 (all PE)
+  PE = mgL(1−cosθ) = max
+
+At mean position (equilibrium):
+  PE = 0 (minimum)
+  v = max → KE = max = (1/2)mv²_max
+
+At any position x from mean:
+  KE = (1/2)mω²(A²−x²)
+  PE = (1/2)mω²x²
+  Total E = (1/2)mω²A² = constant</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 6 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U6</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Heat & Thermodynamics</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~2 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Thermal Expansion of Solids</h3>
+<div class="formula-block">Linear expansion:   l = l₀(1 + αΔT),   ΔT = T−T₀
+Areal expansion:    A = A₀(1 + βΔT),   β = 2α
+Volumetric:         V = V₀(1 + γΔT),   γ = 3α
+
+Relation: α : β : γ = 1 : 2 : 3
+(Remember: linear→area→volume means ×2, ×3 for the coefficient)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Gas Laws & Ideal Gas Equation</h3>
+<div class="formula-block">Boyle's Law (T=const):    PV = constant  → P₁V₁ = P₂V₂
+Charles' Law (P=const):   V/T = constant → V₁/T₁ = V₂/T₂
+Combined Gas Law:          PV/T = constant → P₁V₁/T₁ = P₂V₂/T₂
+
+Ideal Gas Equation: PV = nRT
+  n = number of moles
+  R = Universal gas constant = 8.314 J/(mol·K)
+  T = Temperature in KELVIN (T = 273 + t°C)
+
+In terms of density (ρ = mass/volume):
+  P = ρRT/M   where M = molar mass</div>
+</div>
+<div class="deep-section">
+<h3>📌 First Law of Thermodynamics</h3>
+<p class="deep-para">The first law is simply the law of conservation of energy applied to thermodynamic systems: <strong>ΔQ = ΔU + W</strong> where ΔQ = heat supplied to system, ΔU = increase in internal energy, W = work done by system.</p>
+<div class="formula-block">Work done by gas expanding against pressure P:
+  W = P·ΔV = P(V₂−V₁)   (for constant pressure process)
+  W = ∫P dV in general
+
+Isothermal Process (T=const, ideal gas → ΔU=0):
+  ΔQ = W → all heat converts to work
+  W = nRT·ln(V₂/V₁)
+
+Adiabatic Process (ΔQ=0, no heat exchange):
+  ΔU = −W → work done at expense of internal energy
+  PVᵞ = constant  (γ = Cp/Cv = adiabatic index)
+  Temperature drops when gas expands adiabatically
+
+Second Law: Heat flows spontaneously from hot to cold (not reverse).
+Kelvin-Planck: No engine can convert all heat to work.
+Clausius: Refrigerator needs work input to transfer heat from cold to hot.</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 7 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U7</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Simple Harmonic Motion</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~2 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 SHM — Definition & Conditions</h3>
+<p class="deep-para"><strong>Simple Harmonic Motion</strong> is a special type of periodic motion where the restoring force is <em>directly proportional to the displacement from equilibrium and directed toward it</em>: <strong>F = −kx</strong>. The negative sign means the force always opposes displacement.</p>
+<div class="formula-block">Defining Equation: a = −ω²x   (acceleration ∝ −displacement)
+  ω = angular frequency = 2πf = 2π/T
+
+Displacement: x = A·sin(ωt + φ)   or   x = A·cos(ωt + φ)
+  A = amplitude (maximum displacement from mean position)
+  φ = initial phase (depends on initial conditions)
+
+Velocity:     v = dx/dt = Aω·cos(ωt + φ)
+              v = ω√(A²−x²)    [velocity at any position x]
+              v_max = Aω  (at x=0, mean position)
+
+Acceleration: a = −ω²x
+              a_max = ω²A  (at x=±A, extreme positions)
+
+Time Period:  T = 2π/ω    Frequency: f = 1/T = ω/2π</div>
+</div>
+<div class="deep-section">
+<h3>📌 Simple Pendulum — Complete Derivation</h3>
+<p class="deep-para">An ideal simple pendulum = point mass m on massless inextensible string of length L, oscillating in a plane. For small angles (θ&lt;5°), sinθ≈θ, which makes the motion SHM.</p>
+<div class="formula-block">Restoring force = −mg sinθ ≈ −mgθ = −mg(x/L) = −(mg/L)·x
+
+Compare with F = −kx: k = mg/L → ω = √(k/m) = √(g/L)
+
+Time Period: T = 2π√(L/g)
+
+Laws of Simple Pendulum:
+1. T ∝ √L  (increase length 4× → period doubles)
+2. T ∝ 1/√g  (period increases at higher altitudes, lower g)
+3. T is INDEPENDENT of mass m
+4. T is INDEPENDENT of amplitude (for small oscillations only)
+
+Second's Pendulum: T = 2s → L = g/π² ≈ 1 m (at g=9.8 m/s²)</div>
+<div class="ex-box">
+<div class="ex-lbl">Numerical Example</div>
+<p>A pendulum has T=2s at g=9.8 m/s². Find length.
+T = 2π√(L/g) → 2 = 2π√(L/9.8) → 1/π = √(L/9.8)
+L = 9.8/π² = 9.8/9.87 ≈ 0.993 m ≈ 1 m</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 8 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U8</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Sound</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-low">✅ Low</span><span class="expected-marks">~1 mark</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Doppler Effect</h3>
+<p class="deep-para">The <strong>Doppler Effect</strong> is the change in observed frequency of a wave when there is relative motion between source and observer. When they approach each other, frequency appears higher (pitch rises); when receding, frequency appears lower.</p>
+<div class="formula-block">Apparent frequency: f' = f · (v ± vₒ) / (v ∓ vₛ)
+
+v = speed of sound in medium
+vₒ = speed of observer (+ if moving toward source, − if away)
+vₛ = speed of source (− if moving toward observer, + if away)
+
+Memory tip: "Approaching increases, Receding decreases"
+When source moves toward stationary observer: f' = fv/(v−vₛ) > f
+When source moves away: f' = fv/(v+vₛ) < f
+When observer moves toward stationary source: f' = f(v+vₒ)/v > f
+
+Applications: RADAR speed detection, medical ultrasound, astronomy (redshift/blueshift)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Beats, Echo & Reverberation</h3>
+<div class="formula-block">Beats: superposition of two sound waves of slightly different frequencies
+  Beat frequency = |f₁ − f₂|  (must be < ~10 Hz to be heard as beats)
+  Applications: tuning musical instruments
+
+Echo: reflection of sound heard distinctly after original sound
+  Minimum distance for echo at 20°C: d = vt/2 = 340×0.1/2 = 17 m
+  (ear needs ≥0.1s separation to distinguish echo from original)
+
+Stationary Waves: formed by superposition of two identical waves
+  traveling in opposite directions. Nodes (zero amplitude) and
+  Antinodes (maximum amplitude) are fixed in space.
+
+Reverberation: persistence of sound due to multiple reflections
+  Sabine's Formula: T = 0.165V/ΣaS
+  T = reverberation time (seconds)
+  V = volume of room (m³)
+  ΣaS = total absorption = Σ(absorption coefficient × area of each surface)
+  
+Good auditorium: T = 0.5 to 1.5 seconds
+Noise pollution control: barriers, absorption panels, plantations</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 9 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U9</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Magnetism & Electricity</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High</span><span class="expected-marks">~3 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Kirchhoff's Laws</h3>
+<p class="deep-para">These are the fundamental laws for analyzing any electrical circuit, based on conservation of charge (KCL) and conservation of energy (KVL).</p>
+<div class="formula-block">KCL (Kirchhoff's Current Law):
+  At any junction, ΣI_in = ΣI_out
+  i.e., sum of currents entering = sum leaving (conservation of charge)
+  ΣI = 0 at a node
+
+KVL (Kirchhoff's Voltage Law):
+  Around any closed loop, ΣV = 0
+  i.e., sum of all potential differences = 0 (conservation of energy)
+  Sign convention: EMF positive if traversed from − to +; 
+                   Resistor drop negative if traversed in current direction</div>
+</div>
+<div class="deep-section">
+<h3>📌 Wheatstone Bridge & Meter Bridge</h3>
+<p class="deep-para">The Wheatstone Bridge is a circuit for precisely measuring unknown resistance. It consists of 4 resistors P, Q, R, S in a diamond pattern with a galvanometer (G) across the middle diagonal.</p>
+<div class="formula-block">Balanced Condition: P/Q = R/S
+  When balanced, no current flows through galvanometer (Ig=0)
+  This gives very accurate measurement of unknown resistance.
+
+Meter Bridge (Practical Wheatstone Bridge):
+  Uses a 1-metre resistance wire. The balance point (null point) at length l:
+  R/S = l/(100−l)   → Unknown S = R(100−l)/l
+
+  Always: P corresponds to 0-l (length l)
+          Q corresponds to l-100 (length 100−l)</div>
+</div>
+<div class="deep-section">
+<h3>📌 Electromagnetic Induction</h3>
+<p class="deep-para"><strong>Faraday's Discovery:</strong> A changing magnetic flux through a circuit induces an EMF in it. This is the basis of generators, transformers, and induction motors.</p>
+<div class="formula-block">Magnetic Flux: Φ = B·A·cosθ   Units: Weber (Wb)
+
+Faraday's Laws:
+  1st Law: Whenever magnetic flux linked with a circuit changes, an EMF is induced.
+  2nd Law: Magnitude of induced EMF = rate of change of flux:
+           e = −dΦ/dt  (negative sign from Lenz's Law)
+
+Lenz's Law: The induced current always flows in a direction to OPPOSE
+            the change that caused it (conservation of energy principle).
+
+Self-Inductance (L):
+  When current in a coil changes, it induces EMF in itself.
+  e = −L·dI/dt     L = NΦ/I  (Henry, H)
+
+Mutual Inductance (M):
+  EMF induced in coil 2 due to changing current in coil 1:
+  e₂ = −M·dI₁/dt</div>
+</div>
+<div class="deep-section">
+<h3>📌 Transformer — Principle & Types</h3>
+<div class="formula-block">Principle: Mutual induction between two coils wound on same iron core.
+AC input in primary → changing flux → induced EMF in secondary.
+
+Transformer Equations:
+  Vₛ/Vₚ = Nₛ/Nₚ = Iₚ/Iₛ
+  
+  (voltage ratio = turns ratio; current ratio is inverse of turns ratio)
+  
+  For ideal transformer: Pₛ = Pₚ → VₛIₛ = VₚIₚ
+
+Step-up Transformer: Nₛ > Nₚ → Vₛ > Vₚ (increases voltage, decreases current)
+Step-down Transformer: Nₛ < Nₚ → Vₛ < Vₚ (decreases voltage, increases current)
+
+Efficiency: η = Pₒᵤₜ/Pᵢₙ × 100% (ideal = 100%, real ≈ 95–99%)
+Losses: Copper loss (I²R in windings), Eddy current loss, Hysteresis loss</div>
+</div>
+<div class="deep-section">
+<h3>📌 Magnetic Materials</h3>
+<div class="table-wrap"><table>
+<tr><th>Property</th><th>Diamagnetic</th><th>Paramagnetic</th><th>Ferromagnetic</th></tr>
+<tr><td>Susceptibility χ</td><td>Small negative</td><td>Small positive</td><td>Very large positive</td></tr>
+<tr><td>Behavior in field</td><td>Weakly repelled</td><td>Weakly attracted</td><td>Strongly attracted</td></tr>
+<tr><td>Examples</td><td>Bi, Cu, H₂O, Au</td><td>Al, Pt, O₂, Na</td><td>Fe, Ni, Co</td></tr>
+<tr><td>Permeability μᵣ</td><td>Slightly &lt; 1</td><td>Slightly &gt; 1</td><td>Very large (1000s)</td></tr>
+<tr><td>Temperature effect</td><td>Independent</td><td>Decreases (Curie law)</td><td>Becomes paramagnetic above Curie temp</td></tr>
+</table></div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 10 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U10</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Optics</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~2 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Photoelectric Effect — Einstein's Theory</h3>
+<p class="deep-para">When light falls on a metal surface, electrons are emitted. This <strong>cannot</strong> be explained by wave theory (wave theory predicts any frequency should work given enough intensity). Einstein used the <strong>quantum/particle nature of light (photons)</strong> to explain it.</p>
+<div class="formula-block">Einstein's Photoelectric Equation:
+  hf = W₀ + KE_max
+  hf = hf₀ + (1/2)mv²_max
+
+  h = Planck's constant = 6.63×10⁻³⁴ J·s
+  f = frequency of incident light
+  W₀ = Work function = hf₀ (minimum energy to eject electron from surface)
+  f₀ = Threshold frequency (minimum frequency for emission)
+  KE_max = (1/2)mv²_max = maximum kinetic energy of ejected electron
+
+Stopping Potential V₀: minimum potential to stop fastest photoelectron
+  eV₀ = (1/2)mv²_max = h(f−f₀)</div>
+<div class="formula-block"><div class="label">Laws of Photoelectric Effect</div>
+1. Emission is INSTANTANEOUS (no time delay) — proves particle nature
+2. Maximum KE of emitted electrons depends on FREQUENCY, not intensity
+3. There is a minimum threshold frequency f₀ below which NO emission occurs,
+   regardless of intensity
+4. Number of photoelectrons emitted per second is proportional to INTENSITY of light
+5. Work function W₀ depends on the metal surface, not on incident light</div>
+</div>
+<div class="deep-section">
+<h3>📌 Dual Nature of Light</h3>
+<p class="deep-para">Light behaves as a <strong>wave</strong> in phenomena like interference, diffraction, and polarization. It behaves as a <strong>particle (photon)</strong> in photoelectric effect and Compton effect. This wave-particle duality is a fundamental quantum mechanical concept.</p>
+<div class="formula-block">Wave nature evidence: interference (Young's double slit), diffraction, polarization
+Particle nature evidence: photoelectric effect, Compton scattering, radiation pressure
+
+Photon energy: E = hf = hc/λ
+de Broglie wavelength of matter: λ = h/(mv) = h/p
+  (every particle also has wave nature — dual nature of matter!)
+
+Young's Double Slit (interference):
+  Fringe width: β = λD/d
+  λ=wavelength, D=screen distance, d=slit separation
+  Constructive (bright fringe): path diff = nλ
+  Destructive (dark fringe): path diff = (2n+1)λ/2</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 11 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U11</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Modern Physics</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-medium">📊 Medium</span><span class="expected-marks">~2 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 LASER — Complete Theory</h3>
+<p class="deep-para"><strong>LASER</strong> = Light Amplification by Stimulated Emission of Radiation. It produces highly coherent, monochromatic, directional, and intense light.</p>
+<div class="formula-block">Types of Emission:
+  Spontaneous Emission: atom in excited state spontaneously falls to ground state,
+    emitting a photon randomly (no trigger). Direction and phase are random.
+  
+  Stimulated Emission (Einstein, 1917): an incoming photon of EXACT energy (E₂−E₁)
+    triggers the excited atom to emit a photon of IDENTICAL energy, direction,
+    phase, and polarization. This is what makes LASER coherent and intense.
+
+Population Inversion: For LASER, more atoms must be in excited state than ground
+  state — this is population inversion (achieved by pumping: optical, electrical, chemical)
+
+Types:
+  Ruby LASER: 3-level system; pulsed; red light (694 nm); used in holography
+  He-Ne LASER: 4-level system; continuous; red (632.8 nm); used in barcode scanners
+  CO₂ LASER: high power; IR; industrial cutting and welding
+  Semiconductor LASER: compact; used in optical fiber communication, DVD players
+
+LASER Characteristics: Monochromatic, Coherent (all waves in phase),
+  Directional (very low divergence), Highly Intense (all power in thin beam)
+
+Applications: Surgery (ophthalmology), cutting/welding, fiber optic communication,
+  holography, CD/DVD, barcode readers, LIDAR, distance measurement</div>
+</div>
+<div class="deep-section">
+<h3>📌 Optical Fiber — Total Internal Reflection</h3>
+<p class="deep-para">Optical fibers use <strong>Total Internal Reflection (TIR)</strong> to guide light along a thin glass/plastic fiber with essentially zero loss.</p>
+<div class="formula-block">Total Internal Reflection (TIR):
+  Occurs when: (1) light travels from denser to rarer medium (n₁ > n₂)
+               (2) angle of incidence > critical angle θc
+
+  Critical angle: sinθc = n₂/n₁   (from Snell's law with r=90°)
+
+Optical Fiber Structure:
+  Core: inner glass, high refractive index n₁ (~1.5)
+  Cladding: outer glass/plastic, lower n₂ → ensures TIR at interface
+  Buffer/Jacket: protective coating
+
+Types:
+  Single-mode fiber: very thin core (~9μm); one light path; used for long distance
+  Multi-mode fiber: thicker core (~50μm); multiple paths; used for short distance
+  Graded-index: n varies gradually; reduces dispersion
+
+Applications: Telecommunication (internet backbone), endoscopy (medical imaging),
+  sensors, local area networks, decorative lighting</div>
+</div>
+<div class="deep-section">
+<h3>📌 Nanotechnology & Superconductivity</h3>
+<div class="formula-block">Nanotechnology: manipulation of matter at 1–100 nm scale
+  Nanoparticles have enormous surface-area-to-volume ratio → different properties
+  than bulk material (different melting point, optical, magnetic, catalytic properties)
+  Applications: targeted drug delivery, nano-coatings, nano-electronics, stronger
+  materials, cancer treatment, water purification
+
+Superconductivity:
+  Some materials have ZERO electrical resistance below a critical temperature Tc
+  (e.g., Mercury: Tc=4.2K; YBCO ceramic: Tc≈93K)
+  Meissner Effect: superconductors expel magnetic field (perfect diamagnet)
+  Applications: MRI machines, maglev trains, particle accelerators (LHC),
+  lossless power transmission</div>
+</div>
+</div>
+</div>
+
+<!-- UNIT 12 -->
+<div class="unit-card">
+<div class="unit-header" onclick="toggleUnit(this)">
+  <span class="unit-num">U12</span>
+  <div class="unit-title-wrap">
+    <div class="unit-title">Semiconductor Physics</div>
+    <div class="unit-meta"><span class="weightage-tag wtag-high">🔥 High</span><span class="expected-marks">~3 marks</span></div>
+  </div><div class="unit-toggle">▼</div>
+</div>
+<div class="unit-body">
+<div class="deep-section">
+<h3>📌 Energy Bands in Solids</h3>
+<p class="deep-para">In isolated atoms, electrons occupy discrete energy levels. In a solid, atoms are so close that these levels broaden into <strong>energy bands</strong> due to quantum mechanical interaction. The two critical bands are: <strong>Valence Band</strong> (filled with valence electrons) and <strong>Conduction Band</strong> (where electrons can move freely). The <strong>Forbidden Gap (Bandgap)</strong> between them determines electrical behavior.</p>
+<div class="table-wrap"><table>
+<tr><th>Material</th><th>Band Structure</th><th>Bandgap (Eg)</th><th>Conductivity</th></tr>
+<tr><td>Conductor (e.g., Cu)</td><td>Valence & conduction overlap</td><td>0 eV</td><td>Very high</td></tr>
+<tr><td>Insulator (e.g., Glass)</td><td>Large gap, no overlap</td><td>~5–10 eV</td><td>Practically zero</td></tr>
+<tr><td>Si (Semiconductor)</td><td>Small gap</td><td>1.1 eV</td><td>Moderate (increases with T)</td></tr>
+<tr><td>Ge (Semiconductor)</td><td>Small gap</td><td>0.7 eV</td><td>Moderate (increases with T)</td></tr>
+</table></div>
+<p class="deep-para"><strong>Fermi Level:</strong> The energy level at which the probability of finding an electron is exactly 50%. In intrinsic semiconductors, Fermi level lies in the middle of the bandgap.</p>
+</div>
+<div class="deep-section">
+<h3>📌 Intrinsic & Extrinsic Semiconductors</h3>
+<div class="formula-block">Intrinsic Semiconductor (pure):
+  At 0K: no free carriers, acts as insulator.
+  At room temperature: thermal energy breaks covalent bonds.
+  Each broken bond creates one electron (in conduction band) + one hole (in valence band).
+  ne = nh = nᵢ (intrinsic carrier concentration, increases with temperature)
+
+Doping: Adding tiny amounts of impurity to drastically increase conductivity.
+
+N-type (Donor doping):
+  Pentavalent dopant (5 valence electrons): P, As, Sb, Bi added to Si
+  4 electrons form covalent bonds; 1 extra electron is "donated" to conduction band
+  Majority carriers: ELECTRONS; Minority: holes
+  Fermi level shifts toward conduction band
+
+P-type (Acceptor doping):
+  Trivalent dopant (3 valence electrons): B, Al, Ga, In added to Si
+  3 electrons form bonds; 1 incomplete bond = HOLE created
+  Majority carriers: HOLES; Minority: electrons
+  Fermi level shifts toward valence band</div>
+</div>
+<div class="deep-section">
+<h3>📌 PN Junction Diode — Complete Theory</h3>
+<p class="deep-para">When P-type and N-type are joined, electrons from N-side diffuse to P-side and holes from P-side diffuse to N-side. This creates a <strong>depletion region</strong> (depleted of free carriers) with a built-in electric field that opposes further diffusion — establishing equilibrium.</p>
+<div class="formula-block">Forward Bias (P connected to +ve, N to −ve terminal):
+  Applied voltage opposes built-in field → depletion layer NARROWS
+  Majority carriers flow across junction → large current flows
+  Minimum forward voltage to start conduction (knee voltage):
+    Silicon: ~0.7V    Germanium: ~0.3V
+  Forward current increases exponentially with voltage.
+
+Reverse Bias (P connected to −ve, N to +ve):
+  Applied voltage aids built-in field → depletion layer WIDENS
+  Only minority carriers cross → very small leakage current (~μA)
+  Beyond breakdown voltage → sudden large reverse current
+  (Zener diode exploits this controlled breakdown)
+
+V-I Characteristics:
+  Forward: exponential rise after knee voltage
+  Reverse: flat near-zero (leakage), then sharp breakdown</div>
+</div>
+<div class="deep-section">
+<h3>📌 Rectifiers, LED & Solar Cell</h3>
+<div class="formula-block">Half-Wave Rectifier:
+  Only one diode; conducts only during positive half-cycle.
+  Output: pulsating DC (ripple factor = 1.21, efficiency = 40.6%)
+  
+Full-Wave Rectifier (Center-tap or Bridge):
+  Conducts both half cycles.
+  Ripple factor = 0.48, efficiency = 81.2%
+  Bridge rectifier uses 4 diodes (no center-tap needed)
+
+Light Emitting Diode (LED):
+  Forward-biased P-N junction made of compound semiconductors (GaAs, GaP)
+  Electrons recombine with holes at junction → energy released as PHOTONS
+  Color depends on bandgap: Red (GaAsP), Green (GaP), Blue (GaN)
+  Very efficient, long life, compact, low voltage
+  Used in displays, indicators, traffic lights, lighting
+
+Solar Cell (Photovoltaic Effect):
+  Reverse of LED: light energy → electrical energy
+  Photons with energy > bandgap are absorbed and generate electron-hole pairs
+  Built-in field at junction separates them → EMF developed
+  Multiple cells in series/parallel form a solar panel
+  Efficiency: ~15–25% for silicon solar cells</div>
+</div>
+</div>
+</div>
+
+</div><!-- units-container -->
+</div><!-- page-content -->
+<script>
+function toggleUnit(header){
+  const card=header.closest('.unit-card');
+  card.classList.toggle('open');
+  updateProg();
+}
+function updateProg(){
+  const total=document.querySelectorAll('.unit-card').length;
+  const open=document.querySelectorAll('.unit-card.open').length;
+  const pct=Math.round((open/total)*100);
+  document.getElementById('prog').style.width=pct+'%';
+  document.getElementById('progLbl').textContent=open+' / '+total+' units studied';
+}
+document.querySelector('.unit-card').classList.add('open');
+updateProg();
+</script>
+</body>
+</html>
